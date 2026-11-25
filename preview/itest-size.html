@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>尺码推荐 交互测试</title>
+<style>
+  html, body { margin: 0; background: #fff; font-family: "Microsoft YaHei", sans-serif; }
+  #out { padding: 14px 18px; font-size: 15px; line-height: 1.7; color: #222; white-space: pre-wrap; }
+  iframe { position: fixed; left: -9999px; width: 375px; height: 812px; border: 0; }
+</style>
+</head>
+<body>
+<pre id="out">running…</pre>
+<iframe id="web" src="../web/index.html#/detail?id=p1"></iframe>
+<script>
+var out = document.getElementById('out');
+var lines = [];
+var fails = 0;
+function log(ok, label, extra) {
+  if (!ok) fails += 1;
+  lines.push((ok ? 'PASS  ' : 'FAIL  ') + label + (extra === undefined ? '' : '  |  ' + extra));
+  out.textContent = lines.join('\n');
+}
+function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+function waitFor(fn, ms) {
+  var t0 = Date.now();
+  return new Promise(function (resolve) {
+    (function poll() {
+      var v = null;
+      try { v = fn(); } catch (e) { v = null; }
+      if (v) return resolve(v);
+      if (Date.now() - t0 > (ms || 4000)) return resolve(null);
+      setTimeout(poll, 60);
+    })();
+  });
+}
+function fire(el, type, value) {
+  if (value !== undefined) el.value = value;
+  el.dispatchEvent(new Event(type, { bubbles: true }));
+}
+
+(async function () {
+  var w = document.getElementById('web');
+  var frameLoaded = await new Promise(function (resolve) {
+    w.addEventListener('load', function () { resolve(true); }, { once: true });
+    setTimeout(function () { resolve(false); }, 5000);
+  });
+  log(frameLoaded, '演示版 iframe 加载完成');
+
+  var doc = null;
+  try {
+    doc = w.contentWindow.document;
+  } catch (e) {
+    log(false, '拿不到 iframe 文档（跨域）', e.message);
+  }
+  var opener = doc ? doc.querySelector('[data-tap="openSize"]') : null;
+  log(!!opener, '详情页有「尺码参考」入口');
+  if (opener) { opener.click(); }
+  var card = opener ? await waitFor(function () { return doc.querySelector('.fit'); }, 5000) : null;
+  log(!!card, '打开尺码面板后出现「报身高体重」卡');
+
+  var inputs = card ? card.querySelectorAll('input') : [];
+  log(inputs.length === 2, '有身高、体重两个输入框', inputs.length);
+
+  function refit(h, w) {
+    var ins = doc.querySelectorAll('.fit-field input');
+    fire(ins[0], 'input', h);
+    fire(ins[1], 'input', w);
+    var go = doc.querySelector('.fit-go');
+    if (go) go.click();
+  }
+
+  if (inputs.length === 2) {
+    refit('170', '62');
+    await sleep(250);
+    log(!!doc.querySelector('.fit-result'), '身高 170 / 体重 62，点「算一下」出现推荐结果');
+    var badge = doc.querySelector('.fit-badge');
+    log(badge && badge.textContent.indexOf('M') === 0, '推荐结果是 M 码', badge && badge.textContent);
+    var note = doc.querySelector('.fit-note');
+    log(note && note.textContent.indexOf('推荐 M 码') > 0, '说明里写到了推荐 M 码', note && note.textContent);
+
+    refit('85', '50');
+    await sleep(250);
+    var err = doc.querySelector('.fit-error');
+    log(err && err.textContent.indexOf('90') > 0, '身高填 85cm 会提示范围', err && err.textContent);
+    log(!doc.querySelector('.fit-result'), '报错时清掉旧的推荐结果');
+
+    refit('170', '62');
+    await sleep(250);
+    var apply = doc.querySelector('.fit-apply');
+    log(!!apply, '重新算对后有「就用它」按钮');
+    if (apply) apply.click();
+    await sleep(350);
+    var toastEl = doc.getElementById('toast');
+    log(toastEl && toastEl.classList.contains('on') && toastEl.textContent.indexOf('M') >= 0,
+      '点「就用它」弹「已选 M 码」', toastEl && toastEl.textContent);
+    log(!doc.querySelector('.fit'), '点完面板自动收起');
+  }
+
+  log(fails === 0, fails === 0 ? '全部通过' : ('失败 ' + fails + ' 项'));
+  out.textContent = lines.join('\n');
+  document.title = fails === 0 ? 'ITEST PASS' : 'ITEST FAIL';
+})().catch(function (e) {
+  log(false, '脚本异常', e && e.message);
+  out.textContent = lines.join('\n');
+  document.title = 'ITEST FAIL';
+});
+</script>
+</body>
+</html>

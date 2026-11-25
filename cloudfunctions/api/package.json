@@ -1,0 +1,10 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "兰欧茜校服 · 小程序云端接口（定价/下单/发货/退货/店长权限）",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

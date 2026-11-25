@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<base href="file:///C:/Users/silve/Desktop/DeepSeek%E5%B7%A5%E4%BD%9C%E5%8C%BA/uniform-shop/">
+<title>购物车</title>
+<style>
+html, body { margin: 0; padding: 0; }
+body {
+  width: 375px; height: 812px; overflow: hidden;
+  background: #F7F3EC;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.__status { height: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 11px; font-weight: 600; color: #26364A; background: #F7F3EC; }
+.__sig { letter-spacing: 1px; font-size: 9px; }
+.__navbar { height: 44px; display: flex; align-items: center; justify-content: center; position: relative; background: #F7F3EC; }
+.__title { font-size: 16px; font-weight: 600; color: #26364A; letter-spacing: 1px; }
+.__back { position: absolute; left: 14px; top: 6px; font-size: 26px; color: #4A4A4A; line-height: 1; }
+.__screen { height: 698px; overflow: hidden; transform: translateZ(0); background: #F7F3EC; }
+.__tabbar { position: fixed; left: 0; right: 0; bottom: 0; height: 50px; display: flex; background: #FBF8F2; border-top: 1px solid #EFE6D8; }
+.__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 9px; color: #9C9488; }
+.__tab img { width: 22px; height: 22px; }
+.__tab.__on { color: #2E4A3F; }
+.__switch { display: inline-block; width: 44px; height: 26px; border-radius: 13px; background: #DCD5C8; position: relative; vertical-align: middle; }
+.__switch.__on { background: #2E4A3F; }
+.__switch i { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.__switch.__on i { left: 20px; }
+.page { min-height: 100% !important; }
+input { border: none; outline: none; background: transparent; font-family: inherit; }
+</style>
+<style>
+ body {
+  background: #f7f3ec;
+  color: #26221d;
+  font-family: "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 15.00px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+image,
+scroll-view,
+swiper,
+input,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+.serif {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 24.00px;
+}
+
+.gutter {
+  padding-left: 16.00px;
+  padding-right: 16.00px;
+}
+
+.muted {
+  color: #6f675b;
+}
+
+.tiny {
+  font-size: 12.00px;
+}
+
+.small {
+  font-size: 13.00px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.card {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  border: 0.50px solid #efe6d8;
+  box-shadow: 0 6.00px 20.00px rgba(80, 60, 40, 0.05);
+}
+
+.hairline {
+  height: 0.50px;
+  background: #efe6d8;
+}
+
+/* 按钮 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46.00px;
+  border-radius: 499.50px;
+  font-size: 16.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+  transition: opacity 0.15s;
+}
+
+.btn:active {
+  opacity: 0.82;
+}
+
+.btn-primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn-brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+/* 简写别名，便于页面内组合 */
+.btn.primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn.brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+.btn-light {
+  background: #f1e9db;
+  color: #4a4236;
+}
+
+.btn-sm {
+  height: 32.00px;
+  padding: 0 16.00px;
+  border-radius: 499.50px;
+  font-size: 14.00px;
+  font-weight: 500;
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+}
+
+/* 标签与筛选 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30.00px;
+  padding: 0 14.00px;
+  margin-right: 8.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #e3d8c7;
+  background: #fffdf9;
+  color: #6f675b;
+  font-size: 14.00px;
+  white-space: nowrap;
+}
+
+.chip.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2.00px 6.00px;
+  margin-right: 4.00px;
+  border-radius: 4.00px;
+  background: #f3ebdd;
+  color: #8a6a4f;
+  font-size: 12.00px;
+  line-height: 1.6;
+}
+
+.tag-green {
+  background: #e7efe9;
+  color: #2e4a3f;
+}
+
+/* 标题 */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 28.00px 0 12.00px;
+}
+
+.sec-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 1.00px;
+  color: #26221d;
+}
+
+.sec-sub {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-left: 8.00px;
+}
+
+.sec-more {
+  font-size: 13.00px;
+  color: #6f675b;
+}
+
+/* 价格 */
+.price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  color: #b65b3c;
+}
+
+.price .cur {
+  font-size: 0.62em;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.price-old {
+  margin-left: 6.00px;
+  color: #8f8577;
+  font-size: 12.00px;
+  text-decoration: line-through;
+}
+
+/* 空状态 */
+.empty {
+  padding: 56.00px 20.00px 64.00px;
+  text-align: center;
+  color: #736b5e;
+}
+
+.empty-mark {
+  width: 64.00px;
+  height: 64.00px;
+  margin: 0 auto 14.00px;
+  border-radius: 50%;
+  border: 0.50px solid #ded2bf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 23.00px;
+  color: #8f8577;
+  background: #fbf7f0;
+}
+
+.empty-text {
+  font-size: 14.00px;
+  letter-spacing: 0.50px;
+}
+
+.empty-sub {
+  margin-top: 6.00px;
+  font-size: 12.00px;
+  color: #7d7365;
+}
+
+/* 底部弹层 */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(30, 26, 20, 0.45);
+  z-index: 900;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 901;
+  background: #fffdf9;
+  border-radius: 16.00px 16.00px 0 0;
+  padding: 20.00px 16.00px calc(20.00px + 0px);
+  max-height: 82vh;
+}
+
+.sheet-grip {
+  width: 36.00px;
+  height: 4.00px;
+  border-radius: 2.00px;
+  background: #e4d8c6;
+  margin: 0 auto 12.00px;
+}
+
+.sheet-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+}
+
+.sheet-sub {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.sheet-close {
+  width: 28.00px;
+  height: 28.00px;
+  border-radius: 50%;
+  background: #f2ebdf;
+  color: #7a7165;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16.00px;
+}
+
+/* 输入 */
+.field {
+  display: flex;
+  align-items: center;
+  padding: 14.00px 0;
+  border-bottom: 0.50px solid #efe6d8;
+}
+
+.field-label {
+  width: 75.00px;
+  font-size: 14.00px;
+  color: #6f675b;
+}
+
+.field input {
+  flex: 1;
+  font-size: 15.00px;
+  color: #26221d;
+}
+
+.placeholder {
+  color: #84796a;
+}
+
+/* 动画 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8.00px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease both;
+}
+
+/* 分隔花饰：一条细线 + 中间一枚小菱形，用来断开章节，比纯空白更有节奏 */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20.00px 0 2.00px;
+}
+
+.ornament-line {
+  width: 48.00px;
+  height: 0.50px;
+  background: #ded2bf;
+}
+
+.ornament-dot {
+  width: 5.00px;
+  height: 5.00px;
+  margin: 0 10.00px;
+  background: #c9a227;
+  transform: rotate(45deg);
+}
+
+.safe-bottom {
+  padding-bottom: calc(12.00px + 0px);
+}
+
+.pc {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  overflow: hidden;
+  border: 0.50px solid #efe6d8;
+}
+
+.pc-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: #f3ece0;
+}
+
+.pc-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pc-flag {
+  position: absolute;
+  left: 8.00px;
+  top: 8.00px;
+  padding: 2.00px 6.00px;
+  border-radius: 4.00px;
+  background: rgba(255, 253, 249, 0.86);
+  color: #8a6a4f;
+  font-size: 11.00px;
+  letter-spacing: 0.50px;
+}
+
+.pc-cat {
+  position: absolute;
+  right: 8.00px;
+  bottom: 7.00px;
+  padding: 0.00px 6.00px;
+  border-radius: 2.00px;
+  background: rgba(38, 34, 29, 0.28);
+  color: #fffdf9;
+  font-size: 11.00px;
+  letter-spacing: 1.00px;
+}
+
+.pc-body {
+  padding: 10.00px 10.00px 12.00px;
+}
+
+.pc-school {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-bottom: 2.00px;
+}
+
+.pc-name {
+  font-size: 14.00px;
+  color: #26221d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.25px;
+}
+
+.pc-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 6.00px;
+}
+
+.pc-price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 17.00px;
+  color: #b65b3c;
+  line-height: 1;
+}
+
+.pc-price .cur {
+  font-size: 12.00px;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.pc-sales {
+  font-size: 11.00px;
+  color: #7d7365;
+}
+
+.cart {
+  padding-bottom: 64.00px;
+}
+
+.hint {
+  padding: 10.00px 16.00px 2.00px;
+  font-size: 12.00px;
+  color: #7a7264;
+  letter-spacing: 0.50px;
+}
+
+.hint-dot {
+  margin: 0 6.00px;
+}
+
+.list {
+  padding: 8.00px 16.00px 0;
+}
+
+.citem {
+  display: flex;
+  align-items: center;
+  padding: 12.00px 16.00px;
+  margin-bottom: 10.00px;
+  border-radius: 12.00px;
+  background: #fffdf9;
+  border: 0.50px solid #efe6d8;
+}
+
+.check {
+  width: 20.00px;
+  height: 20.00px;
+  flex: 0 0 20.00px;
+  border-radius: 50%;
+  border: 0.50px solid #d8cdbc;
+  color: transparent;
+  font-size: 12.00px;
+  line-height: 19.00px;
+  text-align: center;
+}
+
+.check.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.cimg {
+  width: 75.00px;
+  height: 75.00px;
+  flex: 0 0 75.00px;
+  margin: 0 10.00px;
+  border-radius: 8.00px;
+  background: #f3ece0;
+}
+
+.cbody {
+  flex: 1;
+  min-width: 0;
+}
+
+.crow {
+  display: flex;
+  align-items: flex-start;
+}
+
+.cname {
+  flex: 1;
+  font-size: 14.00px;
+  color: #26221d;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cdel {
+  margin-left: 6.00px;
+  font-size: 12.00px;
+  color: #7d7365;
+}
+
+.cspec {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.cfoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8.00px;
+}
+
+.cprice {
+  font-size: 17.00px;
+}
+
+.cprice .cur {
+  font-size: 12.00px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  height: 26.00px;
+  border: 0.50px solid #e3d8c7;
+  border-radius: 499.50px;
+  overflow: hidden;
+}
+
+.step {
+  width: 27.00px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13.00px;
+  color: #4a4236;
+}
+
+.step.off {
+  color: #cec4b3;
+}
+
+.step-num {
+  min-width: 22.00px;
+  text-align: center;
+  font-size: 13.00px;
+}
+
+.cart-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  padding: 8.00px 16.00px calc(8.00px + 0px);
+  background: rgba(247, 243, 236, 0.97);
+  border-top: 0.50px solid #ebe1d2;
+}
+
+.all {
+  display: flex;
+  align-items: center;
+}
+
+.all-text {
+  margin-left: 6.00px;
+  font-size: 12.00px;
+  color: #6f675b;
+}
+
+.total {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  margin-right: 10.00px;
+}
+
+.tlabel {
+  font-size: 12.00px;
+  color: #6f675b;
+  margin-right: 4.00px;
+}
+
+.tprice {
+  font-size: 19.00px;
+}
+
+.tprice .cur {
+  font-size: 12.00px;
+}
+
+.pay-btn {
+  width: 115.00px;
+  height: 42.00px;
+  border-radius: 499.50px;
+  background: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 14.00px;
+}
+
+.pay-btn.off {
+  background: #d9cebd;
+  color: #fbf7f0;
+}
+
+.empty-btn {
+  margin-top: 16.00px;
+  display: inline-flex;
+  padding: 0 32.00px;
+  height: 40.00px;
+  border-radius: 499.50px;
+}
+
+</style>
+</head>
+<body>
+
+  <div class="__status"><span>9:41</span><span class="__sig">●●●</span></div>
+  <div class="__navbar">
+    
+    <span class="__title">购物车</span>
+  </div>
+<div class="__screen">
+<div class="page cart" style=""><div class="hint" style=""><span style="">满 ¥50 包邮</span><span class="hint-dot" style="">·</span><span style="">支持到店自提</span></div><div class="list" style=""><div class="citem" style=""><div class="check on" style="">✓</div><img class="cimg" src="miniprogram/images/prod-01.jpg" style="object-fit:cover;"><div class="cbody" style=""><div class="crow" style=""><div class="cname" style="">市一中 · 夏季短袖套装</div><div class="cdel" style="">移除</div></div><div class="cspec" style="">藏青 · L</div><div class="cfoot" style=""><div class="price cprice" style=""><span class="cur" style="">¥</span>128</div><div class="stepper" style=""><div class="step off" style="">−</div><div class="step-num" style="">1</div><div class="step" style="">＋</div></div></div></div></div><div class="citem" style=""><div class="check on" style="">✓</div><img class="cimg" src="miniprogram/images/p7.png" style="object-fit:cover;"><div class="cbody" style=""><div class="crow" style=""><div class="cname" style="">通用 · 速干运动短裤</div><div class="cdel" style="">移除</div></div><div class="cspec" style="">藏青 · M</div><div class="cfoot" style=""><div class="price cprice" style=""><span class="cur" style="">¥</span>49</div><div class="stepper" style=""><div class="step off" style="">−</div><div class="step-num" style="">1</div><div class="step" style="">＋</div></div></div></div></div><div class="citem" style=""><div class="check on" style="">✓</div><img class="cimg" src="miniprogram/images/p3.png" style="object-fit:cover;"><div class="cbody" style=""><div class="crow" style=""><div class="cname" style="">金湾一小 · 夏季连衣裙</div><div class="cdel" style="">移除</div></div><div class="cspec" style="">浅蓝 · M</div><div class="cfoot" style=""><div class="price cprice" style=""><span class="cur" style="">¥</span>118</div><div class="stepper" style=""><div class="step off" style="">−</div><div class="step-num" style="">1</div><div class="step" style="">＋</div></div></div></div></div></div><div class="cart-bar" style=""><div class="all" style=""><div class="check on" style="">✓</div><span class="all-text" style="">全选</span></div><div class="total" style=""><span class="tlabel" style="">合计</span><div class="price tprice" style=""><span class="cur" style="">¥</span>295</div></div><div class="btn pay-btn " style="">去结算 (3)</div></div></div>
+</div>
+
+  <div class="__tabbar">
+    
+      <div class="__tab">
+        <img src="miniprogram/images/tab-home.png">
+        <span>首页</span>
+      </div>
+      <div class="__tab">
+        <img src="miniprogram/images/tab-category.png">
+        <span>分类</span>
+      </div>
+      <div class="__tab __on">
+        <img src="miniprogram/images/tab-cart-on.png">
+        <span>购物车</span>
+      </div>
+      <div class="__tab">
+        <img src="miniprogram/images/tab-user.png">
+        <span>我的</span>
+      </div>
+  </div>
+</body></html>

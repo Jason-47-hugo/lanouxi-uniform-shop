@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<base href="file:///C:/Users/silve/Desktop/DeepSeek%E5%B7%A5%E4%BD%9C%E5%8C%BA/uniform-shop/">
+<title>尺码推荐</title>
+<style>
+html, body { margin: 0; padding: 0; }
+body {
+  width: 375px; height: 812px; overflow: hidden;
+  background: #F7F3EC;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.__status { height: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 11px; font-weight: 600; color: #26364A; background: #F7F3EC; }
+.__sig { letter-spacing: 1px; font-size: 9px; }
+.__navbar { height: 44px; display: flex; align-items: center; justify-content: center; position: relative; background: #F7F3EC; }
+.__title { font-size: 16px; font-weight: 600; color: #26364A; letter-spacing: 1px; }
+.__back { position: absolute; left: 14px; top: 6px; font-size: 26px; color: #4A4A4A; line-height: 1; }
+.__screen { height: 748px; overflow: hidden; transform: translateZ(0); background: #F7F3EC; }
+.__tabbar { position: fixed; left: 0; right: 0; bottom: 0; height: 50px; display: flex; background: #FBF8F2; border-top: 1px solid #EFE6D8; }
+.__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 9px; color: #9C9488; }
+.__tab img { width: 22px; height: 22px; }
+.__tab.__on { color: #2E4A3F; }
+.__switch { display: inline-block; width: 44px; height: 26px; border-radius: 13px; background: #DCD5C8; position: relative; vertical-align: middle; }
+.__switch.__on { background: #2E4A3F; }
+.__switch i { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.__switch.__on i { left: 20px; }
+.page { min-height: 100% !important; }
+input { border: none; outline: none; background: transparent; font-family: inherit; }
+</style>
+<style>
+ body {
+  background: #f7f3ec;
+  color: #26221d;
+  font-family: "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 15.00px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+image,
+scroll-view,
+swiper,
+input,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+.serif {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 24.00px;
+}
+
+.gutter {
+  padding-left: 16.00px;
+  padding-right: 16.00px;
+}
+
+.muted {
+  color: #6f675b;
+}
+
+.tiny {
+  font-size: 12.00px;
+}
+
+.small {
+  font-size: 13.00px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.card {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  border: 0.50px solid #efe6d8;
+  box-shadow: 0 6.00px 20.00px rgba(80, 60, 40, 0.05);
+}
+
+.hairline {
+  height: 0.50px;
+  background: #efe6d8;
+}
+
+/* 按钮 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46.00px;
+  border-radius: 499.50px;
+  font-size: 16.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+  transition: opacity 0.15s;
+}
+
+.btn:active {
+  opacity: 0.82;
+}
+
+.btn-primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn-brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+/* 简写别名，便于页面内组合 */
+.btn.primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn.brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+.btn-light {
+  background: #f1e9db;
+  color: #4a4236;
+}
+
+.btn-sm {
+  height: 32.00px;
+  padding: 0 16.00px;
+  border-radius: 499.50px;
+  font-size: 14.00px;
+  font-weight: 500;
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+}
+
+/* 标签与筛选 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30.00px;
+  padding: 0 14.00px;
+  margin-right: 8.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #e3d8c7;
+  background: #fffdf9;
+  color: #6f675b;
+  font-size: 14.00px;
+  white-space: nowrap;
+}
+
+.chip.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2.00px 6.00px;
+  margin-right: 4.00px;
+  border-radius: 4.00px;
+  background: #f3ebdd;
+  color: #8a6a4f;
+  font-size: 12.00px;
+  line-height: 1.6;
+}
+
+.tag-green {
+  background: #e7efe9;
+  color: #2e4a3f;
+}
+
+/* 标题 */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 28.00px 0 12.00px;
+}
+
+.sec-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 1.00px;
+  color: #26221d;
+}
+
+.sec-sub {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-left: 8.00px;
+}
+
+.sec-more {
+  font-size: 13.00px;
+  color: #6f675b;
+}
+
+/* 价格 */
+.price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  color: #b65b3c;
+}
+
+.price .cur {
+  font-size: 0.62em;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.price-old {
+  margin-left: 6.00px;
+  color: #8f8577;
+  font-size: 12.00px;
+  text-decoration: line-through;
+}
+
+/* 空状态 */
+.empty {
+  padding: 56.00px 20.00px 64.00px;
+  text-align: center;
+  color: #736b5e;
+}
+
+.empty-mark {
+  width: 64.00px;
+  height: 64.00px;
+  margin: 0 auto 14.00px;
+  border-radius: 50%;
+  border: 0.50px solid #ded2bf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 23.00px;
+  color: #8f8577;
+  background: #fbf7f0;
+}
+
+.empty-text {
+  font-size: 14.00px;
+  letter-spacing: 0.50px;
+}
+
+.empty-sub {
+  margin-top: 6.00px;
+  font-size: 12.00px;
+  color: #7d7365;
+}
+
+/* 底部弹层 */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(30, 26, 20, 0.45);
+  z-index: 900;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 901;
+  background: #fffdf9;
+  border-radius: 16.00px 16.00px 0 0;
+  padding: 20.00px 16.00px calc(20.00px + 0px);
+  max-height: 82vh;
+}
+
+.sheet-grip {
+  width: 36.00px;
+  height: 4.00px;
+  border-radius: 2.00px;
+  background: #e4d8c6;
+  margin: 0 auto 12.00px;
+}
+
+.sheet-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+}
+
+.sheet-sub {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.sheet-close {
+  width: 28.00px;
+  height: 28.00px;
+  border-radius: 50%;
+  background: #f2ebdf;
+  color: #7a7165;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16.00px;
+}
+
+/* 输入 */
+.field {
+  display: flex;
+  align-items: center;
+  padding: 14.00px 0;
+  border-bottom: 0.50px solid #efe6d8;
+}
+
+.field-label {
+  width: 75.00px;
+  font-size: 14.00px;
+  color: #6f675b;
+}
+
+.field input {
+  flex: 1;
+  font-size: 15.00px;
+  color: #26221d;
+}
+
+.placeholder {
+  color: #84796a;
+}
+
+/* 动画 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8.00px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease both;
+}
+
+/* 分隔花饰：一条细线 + 中间一枚小菱形，用来断开章节，比纯空白更有节奏 */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20.00px 0 2.00px;
+}
+
+.ornament-line {
+  width: 48.00px;
+  height: 0.50px;
+  background: #ded2bf;
+}
+
+.ornament-dot {
+  width: 5.00px;
+  height: 5.00px;
+  margin: 0 10.00px;
+  background: #c9a227;
+  transform: rotate(45deg);
+}
+
+.safe-bottom {
+  padding-bottom: calc(12.00px + 0px);
+}
+
+.pc {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  overflow: hidden;
+  border: 0.50px solid #efe6d8;
+}
+
+.pc-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: #f3ece0;
+}
+
+.pc-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pc-flag {
+  position: absolute;
+  left: 8.00px;
+  top: 8.00px;
+  padding: 2.00px 6.00px;
+  border-radius: 4.00px;
+  background: rgba(255, 253, 249, 0.86);
+  color: #8a6a4f;
+  font-size: 11.00px;
+  letter-spacing: 0.50px;
+}
+
+.pc-cat {
+  position: absolute;
+  right: 8.00px;
+  bottom: 7.00px;
+  padding: 0.00px 6.00px;
+  border-radius: 2.00px;
+  background: rgba(38, 34, 29, 0.28);
+  color: #fffdf9;
+  font-size: 11.00px;
+  letter-spacing: 1.00px;
+}
+
+.pc-body {
+  padding: 10.00px 10.00px 12.00px;
+}
+
+.pc-school {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-bottom: 2.00px;
+}
+
+.pc-name {
+  font-size: 14.00px;
+  color: #26221d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.25px;
+}
+
+.pc-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 6.00px;
+}
+
+.pc-price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 17.00px;
+  color: #b65b3c;
+  line-height: 1;
+}
+
+.pc-price .cur {
+  font-size: 12.00px;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.pc-sales {
+  font-size: 11.00px;
+  color: #7d7365;
+}
+
+.detail {
+  padding-bottom: 64.00px;
+}
+
+.gallery {
+  position: relative;
+  width: 100%;
+  height: 375.00px;
+  background: #f1e8da;
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.gallery-tags {
+  position: absolute;
+  left: 16.00px;
+  bottom: 32.00px;
+}
+
+.gtag {
+  display: inline-block;
+  margin-right: 6.00px;
+  padding: 2.00px 8.00px;
+  border-radius: 4.00px;
+  background: rgba(255, 253, 249, 0.9);
+  color: #7d6a52;
+  font-size: 12.00px;
+  letter-spacing: 0.50px;
+}
+
+.main-card {
+  position: relative;
+  margin: -24.00px 16.00px 0;
+  padding: 16.00px 16.00px 16.00px;
+  border-radius: 16.00px;
+  background: #fffdf9;
+  border: 0.50px solid #efe6d8;
+  box-shadow: 0 8.00px 20.00px rgba(80, 60, 40, 0.06);
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.main-price {
+  font-size: 28.00px;
+  line-height: 1;
+}
+
+.main-price .cur {
+  font-size: 15.00px;
+}
+
+.sold {
+  font-size: 12.00px;
+  color: #7a7264;
+}
+
+.pname {
+  margin-top: 8.00px;
+  font-size: 21.00px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.50px;
+}
+
+.psub {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+}
+
+.points-tip {
+  display: flex;
+  align-items: center;
+  margin-top: 12.00px;
+  padding: 8.00px 10.00px;
+  border-radius: 8.00px;
+  background: #f0f4f0;
+}
+
+.pt-key {
+  padding: 2.00px 6.00px;
+  margin-right: 6.00px;
+  border-radius: 2.00px;
+  background: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 11.00px;
+  letter-spacing: 0.50px;
+}
+
+.pt-val {
+  flex: 1;
+  font-size: 12.00px;
+  color: #2e4a3f;
+}
+
+.pt-arrow {
+  font-size: 13.00px;
+  color: #7d8d82;
+}
+
+.block {
+  margin: 12.00px 16.00px 0;
+  padding: 14.00px 16.00px;
+}
+
+.opt {
+  padding: 4.00px 0;
+}
+
+.opt-head {
+  display: flex;
+  align-items: baseline;
+}
+
+.opt-label {
+  width: 46.00px;
+  flex: 0 0 46.00px;
+  font-size: 14.00px;
+  color: #6f675b;
+  letter-spacing: 0.50px;
+}
+
+.opt-value {
+  font-size: 14.00px;
+  color: #26221d;
+}
+
+.size-help {
+  font-size: 12.00px;
+  color: #8a6a4f;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  margin-top: 8.00px;
+  padding-left: 48.00px;
+}
+
+.dot-wrap {
+  width: 31.00px;
+  height: 31.00px;
+  margin-right: 6.00px;
+  border-radius: 50%;
+  border: 0.50px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot-wrap.on {
+  border-color: #2e4a3f;
+}
+
+.dot {
+  width: 21.00px;
+  height: 21.00px;
+  border-radius: 50%;
+  border: 0.50px solid rgba(0, 0, 0, 0.08);
+}
+
+.sizes {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8.00px;
+  padding-left: 48.00px;
+}
+
+.size-chip {
+  min-width: 38.00px;
+  height: 29.00px;
+  padding: 0 10.00px;
+  margin: 0 8.00px 6.00px 0;
+  border-radius: 4.00px;
+  border: 0.50px solid #e3d8c7;
+  background: #fbf7f0;
+  color: #4a4236;
+  font-size: 13.00px;
+  line-height: 28.00px;
+  text-align: center;
+}
+
+.size-chip.on {
+  border-color: #2e4a3f;
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.qty-row {
+  display: flex;
+  align-items: center;
+  padding: 10.00px 0 4.00px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  height: 29.00px;
+  border: 0.50px solid #e3d8c7;
+  border-radius: 499.50px;
+  overflow: hidden;
+}
+
+.step {
+  width: 32.00px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15.00px;
+  color: #4a4236;
+}
+
+.step.off {
+  color: #c9bfae;
+}
+
+.step-num {
+  min-width: 28.00px;
+  text-align: center;
+  font-size: 14.00px;
+  color: #26221d;
+}
+
+.svc {
+  display: flex;
+  align-items: flex-start;
+  padding: 4.00px 0;
+  font-size: 13.00px;
+  color: #5f574b;
+  line-height: 1.8;
+}
+
+.svc-check {
+  margin-right: 8.00px;
+  color: #2e4a3f;
+  font-size: 12.00px;
+  line-height: 1.8;
+}
+
+.block-title {
+  font-size: 17.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+  margin-bottom: 6.00px;
+}
+
+.kv {
+  display: flex;
+  align-items: flex-start;
+  padding: 6.00px 0;
+}
+
+.k {
+  width: 42.00px;
+  flex: 0 0 42.00px;
+  font-size: 13.00px;
+  color: #736b5e;
+  line-height: 1.8;
+}
+
+.v {
+  flex: 1;
+  font-size: 13.00px;
+  color: #4a4236;
+  line-height: 1.8;
+}
+
+.related {
+  margin-top: 24.00px;
+}
+
+.rel-head {
+  display: flex;
+  align-items: baseline;
+  padding: 0 16.00px;
+  margin-bottom: 10.00px;
+}
+
+.rel-head .sec-sub {
+  margin-left: 8.00px;
+}
+
+.rel-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 16.00px;
+}
+
+.rel-item {
+  width: calc(50% - 5.00px);
+  margin-bottom: 10.00px;
+}
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  padding: 8.00px 16.00px calc(8.00px + 0px);
+  background: rgba(247, 243, 236, 0.97);
+  border-top: 0.50px solid #ebe1d2;
+}
+
+/* 底部固定条会盖住最后一屏，给页面留出滚动余量 */
+.page {
+  padding-bottom: 64.00px;
+}
+
+.bar-side {
+  position: relative;
+  width: 44.00px;
+  text-align: center;
+}
+
+.bar-side-text {
+  font-size: 12.00px;
+  color: #6f675b;
+  letter-spacing: 0.50px;
+}
+
+.bar-badge {
+  position: absolute;
+  top: -5.00px;
+  right: 3.00px;
+  min-width: 15.00px;
+  height: 15.00px;
+  padding: 0 4.00px;
+  border-radius: 8.00px;
+  background: #b65b3c;
+  color: #fff8ee;
+  font-size: 11.00px;
+  line-height: 15.00px;
+  text-align: center;
+}
+
+.bar-main {
+  flex: 1;
+  display: flex;
+  margin-left: 6.00px;
+}
+
+.bar-btn {
+  height: 42.00px;
+  border-radius: 499.50px;
+  font-size: 14.00px;
+}
+
+.bar-cart {
+  flex: 1;
+  background: #efe4d2;
+  color: #4a4236;
+  margin-right: 6.00px;
+}
+
+.bar-buy {
+  flex: 1.1;
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.fit {
+  margin-top: 14.00px;
+  padding: 12.00px;
+  background: #f8f1e5;
+  border: 0.50px solid #efe6d8;
+  border-radius: 10.00px;
+}
+
+.fit-head {
+  display: flex;
+  flex-direction: column;
+}
+
+.fit-title {
+  font-size: 14.00px;
+  color: #2e4a3f;
+  font-weight: 600;
+}
+
+.fit-sub {
+  margin-top: 3.00px;
+  font-size: 11.00px;
+  color: #6f675b;
+}
+
+.fit-fields {
+  display: flex;
+  align-items: center;
+  margin-top: 9.00px;
+}
+
+.fit-field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  height: 34.00px;
+  padding: 0 8.00px;
+  margin-right: 6.00px;
+  background: #fbf8f2;
+  border: 0.50px solid #e7dccc;
+  border-radius: 7.00px;
+}
+
+.fit-input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 33.00px;
+  font-size: 14.00px;
+  color: #332f28;
+}
+
+.fit-ph {
+  color: #9a9184;
+  font-size: 13.00px;
+}
+
+.fit-unit {
+  margin-left: 3.00px;
+  font-size: 11.00px;
+  color: #8c8477;
+}
+
+.fit-go {
+  flex: 0 0 auto;
+  width: 70.00px;
+  height: 34.00px;
+  border-radius: 7.00px;
+  background: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 13.00px;
+  line-height: 34.00px;
+  text-align: center;
+}
+
+.fit-error {
+  margin-top: 7.00px;
+  font-size: 11.00px;
+  color: #b65b3c;
+}
+
+.fit-result {
+  margin-top: 8.00px;
+  padding-top: 8.00px;
+  border-top: 0.50px dashed #e2d6c4;
+}
+
+.fit-line {
+  display: flex;
+  align-items: center;
+}
+
+.fit-badge {
+  padding: 3.00px 9.00px;
+  border-radius: 499.50px;
+  background: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 13.00px;
+}
+
+.fit-apply {
+  padding: 4.00px 11.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #2e4a3f;
+  color: #2e4a3f;
+  font-size: 12.00px;
+}
+
+.fit-note {
+  display: block;
+  margin-top: 6.00px;
+  font-size: 11.00px;
+  color: #5b5348;
+  line-height: 1.7;
+}
+
+.guide-tabs {
+  display: flex;
+  margin-top: 12.00px;
+}
+
+.gt {
+  flex: 1;
+  height: 33.00px;
+  margin-right: 6.00px;
+  border-radius: 499.50px;
+  background: #f5eee2;
+  color: #6f675b;
+  font-size: 13.00px;
+  line-height: 33.00px;
+  text-align: center;
+}
+
+.gt:last-child {
+  margin-right: 0;
+}
+
+.gt.on {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.table {
+  margin-top: 10.00px;
+  border: 0.50px solid #efe6d8;
+  border-radius: 8.00px;
+  overflow: hidden;
+}
+
+.tr {
+  display: flex;
+  padding: 8.00px 10.00px;
+  border-bottom: 0.50px solid #f2eadc;
+}
+
+.tr:last-child {
+  border-bottom: 0;
+}
+
+.tr.th {
+  background: #f8f1e5;
+}
+
+.td {
+  flex: 1;
+  font-size: 12.00px;
+  color: #4a4236;
+  line-height: 1.6;
+}
+
+.tr.th .td {
+  color: #6f675b;
+  font-size: 12.00px;
+}
+
+.td.wide {
+  flex: 1.5;
+}
+
+.sheet-tip {
+  margin-top: 10.00px;
+  font-size: 12.00px;
+  color: #6f675b;
+  line-height: 1.6;
+}
+
+.sheet-btn {
+  margin-top: 14.00px;
+}
+
+</style>
+</head>
+<body>
+
+  <div class="__status"><span>9:41</span><span class="__sig">●●●</span></div>
+  <div class="__navbar">
+    <span class="__back">‹</span>
+    <span class="__title">尺码推荐</span>
+  </div>
+<div class="__screen">
+<div class="page detail" style=""><div class="gallery" style=""><img class="cover" src="miniprogram/images/prod-01.jpg" style="object-fit:cover;"><div class="gallery-tags" style=""><span class="gtag" style="">当季</span><span class="gtag" style="">可试穿</span></div></div><div class="main-card" style=""><div class="price-row" style=""><div class="price main-price" style=""><span class="cur" style="">¥</span>128</div><span class="price-old" style="">¥158</span><div class="grow" style=""></div><div class="sold" style="">已售 326</div></div><div class="pname serif" style="">市一中 · 夏季短袖套装</div><div class="psub" style="">珠海市第一中学 · 高中 · 夏装</div><div class="points-tip" style=""><span class="pt-key" style="">积分</span><span class="pt-val" style="">可用 5 元 · 每单最多抵 5%</span><span class="pt-arrow" style="">›</span></div></div><div class="card block" style=""><div class="opt" style=""><div class="opt-head" style=""><span class="opt-label" style="">颜色</span><span class="opt-value" style="">藏青</span></div><div class="dots" style=""><div class="dot-wrap on" style=""><div class="dot" style="background: #26364A;;"></div></div><div class="dot-wrap " style=""><div class="dot" style="background: #F3EEE2;;"></div></div></div></div><div class="hairline" style=""></div><div class="opt" style=""><div class="opt-head" style=""><span class="opt-label" style="">尺码</span><span class="opt-value muted" style="">还没选</span><div class="grow" style=""></div><div class="size-help" style="">尺码参考 ›</div></div><div class="sizes" style=""><div class="size-chip " style="">150</div><div class="size-chip " style="">155</div><div class="size-chip " style="">160</div><div class="size-chip " style="">165</div><div class="size-chip " style="">170</div><div class="size-chip " style="">175</div><div class="size-chip " style="">180</div><div class="size-chip " style="">185</div><div class="size-chip " style="">190</div><div class="size-chip " style="">195</div><div class="size-chip " style="">200</div></div></div><div class="hairline" style=""></div><div class="qty-row" style=""><span class="opt-label" style="">数量</span><div class="grow" style=""></div><div class="stepper" style=""><div class="step off" style="">−</div><div class="step-num" style="">1</div><div class="step" style="">＋</div></div></div></div><div class="card block" style=""><div class="svc" style=""><span class="svc-check" style="">✓</span><span style="">校服同款版型，按学校分版</span></div><div class="svc" style=""><span class="svc-check" style="">✓</span><span style="">到店可试穿，7 天无理由退换</span></div><div class="svc" style=""><span class="svc-check" style="">✓</span><span style="">快递 ¥8 起，满 ¥50 包邮；也可到店自提</span></div><div class="svc" style=""><span class="svc-check" style="">✓</span><span style="">微信支付，付完当天安排发货</span></div></div><div class="card block" style=""><div class="block-title serif" style="">细节与面料</div><div class="kv" style=""><span class="k" style="">面料</span><span class="v" style="">65% 棉 · 35% 聚酯纤维，210g 珠地网眼</span></div><div class="kv" style=""><span class="k" style="">说明</span><span class="v" style="">校服同款版型，领口加固、下摆双线包边。短袖上衣 + 同色短裤/裙裤一套，开学前两周到店可试穿。</span></div><div class="kv" style=""><span class="k" style="">选码</span><span class="v" style="">孩子正在长个子，身高卡在两档中间时选大的那档。</span></div></div><div class="bar" style=""><div class="bar-side" style=""><span class="bar-side-text" style="">购物车</span><div class="bar-badge" style="">3</div></div><div class="bar-side" style=""><span class="bar-side-text" style="">问店长</span></div><div class="bar-main" style=""><div class="btn bar-btn bar-cart" style="">加入购物车</div><div class="btn bar-btn bar-buy" style="">立即购买</div></div></div></div><div class="mask" style=""></div><div class="sheet" style=""><div class="sheet-grip" style=""></div><div class="between" style=""><div style=""><div class="sheet-title" style="">尺码参考</div><div class="sheet-sub" style="">尺码就是身高，填一下孩子多高就行</div></div><div class="sheet-close" style="">×</div></div><div class="fit" style=""><div class="fit-head" style=""><span class="fit-title" style="">报个身高，直接对上码</span><span class="fit-sub" style="">尺码就是身高：170 码给 168–172cm 的同学穿</span></div><div class="fit-fields" style=""><div class="fit-field" style=""><input class="fit-input" type="number" value="170" placeholder="孩子身高" style="" readonly><span class="fit-unit" style="">cm</span></div><div class="fit-go" style="">找尺码</div></div><div class="fit-result" style=""><div class="fit-line" style=""><span class="fit-badge" style="">170 码</span><div class="grow" style=""></div><div class="fit-apply" style="">就用它</div></div><span class="fit-note" style="">身高 170cm → 170 码（和身高一样，贴身）。正好有 170 码。</span></div></div><div class="guide-tabs" style=""><div class="gt " style="">小学 110–160</div><div class="gt on" style="">中学 150–200</div></div><div class="table" style=""><div class="tr th" style=""><span class="td" style="">尺码</span><span class="td" style="">适合身高 cm</span><span class="td wide" style="">说明</span></div><div class="tr" style=""><span class="td" style="">150</span><span class="td" style="">148–152</span><span class="td wide" style="">偏瘦的初一学生</span></div><div class="tr" style=""><span class="td" style="">155</span><span class="td" style="">153–157</span><span class="td wide" style="">班级里偏矮的同学</span></div><div class="tr" style=""><span class="td" style="">160</span><span class="td" style="">158–162</span><span class="td wide" style="">初二常见</span></div><div class="tr" style=""><span class="td" style="">165</span><span class="td" style="">163–167</span><span class="td wide" style="">初三常见</span></div><div class="tr" style=""><span class="td" style="">170</span><span class="td" style="">168–172</span><span class="td wide" style="">高一常见</span></div><div class="tr" style=""><span class="td" style="">175</span><span class="td" style="">173–177</span><span class="td wide" style="">高二常见</span></div><div class="tr" style=""><span class="td" style="">180</span><span class="td" style="">178–182</span><span class="td wide" style="">高个男生</span></div><div class="tr" style=""><span class="td" style="">185</span><span class="td" style="">183–187</span><span class="td wide" style="">偏高大</span></div><div class="tr" style=""><span class="td" style="">190</span><span class="td" style="">188–192</span><span class="td wide" style="">年级里最高的几个</span></div><div class="tr" style=""><span class="td" style="">195</span><span class="td" style="">193–197</span><span class="td wide" style="">需提前预订</span></div><div class="tr" style=""><span class="td" style="">200</span><span class="td" style="">198–205</span><span class="td wide" style="">需提前预订</span></div></div><div class="sheet-tip" style="">孩子正在长个子，身高卡在两档中间时选大的那档。</div><div class="btn btn-primary sheet-btn" style="">知道了</div></div>
+</div>
+
+</body></html>

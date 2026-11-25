@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<base href="file:///C:/Users/silve/Desktop/DeepSeek%E5%B7%A5%E4%BD%9C%E5%8C%BA/uniform-shop/">
+<title>收货地址</title>
+<style>
+html, body { margin: 0; padding: 0; }
+body {
+  width: 375px; height: 812px; overflow: hidden;
+  background: #F7F3EC;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.__status { height: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 11px; font-weight: 600; color: #26364A; background: #F7F3EC; }
+.__sig { letter-spacing: 1px; font-size: 9px; }
+.__navbar { height: 44px; display: flex; align-items: center; justify-content: center; position: relative; background: #F7F3EC; }
+.__title { font-size: 16px; font-weight: 600; color: #26364A; letter-spacing: 1px; }
+.__back { position: absolute; left: 14px; top: 6px; font-size: 26px; color: #4A4A4A; line-height: 1; }
+.__screen { height: 748px; overflow: hidden; transform: translateZ(0); background: #F7F3EC; }
+.__tabbar { position: fixed; left: 0; right: 0; bottom: 0; height: 50px; display: flex; background: #FBF8F2; border-top: 1px solid #EFE6D8; }
+.__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 9px; color: #9C9488; }
+.__tab img { width: 22px; height: 22px; }
+.__tab.__on { color: #2E4A3F; }
+.__switch { display: inline-block; width: 44px; height: 26px; border-radius: 13px; background: #DCD5C8; position: relative; vertical-align: middle; }
+.__switch.__on { background: #2E4A3F; }
+.__switch i { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.__switch.__on i { left: 20px; }
+.page { min-height: 100% !important; }
+input { border: none; outline: none; background: transparent; font-family: inherit; }
+</style>
+<style>
+ body {
+  background: #f7f3ec;
+  color: #26221d;
+  font-family: "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 15.00px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+image,
+scroll-view,
+swiper,
+input,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+.serif {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 24.00px;
+}
+
+.gutter {
+  padding-left: 16.00px;
+  padding-right: 16.00px;
+}
+
+.muted {
+  color: #6f675b;
+}
+
+.tiny {
+  font-size: 12.00px;
+}
+
+.small {
+  font-size: 13.00px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.card {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  border: 0.50px solid #efe6d8;
+  box-shadow: 0 6.00px 20.00px rgba(80, 60, 40, 0.05);
+}
+
+.hairline {
+  height: 0.50px;
+  background: #efe6d8;
+}
+
+/* 按钮 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46.00px;
+  border-radius: 499.50px;
+  font-size: 16.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+  transition: opacity 0.15s;
+}
+
+.btn:active {
+  opacity: 0.82;
+}
+
+.btn-primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn-brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+/* 简写别名，便于页面内组合 */
+.btn.primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn.brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+.btn-light {
+  background: #f1e9db;
+  color: #4a4236;
+}
+
+.btn-sm {
+  height: 32.00px;
+  padding: 0 16.00px;
+  border-radius: 499.50px;
+  font-size: 14.00px;
+  font-weight: 500;
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+}
+
+/* 标签与筛选 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30.00px;
+  padding: 0 14.00px;
+  margin-right: 8.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #e3d8c7;
+  background: #fffdf9;
+  color: #6f675b;
+  font-size: 14.00px;
+  white-space: nowrap;
+}
+
+.chip.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2.00px 6.00px;
+  margin-right: 4.00px;
+  border-radius: 4.00px;
+  background: #f3ebdd;
+  color: #8a6a4f;
+  font-size: 12.00px;
+  line-height: 1.6;
+}
+
+.tag-green {
+  background: #e7efe9;
+  color: #2e4a3f;
+}
+
+/* 标题 */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 28.00px 0 12.00px;
+}
+
+.sec-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 1.00px;
+  color: #26221d;
+}
+
+.sec-sub {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-left: 8.00px;
+}
+
+.sec-more {
+  font-size: 13.00px;
+  color: #6f675b;
+}
+
+/* 价格 */
+.price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  color: #b65b3c;
+}
+
+.price .cur {
+  font-size: 0.62em;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.price-old {
+  margin-left: 6.00px;
+  color: #8f8577;
+  font-size: 12.00px;
+  text-decoration: line-through;
+}
+
+/* 空状态 */
+.empty {
+  padding: 56.00px 20.00px 64.00px;
+  text-align: center;
+  color: #736b5e;
+}
+
+.empty-mark {
+  width: 64.00px;
+  height: 64.00px;
+  margin: 0 auto 14.00px;
+  border-radius: 50%;
+  border: 0.50px solid #ded2bf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 23.00px;
+  color: #8f8577;
+  background: #fbf7f0;
+}
+
+.empty-text {
+  font-size: 14.00px;
+  letter-spacing: 0.50px;
+}
+
+.empty-sub {
+  margin-top: 6.00px;
+  font-size: 12.00px;
+  color: #7d7365;
+}
+
+/* 底部弹层 */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(30, 26, 20, 0.45);
+  z-index: 900;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 901;
+  background: #fffdf9;
+  border-radius: 16.00px 16.00px 0 0;
+  padding: 20.00px 16.00px calc(20.00px + 0px);
+  max-height: 82vh;
+}
+
+.sheet-grip {
+  width: 36.00px;
+  height: 4.00px;
+  border-radius: 2.00px;
+  background: #e4d8c6;
+  margin: 0 auto 12.00px;
+}
+
+.sheet-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+}
+
+.sheet-sub {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.sheet-close {
+  width: 28.00px;
+  height: 28.00px;
+  border-radius: 50%;
+  background: #f2ebdf;
+  color: #7a7165;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16.00px;
+}
+
+/* 输入 */
+.field {
+  display: flex;
+  align-items: center;
+  padding: 14.00px 0;
+  border-bottom: 0.50px solid #efe6d8;
+}
+
+.field-label {
+  width: 75.00px;
+  font-size: 14.00px;
+  color: #6f675b;
+}
+
+.field input {
+  flex: 1;
+  font-size: 15.00px;
+  color: #26221d;
+}
+
+.placeholder {
+  color: #84796a;
+}
+
+/* 动画 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8.00px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease both;
+}
+
+/* 分隔花饰：一条细线 + 中间一枚小菱形，用来断开章节，比纯空白更有节奏 */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20.00px 0 2.00px;
+}
+
+.ornament-line {
+  width: 48.00px;
+  height: 0.50px;
+  background: #ded2bf;
+}
+
+.ornament-dot {
+  width: 5.00px;
+  height: 5.00px;
+  margin: 0 10.00px;
+  background: #c9a227;
+  transform: rotate(45deg);
+}
+
+.safe-bottom {
+  padding-bottom: calc(12.00px + 0px);
+}
+
+.pc {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  overflow: hidden;
+  border: 0.50px solid #efe6d8;
+}
+
+.pc-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: #f3ece0;
+}
+
+.pc-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pc-flag {
+  position: absolute;
+  left: 8.00px;
+  top: 8.00px;
+  padding: 2.00px 6.00px;
+  border-radius: 4.00px;
+  background: rgba(255, 253, 249, 0.86);
+  color: #8a6a4f;
+  font-size: 11.00px;
+  letter-spacing: 0.50px;
+}
+
+.pc-cat {
+  position: absolute;
+  right: 8.00px;
+  bottom: 7.00px;
+  padding: 0.00px 6.00px;
+  border-radius: 2.00px;
+  background: rgba(38, 34, 29, 0.28);
+  color: #fffdf9;
+  font-size: 11.00px;
+  letter-spacing: 1.00px;
+}
+
+.pc-body {
+  padding: 10.00px 10.00px 12.00px;
+}
+
+.pc-school {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-bottom: 2.00px;
+}
+
+.pc-name {
+  font-size: 14.00px;
+  color: #26221d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.25px;
+}
+
+.pc-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 6.00px;
+}
+
+.pc-price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 17.00px;
+  color: #b65b3c;
+  line-height: 1;
+}
+
+.pc-price .cur {
+  font-size: 12.00px;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.pc-sales {
+  font-size: 11.00px;
+  color: #7d7365;
+}
+
+.addr {
+  padding: 10.00px 0 100.00px;
+}
+
+.tip {
+  margin: 0 16.00px 8.00px;
+  padding: 9.00px 12.00px;
+  border-radius: 9.00px;
+  background: #efe6d8;
+  color: #6f675b;
+  font-size: 12.00px;
+}
+
+.list {
+  padding: 0 16.00px;
+}
+
+.item {
+  margin-bottom: 10.00px;
+  padding: 14.00px 14.00px 10.00px;
+  border-radius: 12.00px;
+  background: #fbf8f2;
+  border: 0.50px solid #efe6d8;
+}
+
+.it-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.it-name {
+  font-size: 16.00px;
+  font-weight: 600;
+  color: #2b2823;
+}
+
+.it-phone {
+  margin-left: 8.00px;
+  font-size: 13.50px;
+  color: #6f675b;
+}
+
+.it-badge {
+  margin-left: 7.00px;
+  padding: 1.00px 6.00px;
+  border-radius: 4.00px;
+  background: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 10.00px;
+}
+
+.it-tag {
+  margin-left: 6.00px;
+  padding: 1.00px 6.00px;
+  border-radius: 4.00px;
+  background: #efe6d8;
+  color: #6f675b;
+  font-size: 10.00px;
+}
+
+.it-detail {
+  margin-top: 6.00px;
+  font-size: 13.00px;
+  line-height: 1.6;
+  color: #4a443b;
+}
+
+.it-ops {
+  margin-top: 8.00px;
+  padding-top: 8.00px;
+  border-top: 0.50px dashed #e7ddcd;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.op {
+  margin-left: 16.00px;
+  font-size: 12.00px;
+  color: #2e4a3f;
+}
+
+.op.danger {
+  color: #a4462f;
+}
+
+.foot {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8.00px 16.00px calc(8.00px + 0px);
+  background: #f7f3ec;
+  border-top: 0.50px solid #ece3d4;
+  display: flex;
+}
+
+.foot .btn {
+  flex: 1;
+  margin: 0 4.00px;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 10.00px 16.00px calc(12.00px + 0px);
+  border-radius: 16.00px 16.00px 0 0;
+  background: #fbf8f2;
+}
+
+.sheet-bar {
+  width: 36.00px;
+  height: 4.00px;
+  margin: 0 auto 10.00px;
+  border-radius: 4.00px;
+  background: #ded3c0;
+}
+
+.sheet-title {
+  margin-bottom: 6.00px;
+  font-size: 17.00px;
+  color: #2b2823;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  min-height: 46.00px;
+  border-bottom: 0.50px solid #ece3d4;
+}
+
+.field.no-line {
+  border-bottom: 0;
+}
+
+.field-label {
+  width: 65.00px;
+  flex: 0 0 65.00px;
+  font-size: 13.00px;
+  color: #8b8272;
+}
+
+.field input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  font-size: 14.00px;
+  color: #2b2823;
+}
+
+.ph {
+  color: #b3a893;
+}
+
+.def-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10.00px 0;
+}
+
+.def-label {
+  font-size: 13.00px;
+  color: #4a443b;
+}
+
+.err {
+  margin-top: 4.00px;
+  padding: 8.00px 10.00px;
+  border-radius: 7.00px;
+  background: #f8ece4;
+  color: #a4462f;
+  font-size: 12.00px;
+}
+
+.sheet-foot {
+  margin-top: 10.00px;
+  display: flex;
+}
+
+.sheet-foot .btn {
+  flex: 1;
+  margin: 0 4.00px;
+}
+
+</style>
+</head>
+<body>
+
+  <div class="__status"><span>9:41</span><span class="__sig">●●●</span></div>
+  <div class="__navbar">
+    <span class="__back">‹</span>
+    <span class="__title">收货地址</span>
+  </div>
+<div class="__screen">
+<div class="page addr" style=""><div class="list" style=""><div class="item" style=""><div class="it-top" style=""><span class="it-name" style="">林晓</span><span class="it-phone" style="">13800138000</span><span class="it-badge" style="">默认</span><span class="it-tag" style="">家</span></div><div class="it-detail" style="">珠海市香洲区情侣中路 88 号 3 栋 502</div><div class="it-ops" style=""><span class="op" style="">编辑</span><span class="op danger" style="">删除</span></div></div><div class="item" style=""><div class="it-top" style=""><span class="it-name" style="">陈海</span><span class="it-phone" style="">13900139000</span><span class="it-tag" style="">学校</span></div><div class="it-detail" style="">珠海市第一中学 高一二班 陈海 收</div><div class="it-ops" style=""><span class="op" style="">设为默认</span><span class="op" style="">编辑</span><span class="op danger" style="">删除</span></div></div></div><div class="foot" style=""><button class="btn btn-ghost" style="">用微信里的地址</button><button class="btn btn-primary" style="">新增地址</button></div></div>
+</div>
+
+</body></html>

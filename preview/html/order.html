@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<base href="file:///C:/Users/silve/Desktop/DeepSeek%E5%B7%A5%E4%BD%9C%E5%8C%BA/uniform-shop/">
+<title>订单详情</title>
+<style>
+html, body { margin: 0; padding: 0; }
+body {
+  width: 375px; height: 812px; overflow: hidden;
+  background: #F7F3EC;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.__status { height: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 11px; font-weight: 600; color: #26364A; background: #F7F3EC; }
+.__sig { letter-spacing: 1px; font-size: 9px; }
+.__navbar { height: 44px; display: flex; align-items: center; justify-content: center; position: relative; background: #F7F3EC; }
+.__title { font-size: 16px; font-weight: 600; color: #26364A; letter-spacing: 1px; }
+.__back { position: absolute; left: 14px; top: 6px; font-size: 26px; color: #4A4A4A; line-height: 1; }
+.__screen { height: 748px; overflow: hidden; transform: translateZ(0); background: #F7F3EC; }
+.__tabbar { position: fixed; left: 0; right: 0; bottom: 0; height: 50px; display: flex; background: #FBF8F2; border-top: 1px solid #EFE6D8; }
+.__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 9px; color: #9C9488; }
+.__tab img { width: 22px; height: 22px; }
+.__tab.__on { color: #2E4A3F; }
+.__switch { display: inline-block; width: 44px; height: 26px; border-radius: 13px; background: #DCD5C8; position: relative; vertical-align: middle; }
+.__switch.__on { background: #2E4A3F; }
+.__switch i { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.__switch.__on i { left: 20px; }
+.page { min-height: 100% !important; }
+input { border: none; outline: none; background: transparent; font-family: inherit; }
+</style>
+<style>
+ body {
+  background: #f7f3ec;
+  color: #26221d;
+  font-family: "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 15.00px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+image,
+scroll-view,
+swiper,
+input,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+.serif {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 24.00px;
+}
+
+.gutter {
+  padding-left: 16.00px;
+  padding-right: 16.00px;
+}
+
+.muted {
+  color: #6f675b;
+}
+
+.tiny {
+  font-size: 12.00px;
+}
+
+.small {
+  font-size: 13.00px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.card {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  border: 0.50px solid #efe6d8;
+  box-shadow: 0 6.00px 20.00px rgba(80, 60, 40, 0.05);
+}
+
+.hairline {
+  height: 0.50px;
+  background: #efe6d8;
+}
+
+/* 按钮 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46.00px;
+  border-radius: 499.50px;
+  font-size: 16.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+  transition: opacity 0.15s;
+}
+
+.btn:active {
+  opacity: 0.82;
+}
+
+.btn-primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn-brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+/* 简写别名，便于页面内组合 */
+.btn.primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn.brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+.btn-light {
+  background: #f1e9db;
+  color: #4a4236;
+}
+
+.btn-sm {
+  height: 32.00px;
+  padding: 0 16.00px;
+  border-radius: 499.50px;
+  font-size: 14.00px;
+  font-weight: 500;
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+}
+
+/* 标签与筛选 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30.00px;
+  padding: 0 14.00px;
+  margin-right: 8.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #e3d8c7;
+  background: #fffdf9;
+  color: #6f675b;
+  font-size: 14.00px;
+  white-space: nowrap;
+}
+
+.chip.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2.00px 6.00px;
+  margin-right: 4.00px;
+  border-radius: 4.00px;
+  background: #f3ebdd;
+  color: #8a6a4f;
+  font-size: 12.00px;
+  line-height: 1.6;
+}
+
+.tag-green {
+  background: #e7efe9;
+  color: #2e4a3f;
+}
+
+/* 标题 */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 28.00px 0 12.00px;
+}
+
+.sec-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 1.00px;
+  color: #26221d;
+}
+
+.sec-sub {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-left: 8.00px;
+}
+
+.sec-more {
+  font-size: 13.00px;
+  color: #6f675b;
+}
+
+/* 价格 */
+.price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  color: #b65b3c;
+}
+
+.price .cur {
+  font-size: 0.62em;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.price-old {
+  margin-left: 6.00px;
+  color: #8f8577;
+  font-size: 12.00px;
+  text-decoration: line-through;
+}
+
+/* 空状态 */
+.empty {
+  padding: 56.00px 20.00px 64.00px;
+  text-align: center;
+  color: #736b5e;
+}
+
+.empty-mark {
+  width: 64.00px;
+  height: 64.00px;
+  margin: 0 auto 14.00px;
+  border-radius: 50%;
+  border: 0.50px solid #ded2bf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 23.00px;
+  color: #8f8577;
+  background: #fbf7f0;
+}
+
+.empty-text {
+  font-size: 14.00px;
+  letter-spacing: 0.50px;
+}
+
+.empty-sub {
+  margin-top: 6.00px;
+  font-size: 12.00px;
+  color: #7d7365;
+}
+
+/* 底部弹层 */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(30, 26, 20, 0.45);
+  z-index: 900;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 901;
+  background: #fffdf9;
+  border-radius: 16.00px 16.00px 0 0;
+  padding: 20.00px 16.00px calc(20.00px + 0px);
+  max-height: 82vh;
+}
+
+.sheet-grip {
+  width: 36.00px;
+  height: 4.00px;
+  border-radius: 2.00px;
+  background: #e4d8c6;
+  margin: 0 auto 12.00px;
+}
+
+.sheet-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+}
+
+.sheet-sub {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.sheet-close {
+  width: 28.00px;
+  height: 28.00px;
+  border-radius: 50%;
+  background: #f2ebdf;
+  color: #7a7165;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16.00px;
+}
+
+/* 输入 */
+.field {
+  display: flex;
+  align-items: center;
+  padding: 14.00px 0;
+  border-bottom: 0.50px solid #efe6d8;
+}
+
+.field-label {
+  width: 75.00px;
+  font-size: 14.00px;
+  color: #6f675b;
+}
+
+.field input {
+  flex: 1;
+  font-size: 15.00px;
+  color: #26221d;
+}
+
+.placeholder {
+  color: #84796a;
+}
+
+/* 动画 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8.00px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease both;
+}
+
+/* 分隔花饰：一条细线 + 中间一枚小菱形，用来断开章节，比纯空白更有节奏 */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20.00px 0 2.00px;
+}
+
+.ornament-line {
+  width: 48.00px;
+  height: 0.50px;
+  background: #ded2bf;
+}
+
+.ornament-dot {
+  width: 5.00px;
+  height: 5.00px;
+  margin: 0 10.00px;
+  background: #c9a227;
+  transform: rotate(45deg);
+}
+
+.safe-bottom {
+  padding-bottom: calc(12.00px + 0px);
+}
+
+.pc {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  overflow: hidden;
+  border: 0.50px solid #efe6d8;
+}
+
+.pc-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: #f3ece0;
+}
+
+.pc-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pc-flag {
+  position: absolute;
+  left: 8.00px;
+  top: 8.00px;
+  padding: 2.00px 6.00px;
+  border-radius: 4.00px;
+  background: rgba(255, 253, 249, 0.86);
+  color: #8a6a4f;
+  font-size: 11.00px;
+  letter-spacing: 0.50px;
+}
+
+.pc-cat {
+  position: absolute;
+  right: 8.00px;
+  bottom: 7.00px;
+  padding: 0.00px 6.00px;
+  border-radius: 2.00px;
+  background: rgba(38, 34, 29, 0.28);
+  color: #fffdf9;
+  font-size: 11.00px;
+  letter-spacing: 1.00px;
+}
+
+.pc-body {
+  padding: 10.00px 10.00px 12.00px;
+}
+
+.pc-school {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-bottom: 2.00px;
+}
+
+.pc-name {
+  font-size: 14.00px;
+  color: #26221d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.25px;
+}
+
+.pc-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 6.00px;
+}
+
+.pc-price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 17.00px;
+  color: #b65b3c;
+  line-height: 1;
+}
+
+.pc-price .cur {
+  font-size: 12.00px;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.pc-sales {
+  font-size: 11.00px;
+  color: #7d7365;
+}
+
+.order {
+  padding-bottom: 64.00px;
+}
+
+.status {
+  position: relative;
+  padding: 20.00px 16.00px 16.00px;
+  background: #2e4a3f;
+  overflow: hidden;
+}
+
+.status.is-off {
+  background: #6f6a60;
+}
+
+.st-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.st-main {
+  flex: 1;
+}
+
+.st-text {
+  font-size: 23.00px;
+  color: #f8f4ec;
+  letter-spacing: 1.50px;
+}
+
+.st-hint {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: rgba(248, 244, 236, 0.72);
+}
+
+.st-mark {
+  width: 39.00px;
+  height: 39.00px;
+  margin-left: 10.00px;
+  border: 0.50px solid rgba(248, 244, 236, 0.4);
+  border-radius: 50%;
+  color: rgba(248, 244, 236, 0.85);
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: 17.00px;
+  line-height: 39.00px;
+  text-align: center;
+}
+
+.progress {
+  display: flex;
+  margin-top: 16.00px;
+}
+
+.p-step {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.p-line {
+  position: absolute;
+  top: 4.50px;
+  left: 50%;
+  width: 100%;
+  height: 1.00px;
+  background: rgba(248, 244, 236, 0.22);
+}
+
+.p-line.on {
+  background: rgba(248, 244, 236, 0.85);
+}
+
+.p-dot {
+  position: relative;
+  z-index: 1;
+  width: 10.00px;
+  height: 10.00px;
+  border-radius: 50%;
+  background: rgba(248, 244, 236, 0.25);
+  border: 1.00px solid transparent;
+}
+
+.p-step.done .p-dot {
+  background: #f8f4ec;
+}
+
+.p-step.now .p-dot {
+  background: #c9a227;
+  box-shadow: 0 0 0 3.00px rgba(201, 162, 39, 0.24);
+}
+
+.p-label {
+  margin-top: 6.00px;
+  font-size: 12.00px;
+  color: rgba(248, 244, 236, 0.5);
+}
+
+.p-step.done .p-label {
+  color: rgba(248, 244, 236, 0.85);
+}
+
+.p-step.now .p-label {
+  color: #f0d68a;
+}
+
+.block {
+  margin: 10.00px 16.00px 0;
+  padding: 14.00px 16.00px;
+}
+
+.block-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6.00px;
+}
+
+.bh-title {
+  font-size: 16.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+}
+
+.bh-sub {
+  font-size: 12.00px;
+  color: #7a7264;
+}
+
+.addr-name {
+  font-size: 15.00px;
+  color: #26221d;
+  padding-top: 4.00px;
+}
+
+.addr-phone {
+  margin-left: 8.00px;
+  font-size: 13.00px;
+  color: #6f675b;
+}
+
+.addr-detail {
+  margin-top: 4.00px;
+  font-size: 13.00px;
+  color: #5c554a;
+  line-height: 1.6;
+}
+
+.addr-sub {
+  margin-top: 2.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.track {
+  margin-top: 8.00px;
+  padding: 6.00px 8.00px;
+  border-radius: 4.00px;
+  background: #f6f0e4;
+  font-size: 12.00px;
+  color: #8a6a4f;
+}
+
+.oitem {
+  display: flex;
+  align-items: center;
+  padding: 8.00px 0;
+}
+
+.oimg {
+  width: 52.00px;
+  height: 52.00px;
+  flex: 0 0 52.00px;
+  border-radius: 4.00px;
+  background: #f3ece0;
+  margin-right: 10.00px;
+}
+
+.obody {
+  flex: 1;
+  min-width: 0;
+}
+
+.oname {
+  font-size: 14.00px;
+  color: #26221d;
+}
+
+.ospec {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.oright {
+  text-align: right;
+  margin-left: 8.00px;
+}
+
+.oprice {
+  font-size: 14.00px;
+}
+
+.oqty {
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.srow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4.00px 0;
+}
+
+.slabel {
+  font-size: 13.00px;
+  color: #6f675b;
+}
+
+.sval {
+  font-size: 13.00px;
+  color: #26221d;
+}
+
+.sval.minus {
+  color: #2e4a3f;
+}
+
+.sval.muted {
+  color: #a0603f;
+}
+
+.srow.total {
+  padding-top: 6.00px;
+}
+
+.slabel.strong {
+  font-size: 14.00px;
+  font-weight: 600;
+  color: #26221d;
+}
+
+.total .price {
+  font-size: 21.00px;
+}
+
+.total .cur {
+  font-size: 12.00px;
+}
+
+.irow {
+  display: flex;
+  align-items: center;
+  padding: 6.00px 0;
+}
+
+.ilabel {
+  width: 65.00px;
+  flex: 0 0 65.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.ival {
+  flex: 1;
+  font-size: 12.00px;
+  color: #4a4236;
+  word-break: break-all;
+}
+
+.mono {
+  font-family: "DIN Alternate", monospace;
+  letter-spacing: 0.25px;
+}
+
+.copy {
+  margin-left: 6.00px;
+  padding: 2.00px 6.00px;
+  border: 0.50px solid #ddd2c1;
+  border-radius: 2.00px;
+  color: #6f675b;
+  font-size: 11.00px;
+}
+
+.tl {
+  padding-top: 4.00px;
+}
+
+.tl-item {
+  position: relative;
+  display: flex;
+  padding: 6.00px 0 10.00px 14.00px;
+}
+
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: 2.50px;
+  top: 12.00px;
+  bottom: -3.00px;
+  width: 1.00px;
+  background: #e8dece;
+}
+
+.tl-item:last-child::before {
+  display: none;
+}
+
+.tl-dot {
+  position: absolute;
+  left: 0;
+  top: 7.00px;
+  width: 6.00px;
+  height: 6.00px;
+  border-radius: 50%;
+  background: #d9cebd;
+}
+
+.tl-item.latest .tl-dot {
+  background: #2e4a3f;
+  box-shadow: 0 0 0 2.50px #e6ede7;
+}
+
+.tl-label {
+  font-size: 13.00px;
+  color: #5c554a;
+}
+
+.tl-item.latest .tl-label {
+  color: #26221d;
+  font-weight: 600;
+}
+
+.tl-time {
+  margin-top: 2.00px;
+  font-size: 12.00px;
+  color: #7a7264;
+}
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  padding: 8.00px 16.00px calc(8.00px + 0px);
+  background: rgba(247, 243, 236, 0.97);
+  border-top: 0.50px solid #ebe1d2;
+}
+
+.b-btn {
+  height: 42.00px;
+  border-radius: 499.50px;
+  font-size: 14.00px;
+}
+
+.b-btn + .b-btn {
+  margin-left: 8.00px;
+}
+
+.b-btn.main {
+  flex: 1;
+}
+
+/* 固定底栏留出滚动余量 */
+.page { padding-bottom: 64.00px; }
+
+</style>
+</head>
+<body>
+
+  <div class="__status"><span>9:41</span><span class="__sig">●●●</span></div>
+  <div class="__navbar">
+    <span class="__back">‹</span>
+    <span class="__title">订单详情</span>
+  </div>
+<div class="__screen">
+<div class="page order" style=""><div class="status " style=""><div class="st-row" style=""><div class="st-main" style=""><div class="st-text serif" style="">待收货</div><div class="st-hint" style="">已发出，注意查收</div></div><div class="st-mark" style="">兰</div></div><div class="progress" style=""><div class="p-step done" style=""><div class="p-line on" style=""></div><div class="p-dot" style=""></div><div class="p-label" style="">下单</div></div><div class="p-step done" style=""><div class="p-line on" style=""></div><div class="p-dot" style=""></div><div class="p-label" style="">付款</div></div><div class="p-step done" style=""><div class="p-line on" style=""></div><div class="p-dot" style=""></div><div class="p-label" style="">发货</div></div><div class="p-step now" style=""><div class="p-dot" style=""></div><div class="p-label" style="">收货</div></div></div></div><div class="card block" style=""><div class="block-head" style=""><span class="bh-title serif" style="">收货信息</span></div><div class="addr-name" style="">林晓<span class="addr-phone" style="">13800138000</span></div><div class="addr-detail" style="">珠海市香洲区情侣中路 88 号 3 栋 502</div><div class="track" style="">物流 顺丰速运 SF1402938712</div></div><div class="card block" style=""><div class="block-head" style=""><span class="bh-title serif" style="">商品</span><span class="bh-sub" style="">共 2 种</span></div><div class="oitem" style=""><img class="oimg" src="miniprogram/images/p3.png" style="object-fit:cover;"><div class="obody" style=""><div class="oname" style="">金湾一小 · 夏季连衣裙</div><div class="ospec" style="">浅蓝 · M</div></div><div class="oright" style=""><div class="oprice" style="">¥118</div><div class="oqty" style="">×1</div></div></div><div class="oitem" style=""><img class="oimg" src="miniprogram/images/p6.png" style="object-fit:cover;"><div class="obody" style=""><div class="oname" style="">通用 · 针织领带</div><div class="ospec" style="">砖红 · 均码</div></div><div class="oright" style=""><div class="oprice" style="">¥25</div><div class="oqty" style="">×1</div></div></div></div><div class="card block" style=""><div class="srow" style=""><span class="slabel" style="">商品金额</span><span class="sval" style="">¥143</span></div><div class="srow" style=""><span class="slabel" style="">运费</span><span class="sval" style="">包邮</span></div><div class="hairline" style=""></div><div class="srow total" style=""><span class="slabel strong" style="">合计</span><div class="price" style=""><span class="cur" style="">¥</span>143</div></div></div><div class="card block" style=""><div class="irow" style=""><span class="ilabel" style="">订单号</span><span class="ival mono" style="">JB20261125163498</span><span class="copy" style="">复制</span></div><div class="irow" style=""><span class="ilabel" style="">下单时间</span><span class="ival" style="">2026-11-25 16:34</span></div></div><div class="card block" style=""><div class="block-head" style=""><span class="bh-title serif" style="">订单进度</span></div><div class="tl" style=""><div class="tl-item latest" style=""><div class="tl-dot" style=""></div><div class="tl-body" style=""><div class="tl-label" style="">已发货 · 顺丰速运 SF1402938712</div><div class="tl-time" style="">2026-11-25 16:34</div></div></div><div class="tl-item " style=""><div class="tl-dot" style=""></div><div class="tl-body" style=""><div class="tl-label" style="">微信支付成功</div><div class="tl-time" style="">2026-11-25 16:34</div></div></div><div class="tl-item " style=""><div class="tl-dot" style=""></div><div class="tl-body" style=""><div class="tl-label" style="">订单已提交</div><div class="tl-time" style="">2026-11-25 16:34</div></div></div></div></div><div class="bar" style=""><div class="btn ghost b-btn" style="">打电话</div><div class="btn primary b-btn main" style="">确认收货</div></div></div>
+</div>
+
+</body></html>

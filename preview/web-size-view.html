@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>网页演示版 · 尺码推荐</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  iframe { display: block; width: 375px; height: 812px; border: 0; }
+</style>
+</head>
+<body>
+<iframe id="web" src="../web/index.html#/detail?id=p1" scrolling="no"></iframe>
+<script>
+(function () {
+  var w = document.getElementById('web');
+  w.addEventListener('load', function () {
+    var doc = w.contentWindow.document;
+    var opener = doc.querySelector('[data-tap="openSize"]');
+    if (!opener) return;
+    opener.click();
+    setTimeout(function () {
+      var ins = doc.querySelectorAll('.fit-field input');
+      if (ins.length !== 2) return;
+      ins[0].value = '170';
+      ins[0].dispatchEvent(new Event('input', { bubbles: true }));
+      ins[1].value = '62';
+      ins[1].dispatchEvent(new Event('input', { bubbles: true }));
+      setTimeout(function () {
+        var go = doc.querySelector('.fit-go');
+        if (go) go.click();
+      }, 100);
+    }, 200);
+  }, { once: true });
+})();
+</script>
+</body>
+</html>

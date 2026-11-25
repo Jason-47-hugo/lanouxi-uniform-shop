@@ -1,0 +1,1393 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<base href="file:///C:/Users/silve/Desktop/DeepSeek%E5%B7%A5%E4%BD%9C%E5%8C%BA/uniform-shop/">
+<title>店长工作台</title>
+<style>
+html, body { margin: 0; padding: 0; }
+body {
+  width: 375px; height: 812px; overflow: hidden;
+  background: #F7F3EC;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.__status { height: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 11px; font-weight: 600; color: #26364A; background: #F7F3EC; }
+.__sig { letter-spacing: 1px; font-size: 9px; }
+.__navbar { height: 44px; display: flex; align-items: center; justify-content: center; position: relative; background: #F7F3EC; }
+.__title { font-size: 16px; font-weight: 600; color: #26364A; letter-spacing: 1px; }
+.__back { position: absolute; left: 14px; top: 6px; font-size: 26px; color: #4A4A4A; line-height: 1; }
+.__screen { height: 748px; overflow: hidden; transform: translateZ(0); background: #F7F3EC; }
+.__tabbar { position: fixed; left: 0; right: 0; bottom: 0; height: 50px; display: flex; background: #FBF8F2; border-top: 1px solid #EFE6D8; }
+.__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 9px; color: #9C9488; }
+.__tab img { width: 22px; height: 22px; }
+.__tab.__on { color: #2E4A3F; }
+.__switch { display: inline-block; width: 44px; height: 26px; border-radius: 13px; background: #DCD5C8; position: relative; vertical-align: middle; }
+.__switch.__on { background: #2E4A3F; }
+.__switch i { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.__switch.__on i { left: 20px; }
+.page { min-height: 100% !important; }
+input { border: none; outline: none; background: transparent; font-family: inherit; }
+</style>
+<style>
+ body {
+  background: #f7f3ec;
+  color: #26221d;
+  font-family: "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 15.00px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+image,
+scroll-view,
+swiper,
+input,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+.serif {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 24.00px;
+}
+
+.gutter {
+  padding-left: 16.00px;
+  padding-right: 16.00px;
+}
+
+.muted {
+  color: #6f675b;
+}
+
+.tiny {
+  font-size: 12.00px;
+}
+
+.small {
+  font-size: 13.00px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.card {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  border: 0.50px solid #efe6d8;
+  box-shadow: 0 6.00px 20.00px rgba(80, 60, 40, 0.05);
+}
+
+.hairline {
+  height: 0.50px;
+  background: #efe6d8;
+}
+
+/* 按钮 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46.00px;
+  border-radius: 499.50px;
+  font-size: 16.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+  transition: opacity 0.15s;
+}
+
+.btn:active {
+  opacity: 0.82;
+}
+
+.btn-primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn-brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+/* 简写别名，便于页面内组合 */
+.btn.primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn.brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+.btn-light {
+  background: #f1e9db;
+  color: #4a4236;
+}
+
+.btn-sm {
+  height: 32.00px;
+  padding: 0 16.00px;
+  border-radius: 499.50px;
+  font-size: 14.00px;
+  font-weight: 500;
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+}
+
+/* 标签与筛选 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30.00px;
+  padding: 0 14.00px;
+  margin-right: 8.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #e3d8c7;
+  background: #fffdf9;
+  color: #6f675b;
+  font-size: 14.00px;
+  white-space: nowrap;
+}
+
+.chip.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2.00px 6.00px;
+  margin-right: 4.00px;
+  border-radius: 4.00px;
+  background: #f3ebdd;
+  color: #8a6a4f;
+  font-size: 12.00px;
+  line-height: 1.6;
+}
+
+.tag-green {
+  background: #e7efe9;
+  color: #2e4a3f;
+}
+
+/* 标题 */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 28.00px 0 12.00px;
+}
+
+.sec-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 1.00px;
+  color: #26221d;
+}
+
+.sec-sub {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-left: 8.00px;
+}
+
+.sec-more {
+  font-size: 13.00px;
+  color: #6f675b;
+}
+
+/* 价格 */
+.price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  color: #b65b3c;
+}
+
+.price .cur {
+  font-size: 0.62em;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.price-old {
+  margin-left: 6.00px;
+  color: #8f8577;
+  font-size: 12.00px;
+  text-decoration: line-through;
+}
+
+/* 空状态 */
+.empty {
+  padding: 56.00px 20.00px 64.00px;
+  text-align: center;
+  color: #736b5e;
+}
+
+.empty-mark {
+  width: 64.00px;
+  height: 64.00px;
+  margin: 0 auto 14.00px;
+  border-radius: 50%;
+  border: 0.50px solid #ded2bf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 23.00px;
+  color: #8f8577;
+  background: #fbf7f0;
+}
+
+.empty-text {
+  font-size: 14.00px;
+  letter-spacing: 0.50px;
+}
+
+.empty-sub {
+  margin-top: 6.00px;
+  font-size: 12.00px;
+  color: #7d7365;
+}
+
+/* 底部弹层 */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(30, 26, 20, 0.45);
+  z-index: 900;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 901;
+  background: #fffdf9;
+  border-radius: 16.00px 16.00px 0 0;
+  padding: 20.00px 16.00px calc(20.00px + 0px);
+  max-height: 82vh;
+}
+
+.sheet-grip {
+  width: 36.00px;
+  height: 4.00px;
+  border-radius: 2.00px;
+  background: #e4d8c6;
+  margin: 0 auto 12.00px;
+}
+
+.sheet-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 19.00px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+}
+
+.sheet-sub {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.sheet-close {
+  width: 28.00px;
+  height: 28.00px;
+  border-radius: 50%;
+  background: #f2ebdf;
+  color: #7a7165;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16.00px;
+}
+
+/* 输入 */
+.field {
+  display: flex;
+  align-items: center;
+  padding: 14.00px 0;
+  border-bottom: 0.50px solid #efe6d8;
+}
+
+.field-label {
+  width: 75.00px;
+  font-size: 14.00px;
+  color: #6f675b;
+}
+
+.field input {
+  flex: 1;
+  font-size: 15.00px;
+  color: #26221d;
+}
+
+.placeholder {
+  color: #84796a;
+}
+
+/* 动画 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8.00px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease both;
+}
+
+/* 分隔花饰：一条细线 + 中间一枚小菱形，用来断开章节，比纯空白更有节奏 */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20.00px 0 2.00px;
+}
+
+.ornament-line {
+  width: 48.00px;
+  height: 0.50px;
+  background: #ded2bf;
+}
+
+.ornament-dot {
+  width: 5.00px;
+  height: 5.00px;
+  margin: 0 10.00px;
+  background: #c9a227;
+  transform: rotate(45deg);
+}
+
+.safe-bottom {
+  padding-bottom: calc(12.00px + 0px);
+}
+
+.pc {
+  background: #fffdf9;
+  border-radius: 12.00px;
+  overflow: hidden;
+  border: 0.50px solid #efe6d8;
+}
+
+.pc-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: #f3ece0;
+}
+
+.pc-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pc-flag {
+  position: absolute;
+  left: 8.00px;
+  top: 8.00px;
+  padding: 2.00px 6.00px;
+  border-radius: 4.00px;
+  background: rgba(255, 253, 249, 0.86);
+  color: #8a6a4f;
+  font-size: 11.00px;
+  letter-spacing: 0.50px;
+}
+
+.pc-cat {
+  position: absolute;
+  right: 8.00px;
+  bottom: 7.00px;
+  padding: 0.00px 6.00px;
+  border-radius: 2.00px;
+  background: rgba(38, 34, 29, 0.28);
+  color: #fffdf9;
+  font-size: 11.00px;
+  letter-spacing: 1.00px;
+}
+
+.pc-body {
+  padding: 10.00px 10.00px 12.00px;
+}
+
+.pc-school {
+  font-size: 12.00px;
+  color: #736b5e;
+  letter-spacing: 0.50px;
+  margin-bottom: 2.00px;
+}
+
+.pc-name {
+  font-size: 14.00px;
+  color: #26221d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.25px;
+}
+
+.pc-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 6.00px;
+}
+
+.pc-price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 17.00px;
+  color: #b65b3c;
+  line-height: 1;
+}
+
+.pc-price .cur {
+  font-size: 12.00px;
+  font-weight: 500;
+  margin-right: 2.00px;
+}
+
+.pc-sales {
+  font-size: 11.00px;
+  color: #7d7365;
+}
+
+.admin {
+  padding-bottom: 32.00px;
+}
+
+.head {
+  padding: 16.00px 16.00px 16.00px;
+  background: linear-gradient(160deg, #33513f 0%, #22362c 100%);
+}
+
+.head-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.head-title {
+  font-size: 23.00px;
+  letter-spacing: 3.00px;
+  color: #f8f4ec;
+}
+
+.head-date {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  letter-spacing: 0.50px;
+  color: rgba(248, 244, 236, 0.55);
+}
+
+.exit {
+  margin-top: 4.00px;
+  padding: 2.00px 10.00px;
+  border: 0.50px solid rgba(248, 244, 236, 0.35);
+  border-radius: 12.00px;
+  color: rgba(248, 244, 236, 0.75);
+  font-size: 12.00px;
+}
+
+.stats {
+  display: flex;
+  margin-top: 16.00px;
+  padding-top: 12.00px;
+  border-top: 0.50px solid rgba(248, 244, 236, 0.14);
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sn {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-size: 19.00px;
+  font-weight: 700;
+  color: #f0d68a;
+  line-height: 1.2;
+}
+
+.sl {
+  margin-top: 2.00px;
+  font-size: 11.00px;
+  letter-spacing: 0.50px;
+  color: rgba(248, 244, 236, 0.5);
+}
+
+.tabs {
+  display: flex;
+  background: #fffdf9;
+  border-bottom: 0.50px solid #eee4d5;
+}
+
+.tab {
+  flex: 1;
+  position: relative;
+  height: 44.00px;
+  line-height: 44.00px;
+  text-align: center;
+  font-size: 14.00px;
+  color: #6f675b;
+}
+
+.tab.on {
+  color: #26221d;
+  font-weight: 600;
+}
+
+.tab.on::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5.00px;
+  width: 22.00px;
+  height: 2.00px;
+  margin-left: -11.00px;
+  border-radius: 2.00px;
+  background: #2e4a3f;
+}
+
+.filters {
+  display: flex;
+  white-space: nowrap;
+  padding: 10.00px 16.00px 2.00px;
+}
+
+.fchip {
+  display: inline-block;
+  height: 29.00px;
+  line-height: 29.00px;
+  padding: 0 16.00px;
+  margin-right: 8.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #e3d8c7;
+  background: #fffdf9;
+  color: #6f675b;
+  font-size: 13.00px;
+}
+
+.fchip.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.list {
+  padding: 8.00px 16.00px 0;
+}
+
+.ocard {
+  margin-bottom: 10.00px;
+  padding: 12.00px 16.00px;
+  border-radius: 12.00px;
+  background: #fffdf9;
+  border: 0.50px solid #efe6d8;
+}
+
+.oc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.oc-time {
+  font-size: 12.00px;
+  color: #7a7264;
+}
+
+.oc-status {
+  font-size: 12.00px;
+  letter-spacing: 0.50px;
+}
+
+.oc-status.warm {
+  color: #b65b3c;
+}
+
+.oc-status.green {
+  color: #2e4a3f;
+}
+
+.oc-status.muted {
+  color: #7a7264;
+}
+
+.oc-buyer {
+  display: flex;
+  align-items: center;
+  margin-top: 8.00px;
+}
+
+.buyer-name {
+  font-size: 15.00px;
+  color: #26221d;
+  font-weight: 600;
+}
+
+.buyer-phone {
+  margin-left: 8.00px;
+  font-size: 12.00px;
+  color: #8a6a4f;
+  text-decoration: underline;
+}
+
+.demo-tag {
+  margin-left: 6.00px;
+  padding: 0.00px 6.00px;
+  border-radius: 2.00px;
+  background: #f2ead9;
+  color: #7a7264;
+  font-size: 11.00px;
+}
+
+.oc-addr {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  line-height: 1.45;
+  color: #7d7263;
+}
+
+.oc-items {
+  margin-top: 6.00px;
+  padding: 6.00px 8.00px;
+  border-radius: 4.00px;
+  background: #faf5ec;
+  font-size: 12.00px;
+  line-height: 1.6;
+  color: #4a4236;
+}
+
+.oc-remark {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #8a6a4f;
+}
+
+.oc-track {
+  margin-top: 4.00px;
+  font-size: 12.00px;
+  color: #2e4a3f;
+}
+
+.oc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8.00px;
+  padding-top: 8.00px;
+  border-top: 0.50px solid #f4ecde;
+}
+
+.oc-amount {
+  font-family: "DIN Alternate", sans-serif;
+  font-size: 17.00px;
+  font-weight: 700;
+  color: #b65b3c;
+}
+
+.oc-amount .cur {
+  font-size: 12.00px;
+  margin-right: 2.00px;
+}
+
+.oc-actions {
+  display: flex;
+  align-items: center;
+}
+
+.abtn {
+  margin-left: 8.00px;
+  padding: 0 16.00px;
+  height: 31.00px;
+  line-height: 31.00px;
+  border-radius: 499.50px;
+  font-size: 13.00px;
+}
+
+.abtn.primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.abtn.ghost {
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+}
+
+.empty2 {
+  padding: 48.00px 0 32.00px;
+  text-align: center;
+}
+
+.e2-mark {
+  width: 48.00px;
+  height: 48.00px;
+  margin: 0 auto 10.00px;
+  border: 0.50px solid #ded2bf;
+  border-radius: 50%;
+  color: #8f8577;
+  font-family: "Songti SC", serif;
+  font-size: 17.00px;
+  line-height: 48.00px;
+}
+
+.e2-t {
+  font-size: 13.00px;
+  color: #7a7264;
+}
+
+.glist {
+  padding: 4.00px 16.00px 0;
+}
+
+.grow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8.00px;
+  padding: 10.00px 16.00px;
+  border-radius: 12.00px;
+  background: #fffdf9;
+  border: 0.50px solid #efe6d8;
+}
+
+.gbody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.gimg {
+  width: 46.00px;
+  height: 46.00px;
+  flex: 0 0 46.00px;
+  margin-right: 10.00px;
+  border-radius: 4.00px;
+  background: #f3ece0;
+}
+
+.gtext {
+  flex: 1;
+  min-width: 0;
+}
+
+.top-tip {
+  padding: 10.00px 16.00px 0;
+}
+
+.gname {
+  font-size: 14.00px;
+  color: #26221d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gmeta {
+  margin-top: 2.00px;
+  font-size: 12.00px;
+  color: #7a7264;
+}
+
+.gl {
+  display: inline-block;
+  margin-top: 4.00px;
+  padding: 1.00px 6.00px;
+  font-size: 11.00px;
+  color: #a4432b;
+  background: #fbeee9;
+  border-radius: 3.00px;
+}
+
+.gl.out {
+  color: #fff;
+  background: #a4432b;
+}
+
+.lowtip {
+  margin: 4.00px 16.00px 0;
+  padding: 6.00px 9.00px;
+  font-size: 12.00px;
+  color: #a4432b;
+  background: #fbeee9;
+  border-radius: 5.00px;
+}
+
+.gswitch {
+  transform: scale(0.8);
+  transform-origin: right center;
+}
+
+.gtip {
+  padding: 4.00px 16.00px 0;
+  font-size: 12.00px;
+  color: #84796a;
+}
+
+/* ---------- 退货处理 ---------- */
+.ritem {
+  display: flex;
+  align-items: center;
+  margin-top: 8.00px;
+  padding: 10.00px 10.00px;
+  border-radius: 8.00px;
+  border: 0.50px solid #ece2d2;
+  background: #fbf7f0;
+}
+
+.ritem.on {
+  border-color: #2e4a3f;
+  background: #f2f6f2;
+}
+
+.ritem.done {
+  opacity: 0.55;
+}
+
+.rcheck {
+  width: 22.00px;
+  height: 22.00px;
+  flex: 0 0 22.00px;
+  margin-right: 8.00px;
+  border-radius: 50%;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+  font-size: 11.00px;
+  line-height: 21.00px;
+  text-align: center;
+}
+
+.ritem.on .rcheck {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 12.00px;
+}
+
+.rbody {
+  flex: 1;
+  min-width: 0;
+}
+
+.rname {
+  font-size: 14.00px;
+  color: #26221d;
+}
+
+.rspec {
+  margin-top: 2.00px;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.rtip {
+  margin-top: 10.00px;
+  padding: 8.00px 10.00px;
+  border-radius: 8.00px;
+  background: #faf5ec;
+  font-size: 12.00px;
+  line-height: 1.6;
+  color: #6f675b;
+}
+
+/* ---------- 商品编辑 ---------- */
+.ebox {
+  display: flex;
+  align-items: center;
+  margin-top: 12.00px;
+}
+
+.eimg {
+  width: 90.00px;
+  height: 90.00px;
+  flex: 0 0 90.00px;
+  margin-right: 12.00px;
+  border-radius: 8.00px;
+  border: 0.50px solid #ece2d2;
+  background: #f3ece0;
+}
+
+.ebox-side {
+  flex: 1;
+}
+
+.etip {
+  font-size: 12.00px;
+  color: #736b5e;
+  line-height: 1.6;
+}
+
+.ebtn {
+  margin-top: 8.00px;
+  display: inline-block;
+  padding: 0 16.00px;
+  height: 30.00px;
+  line-height: 30.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #d9cebd;
+  color: #2e4a3f;
+  font-size: 12.00px;
+}
+
+.efield {
+  display: flex;
+  align-items: center;
+  padding: 12.00px 0;
+  border-bottom: 0.50px solid #efe6d8;
+}
+
+.elabel {
+  width: 55.00px;
+  flex: 0 0 55.00px;
+  font-size: 13.00px;
+  color: #6f675b;
+}
+
+.einput {
+  flex: 1;
+  font-size: 14.00px;
+  color: #26221d;
+}
+
+.demo-bar {
+  margin: 14.00px 16.00px 0;
+  padding: 12.00px 16.00px;
+  border: 0.50px dashed #dccfba;
+  border-radius: 12.00px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.demo-tip {
+  flex: 1;
+  font-size: 12.00px;
+  color: #736b5e;
+}
+
+.demo-btn {
+  margin-left: 8.00px;
+  padding: 0 16.00px;
+  height: 29.00px;
+  line-height: 29.00px;
+  border-radius: 499.50px;
+  background: #f1e9db;
+  color: #6f675b;
+  font-size: 12.00px;
+}
+
+.ship-label {
+  margin-top: 14.00px;
+  font-size: 12.00px;
+  color: #6f675b;
+}
+
+.ship-companies {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 6.00px;
+}
+
+.cchip {
+  margin: 0 8.00px 8.00px 0;
+  padding: 0 16.00px;
+  height: 31.00px;
+  line-height: 31.00px;
+  border-radius: 499.50px;
+  border: 0.50px solid #e3d8c7;
+  color: #6f675b;
+  font-size: 13.00px;
+}
+
+.cchip.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.ship-input {
+  margin-top: 6.00px;
+  height: 42.00px;
+  padding: 0 16.00px;
+  border-radius: 8.00px;
+  background: #faf5ec;
+  border: 0.50px solid #ece2d2;
+  font-size: 14.00px;
+}
+
+.sheet-actions {
+  display: flex;
+  margin-top: 16.00px;
+}
+
+.sbtn {
+  flex: 1;
+  height: 43.00px;
+  border-radius: 499.50px;
+  font-size: 14.00px;
+}
+
+.sbtn + .sbtn {
+  margin-left: 8.00px;
+}
+
+/* 搜索与导出 */
+.searchbar {
+  display: flex;
+  align-items: center;
+  margin: 4.00px 16.00px 2.00px;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  height: 34.00px;
+  padding: 0 11.00px;
+  border-radius: 17.00px;
+  background: #fff;
+  border: 0.50px solid #ece3d4;
+  font-size: 13.00px;
+  color: #2b2823;
+}
+
+.search-clear {
+  margin-left: 8.00px;
+  font-size: 12.00px;
+  color: #8b8272;
+}
+
+.search-export {
+  margin-left: 10.00px;
+  padding: 5.00px 10.00px;
+  border-radius: 15.00px;
+  border: 0.50px solid #2e4a3f;
+  color: #2e4a3f;
+  font-size: 12.00px;
+}
+
+/* 每单右上角的勾 */
+.pick {
+  display: flex;
+  align-items: center;
+  margin-right: 8.00px;
+}
+
+.pick-dot {
+  width: 16.00px;
+  height: 16.00px;
+  border-radius: 50%;
+  border: 1.00px solid #cdbfa8;
+  background: #fff;
+}
+
+.pick-dot.on {
+  border-color: #2e4a3f;
+  background: #2e4a3f;
+}
+
+.pick-text {
+  margin-left: 4.00px;
+  font-size: 11.00px;
+  color: #8b8272;
+}
+
+/* 底部批量条 */
+.batchbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  padding: 9.00px 14.00px calc(9.00px + 0px);
+  background: #fbf8f2;
+  border-top: 0.50px solid #ece3d4;
+}
+
+.bb-text {
+  flex: 1;
+  font-size: 13.00px;
+  color: #4a443b;
+}
+
+.bb-all {
+  margin-right: 10.00px;
+  font-size: 12.00px;
+  color: #2e4a3f;
+}
+
+.bb-cancel {
+  margin-right: 12.00px;
+  font-size: 12.00px;
+  color: #8b8272;
+}
+
+.bb-go {
+  padding: 7.00px 15.00px;
+  border-radius: 16.00px;
+  background: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 13.00px;
+}
+
+.bb-go.off {
+  background: #c9c1b3;
+}
+
+/* ---------- 商品换图按钮 ---------- */
+.gshot {
+  margin-left: 6.00px;
+  padding: 3.00px 8.00px;
+  border: 1px solid #e3d9c8;
+  border-radius: 9.00px;
+  color: #6b6257;
+  font-size: 11.00px;
+  flex: 0 0 auto;
+}
+
+/* ---------- 分页 ---------- */
+.loadmore {
+  margin: 12.00px auto 20.00px;
+  padding: 9.00px 0;
+  text-align: center;
+  color: #2e4a3f;
+  font-size: 13.00px;
+  border: 1px solid #e3d9c8;
+  border-radius: 20.00px;
+  background: #fffdf9;
+}
+
+.loadend {
+  margin: 14.00px 0 20.00px;
+  text-align: center;
+  color: #a99f92;
+  font-size: 11.00px;
+}
+
+/* ---------- 数据看板 ---------- */
+.dash {
+  padding: 12.00px 12.00px 30.00px;
+}
+
+.dash-row {
+  display: flex;
+  gap: 10.00px;
+}
+
+.dash-card {
+  flex: 1;
+  padding: 13.00px 12.00px;
+  background: #fffdf9;
+  border: 1px solid #efe6d8;
+  border-radius: 10.00px;
+}
+
+.dc-label {
+  font-size: 11.00px;
+  color: #8a8071;
+}
+
+.dc-num {
+  margin-top: 5.00px;
+  font-size: 20.00px;
+  color: #2e4a3f;
+  font-weight: 600;
+}
+
+.dc-num .cur {
+  font-size: 12.00px;
+  margin-right: 1.00px;
+}
+
+.dc-sub {
+  margin-top: 3.00px;
+  font-size: 10.50px;
+  color: #a99f92;
+}
+
+.dash-panel {
+  margin-top: 11.00px;
+  padding: 12.00px;
+  background: #fffdf9;
+  border: 1px solid #efe6d8;
+  border-radius: 10.00px;
+}
+
+.dp-title {
+  font-size: 13.00px;
+  color: #2e4a3f;
+  margin-bottom: 10.00px;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3.00px;
+  height: 100.00px;
+}
+
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+}
+
+.bar {
+  width: 100%;
+  min-height: 3.00px;
+  background: #2e4a3f;
+  border-radius: 3.00px 3.00px 0 0;
+  opacity: 0.85;
+}
+
+.bar-day {
+  margin-top: 4.00px;
+  font-size: 9.00px;
+  color: #a99f92;
+  white-space: nowrap;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  gap: 6.00px;
+  margin-bottom: 8.00px;
+}
+
+.top-name {
+  flex: 0 0 auto;
+  max-width: 150.00px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12.00px;
+  color: #3b342c;
+}
+
+.top-qty {
+  flex: 0 0 auto;
+  font-size: 11.00px;
+  color: #8a8071;
+}
+
+.top-bar {
+  flex: 1;
+  height: 6.00px;
+  background: #f1e9db;
+  border-radius: 3.00px;
+  overflow: hidden;
+}
+
+.top-fill {
+  height: 100%;
+  background: #b5543a;
+  border-radius: 3.00px;
+}
+
+.kv {
+  display: flex;
+  justify-content: space-between;
+  padding: 7.00px 0;
+  border-bottom: 1px dashed #efe6d8;
+  font-size: 12.50px;
+  color: #4a423a;
+}
+
+.kv:last-child {
+  border-bottom: none;
+}
+
+.dash-basis {
+  margin-top: 8.00px;
+  font-size: 10.00px;
+  color: #a99f92;
+  line-height: 1.6;
+}
+
+.dash-empty {
+  font-size: 11.50px;
+  color: #a99f92;
+  padding: 6.00px 0;
+}
+</style>
+</head>
+<body>
+
+  <div class="__status"><span>9:41</span><span class="__sig">●●●</span></div>
+  <div class="__navbar">
+    <span class="__back">‹</span>
+    <span class="__title">店长工作台</span>
+  </div>
+<div class="__screen">
+<div class="page admin" style=""><div class="head" style=""><div class="head-top" style=""><div style=""><div class="head-title serif" style="">店长台</div><div class="head-date" style="">11 月 25 日 · 兰欧茜校服</div></div><span class="exit" style="">退出</span></div><div class="stats" style=""><div class="stat" style=""><span class="sn" style="">1</span><span class="sl" style="">待发货</span></div><div class="stat" style=""><span class="sn" style="">1</span><span class="sl" style="">退货待处理</span></div><div class="stat" style=""><span class="sn" style="">6</span><span class="sl" style="">订单</span></div><div class="stat" style=""><span class="sn" style="">¥844</span><span class="sl" style="">已收款</span></div></div></div><div class="tabs" style=""><div class="tab on" style="">订单</div><div class="tab " style="">商品</div><div class="tab " style="">数据</div></div><div class="searchbar" style=""><input class="search-input" type="text" value="" placeholder="搜姓名 / 电话 / 订单号 / 商品" style="" readonly><span class="search-export" style="">对账单</span></div><div class="filters" style="overflow-x:auto;overflow-y:hidden;"><div class="fchip on" style="">待处理</div><div class="fchip " style="">待发货</div><div class="fchip " style="">退货</div><div class="fchip " style="">已发货</div><div class="fchip " style="">全部</div></div><div class="list" style=""><div class="ocard fade-up" style=""><div class="oc-head" style=""><span class="oc-time" style="">11-25 14:34 · 共 3 件</span><span class="oc-status green" style="">待发货</span></div><div class="oc-buyer" style=""><span class="buyer-name" style="">王女士</span><span class="buyer-phone" style="">13800001234</span><span class="demo-tag" style="">演示</span></div><div class="oc-addr" style="">珠海市香洲区凤凰北路 88 号 3 栋 502</div><div class="oc-items" style="">市一中 · 夏季短袖套装 藏青/L ×1；通用 · 针织领带 砖红/均码 ×2</div><div class="oc-foot" style=""><div class="oc-amount" style=""><span class="cur" style="">¥</span>178</div><div class="pick" style=""><div class="pick-dot " style=""></div><span class="pick-text" style="">选</span></div><div class="oc-actions" style=""><div class="abtn primary" style="">发货</div></div></div></div><div class="ocard fade-up" style=""><div class="oc-head" style=""><span class="oc-time" style="">11-23 14:34 · 共 2 件</span><span class="oc-status warm" style="">退货申请中</span></div><div class="oc-buyer" style=""><span class="buyer-name" style="">林女士</span><span class="buyer-phone" style="">13700009012</span><span class="demo-tag" style="">演示</span></div><div class="oc-addr" style="">珠海市斗门区井岸镇中兴南路 21 号</div><div class="oc-items" style="">通用 · 冬季冲锋衣 藏青/M ×1；通用 · 速干运动短裤 藏青/M ×1</div><div class="oc-track" style="">顺丰速运 SF1000001554</div><div class="oc-foot" style=""><div class="oc-amount" style=""><span class="cur" style="">¥</span>317</div><div class="pick" style=""><div class="pick-dot " style=""></div><span class="pick-text" style="">选</span></div><div class="oc-actions" style=""><div class="abtn primary" style="">处理退货</div></div></div></div><div class="loadend" style="">— 没有更早的了 —</div></div><div class="demo-bar" style=""><span class="demo-tip" style="">演示订单已生成，随时可以清掉</span><div class="demo-btn" style="">清除演示订单</div></div></div>
+</div>
+
+</body></html>

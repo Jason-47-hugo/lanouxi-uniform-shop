@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>html,body{margin:0;font:12px/1.6 monospace}iframe{width:375px;height:812px;border:0}
+#out{position:fixed;left:390px;top:0;width:340px;white-space:pre-wrap}</style></head>
+<body>
+<iframe id="f" src="../web/app.html#/home"></iframe>
+<pre id="out">running</pre>
+<script>
+var f = document.getElementById('f');
+var log = [];
+function say(s) { log.push(s); document.getElementById('out').textContent = log.join('\n'); }
+function q(sel) { return f.contentDocument.querySelector(sel); }
+function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+function click(el) {
+  if (!el) throw new Error('element missing');
+  el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+}
+function hash() { return f.contentWindow.location.hash; }
+
+(async function () {
+  try {
+    await wait(600);
+    say('start ' + hash());
+    click(q('.pcard') || q('[data-tap="onTap"]'));
+    await wait(500);
+    say('after card click: ' + hash());
+
+    // 详情页：选尺码 + 立即购买
+    var size = q('[data-tap="onSize"]') || q('[data-tap="pickSize"]');
+    if (size) click(size);
+    await wait(200);
+    var buy = q('[data-tap="buyNow"]') || q('[data-tap="onBuy"]');
+    say('buy button: ' + (buy ? buy.textContent.trim() : 'missing'));
+    if (buy) click(buy);
+    await wait(600);
+    say('after buy: ' + hash());
+
+    // 结算页：提交
+    var submit = q('[data-tap="submit"]');
+    say('submit: ' + (submit ? 'found' : 'missing'));
+    if (submit) click(submit);
+    await wait(800);
+    say('after submit: ' + hash());
+
+    // 收款页：我已完成转账
+    var paid = q('[data-tap="markPaid"]');
+    say('markPaid: ' + (paid ? 'found' : 'missing'));
+    if (paid) click(paid);
+    await wait(900);
+    say('after paid: ' + hash());
+    var status = q('.st-text');
+    say('order status: ' + (status ? status.textContent.trim() : 'none'));
+    say('RESULT ' + (/待确认/.test(f.contentDocument.body.textContent) ? 'PASS' : 'CHECK'));
+  } catch (e) {
+    say('ERROR ' + e.message);
+  }
+})();
+</script>
+</body></html>
