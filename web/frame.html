@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>兰欧茜校服 · 网页演示</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: #E9E1D3;
+    background-image: radial-gradient(circle at 20% 10%, #F3ECDF 0, transparent 55%), radial-gradient(circle at 85% 85%, #EFE4D2 0, transparent 50%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; color: #2E4A3F;
+    display: flex; align-items: center; justify-content: center; }
+  .wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .brand { font-family: "Noto Serif SC", "Songti SC", SimSun, serif; font-size: 22px; letter-spacing: 4px; }
+  .brand small { font-family: -apple-system, "PingFang SC", sans-serif; font-size: 12px; letter-spacing: 1px;
+    color: #8A8378; margin-left: 10px; }
+  .device { width: 375px; height: 812px; border-radius: 34px; overflow: hidden; background: #F7F3EC;
+    box-shadow: 0 26px 60px rgba(60,45,30,.28), 0 0 0 8px #22302A, 0 0 0 9px #3A4A42; }
+  iframe { width: 375px; height: 812px; border: 0; display: block; }
+  .tip { font-size: 12px; color: #7C7467; text-align: center; line-height: 1.8; max-width: 520px; }
+  .tip b { color: #2E4A3F; font-weight: 600; }
+  .actions { display: flex; gap: 10px; }
+  .actions button { border: 1px solid #C9BFAE; background: #FBF8F2; color: #2E4A3F; font-size: 12px;
+    padding: 8px 16px; border-radius: 20px; cursor: pointer; }
+  .actions button:hover { background: #fff; }
+  @media (max-width: 430px) {
+    .tip, .brand { display: none; }
+    body { background: #F7F3EC; align-items: flex-start; overflow-x: auto; }
+    .device { transform-origin: top left; transform: scale(calc(100vw / 375)); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">兰欧茜 <small>校服 · 珠海</small></div>
+  <div class="device"><iframe id="app" src="app.html" scrolling="no"></iframe></div>
+  <div class="actions">
+    <button onclick="document.getElementById('app').contentWindow.__reset()">重置演示数据</button>
+    <button onclick="var w=document.getElementById('app').contentWindow; w.getApp().globalData.adminUnlocked=true; w.location.hash='#/admin'">看店长端</button>
+  </div>
+  <div class="tip">首页卡片 → 详情选码 → 加购 → 结算 → 转账 → 订单详情，整条链路都能点。<br>
+  店长端入口在「我的 → 店长入口」，口令 <b>2468</b>。</div>
+</div>
+</body></html>
