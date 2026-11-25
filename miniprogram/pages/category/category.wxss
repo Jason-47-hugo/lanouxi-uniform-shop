@@ -1,0 +1,136 @@
+.head {
+  padding: 16rpx 32rpx 8rpx;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  height: 78rpx;
+  padding: 0 32rpx;
+  border-radius: 999rpx;
+  background: #fffdf9;
+  border: 1rpx solid #e8dece;
+}
+
+.search-icon {
+  position: relative;
+  width: 22rpx;
+  height: 22rpx;
+  border: 2rpx solid #a99e8c;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  flex: 0 0 22rpx;
+}
+
+.search-icon::after {
+  content: "";
+  position: absolute;
+  right: -9rpx;
+  bottom: -5rpx;
+  width: 12rpx;
+  height: 2rpx;
+  background: #a99e8c;
+  transform: rotate(45deg);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  font-size: 28rpx;
+  color: #26221d;
+}
+
+.search-clear {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: #efe6d8;
+  color: #6f675b;
+  font-size: 28rpx;
+  line-height: 38rpx;
+  text-align: center;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 32rpx 4rpx;
+}
+
+.fp {
+  display: flex;
+  align-items: center;
+  height: 62rpx;
+  padding: 0 32rpx;
+  margin-right: 16rpx;
+  border-radius: 999rpx;
+  background: #fffdf9;
+  border: 1rpx solid #e3d8c7;
+  font-size: 26rpx;
+  color: #5f574b;
+  white-space: nowrap;
+}
+
+.fp.on {
+  background: #edf2ee;
+  border-color: #2e4a3f;
+  color: #2e4a3f;
+}
+
+.fp-caret {
+  margin-left: 8rpx;
+  font-size: 22rpx;
+  color: #7a7264;
+}
+
+.cats {
+  width: 100%;
+  margin-top: 16rpx;
+}
+
+.cats-inner {
+  display: flex;
+  padding: 0 32rpx;
+}
+
+.cats-inner .chip {
+  height: 56rpx;
+  padding: 0 32rpx;
+  font-size: 26rpx;
+}
+
+.count-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 32rpx 20rpx;
+}
+
+.count {
+  font-size: 26rpx;
+  color: #6f675b;
+  letter-spacing: 1rpx;
+}
+
+.count-tip {
+  font-size: 24rpx;
+  color: #7a7264;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 32rpx;
+}
+
+.gitem {
+  width: calc(50% - 10rpx);
+  margin-bottom: 24rpx;
+}
+
+.reset-btn {
+  margin-top: 32rpx;
+  display: inline-flex;
+  padding: 0 40rpx;
+}

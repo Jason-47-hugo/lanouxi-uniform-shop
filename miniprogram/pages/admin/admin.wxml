@@ -1,0 +1,344 @@
+<view class="page admin">
+  <view class="head">
+    <view class="head-top">
+      <view>
+        <view class="head-title serif">店长台</view>
+        <view class="head-date">{{today}} · 兰欧茜校服</view>
+      </view>
+      <text class="exit" bindtap="exit">退出</text>
+    </view>
+    <view class="stats">
+      <view class="stat" data-k="ship" bindtap="jumpFilter">
+        <text class="sn">{{stats.pendingShip}}</text>
+        <text class="sl">待发货</text>
+      </view>
+      <view class="stat" data-k="return" bindtap="jumpFilter">
+        <text class="sn">{{stats.pendingReturn}}</text>
+        <text class="sl">退货待处理</text>
+      </view>
+      <view class="stat">
+        <text class="sn">{{stats.total}}</text>
+        <text class="sl">订单</text>
+      </view>
+      <view class="stat">
+        <text class="sn">¥{{stats.revenue}}</text>
+        <text class="sl">已收款</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{tab === 'orders' ? 'on' : ''}}" data-t="orders" bindtap="switchTab">订单</view>
+    <view class="tab {{tab === 'goods' ? 'on' : ''}}" data-t="goods" bindtap="switchTab">商品</view>
+    <view class="tab {{tab === 'data' ? 'on' : ''}}" data-t="data" bindtap="switchTab">数据</view>
+  </view>
+
+  <block wx:if="{{tab === 'orders'}}">
+    <view class="searchbar">
+      <input
+        class="search-input"
+        value="{{keyword}}"
+        bindinput="onKeyword"
+        placeholder="搜姓名 / 电话 / 订单号 / 商品"
+        placeholder-class="placeholder"
+        confirm-type="search"
+      />
+      <text class="search-clear" wx:if="{{keyword}}" bindtap="clearKeyword">清空</text>
+      <text class="search-export" bindtap="exportXlsx">对账单</text>
+    </view>
+
+    <scroll-view class="filters" scroll-x enable-flex>
+      <view
+        class="fchip {{filter === item.key ? 'on' : ''}}"
+        wx:for="{{filters}}"
+        wx:key="key"
+        data-k="{{item.key}}"
+        bindtap="setFilter"
+      >{{item.text}}</view>
+    </scroll-view>
+
+    <view class="list">
+      <view class="ocard fade-up" wx:for="{{orders}}" wx:key="id">
+        <view class="oc-head">
+          <text class="oc-time">{{item.timeText}} · 共 {{item.qty}} 件</text>
+          <text class="oc-status {{item.tone}}">{{item.statusText}}</text>
+        </view>
+        <view class="oc-buyer">
+          <text class="buyer-name">{{item.buyer}}</text>
+          <text class="buyer-phone" data-phone="{{item.phone}}" bindtap="copyPhone">{{item.phone}}</text>
+          <text class="demo-tag" wx:if="{{item.demo}}">演示</text>
+        </view>
+        <view class="oc-addr">{{item.address}}</view>
+        <view class="oc-items">{{item.itemsText}}</view>
+        <view class="oc-remark" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
+        <view class="oc-track" wx:if="{{item.trackText}}">{{item.trackText}}</view>
+        <view class="oc-remark" wx:if="{{item.refundText}}">{{item.refundText}}</view>
+        <view class="oc-foot">
+          <view class="oc-amount"><text class="cur">¥</text>{{item.amountText}}</view>
+          <view class="pick" data-id="{{item.id}}" bindtap="togglePick">
+            <view class="pick-dot {{item.picked ? 'on' : ''}}"></view>
+            <text class="pick-text">选</text>
+          </view>
+          <view class="oc-actions">
+            <view wx:if="{{item.status === 'paid'}}" class="abtn primary" data-id="{{item.id}}" bindtap="openShip">发货</view>
+            <view wx:if="{{item.status === 'return_pending'}}" class="abtn primary" data-id="{{item.id}}" bindtap="openReturn">处理退货</view>
+            <view wx:if="{{item.status === 'shipped'}}" class="abtn ghost" data-id="{{item.id}}" bindtap="copyTrack">复制运单</view>
+            <view wx:if="{{item.status === 'shipped'}}" class="abtn ghost" data-id="{{item.id}}" bindtap="openTrack">补单号</view>
+            <view wx:if="{{item.status === 'pending_pay'}}" class="abtn ghost" data-id="{{item.id}}" bindtap="copyNo">单号</view>
+          </view>
+        </view>
+      </view>
+      <view class="empty2" wx:if="{{!orders.length}}">
+        <view class="e2-mark">空</view>
+        <view class="e2-t">这个分类下没有订单</view>
+      </view>
+      <view class="loadmore" wx:if="{{hasMore}}" bindtap="loadMore">
+        <text wx:if="{{!loadingMore}}">看更早的订单</text>
+        <text wx:else>正在加载…</text>
+      </view>
+      <view class="loadend" wx:if="{{orders.length && !hasMore}}">— 没有更早的了 —</view>
+    </view>
+  </block>
+
+  <block wx:elif="{{tab === 'data'}}">
+    <view class="dash" wx:if="{{dashboard}}">
+      <view class="dash-row">
+        <view class="dash-card">
+          <view class="dc-label">近 7 天</view>
+          <view class="dc-num"><text class="cur">¥</text>{{dashboard.week.revenue}}</view>
+          <view class="dc-sub">{{dashboard.week.orders}} 单 · 客单价 ¥{{dashboard.week.avg}}</view>
+        </view>
+        <view class="dash-card">
+          <view class="dc-label">近 30 天</view>
+          <view class="dc-num"><text class="cur">¥</text>{{dashboard.month.revenue}}</view>
+          <view class="dc-sub">{{dashboard.month.orders}} 单 · 客单价 ¥{{dashboard.month.avg}}</view>
+        </view>
+      </view>
+
+      <view class="dash-panel">
+        <view class="dp-title">近 14 天</view>
+        <view class="bars">
+          <view class="bar-col" wx:for="{{dashboard.byDay}}" wx:key="date">
+            <view class="bar" style="height: {{item.h}}%"></view>
+            <view class="bar-day">{{item.day}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="dash-panel">
+        <view class="dp-title">卖得最多的几款</view>
+        <view class="top-row" wx:for="{{dashboard.topProducts}}" wx:key="productId">
+          <view class="top-name">{{item.name}}</view>
+          <view class="top-qty">{{item.qty}} 件</view>
+          <view class="top-bar"><view class="top-fill" style="width: {{item.w}}%"></view></view>
+        </view>
+        <view class="dash-empty" wx:if="{{!dashboard.topProducts.length}}">还没有已付款的订单</view>
+      </view>
+
+      <view class="dash-panel">
+        <view class="dp-title">经营小指标</view>
+        <view class="kv"><text>退货率</text><text>{{dashboard.returnRate}}%</text></view>
+        <view class="kv"><text>超时未付款关单</text><text>{{dashboard.expired}} 单</text></view>
+        <view class="kv"><text>全部订单</text><text>{{dashboard.total}} 单</text></view>
+        <view class="kv"><text>累计销售额</text><text>¥{{dashboard.revenue}}</text></view>
+        <view class="dash-basis">{{basis}}</view>
+      </view>
+    </view>
+    <view class="empty2" wx:else>
+      <view class="e2-mark">…</view>
+      <view class="e2-t">正在算，稍等一下</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="gtip top-tip">点商品可改价和库存；换照片点这一行右边的「换图」；右边的开关关掉就是下架。</view>
+    <view class="lowtip" wx:if="{{lowCount > 0}}">{{lowCount}} 款商品库存不多了，红标的那几个该补货</view>
+    <view class="glist">
+      <view class="grow" wx:for="{{products}}" wx:key="id">
+        <view class="gbody" data-id="{{item.id}}" bindtap="openEdit">
+          <image class="gimg" src="{{item.image}}" mode="aspectFill" />
+          <view class="gtext">
+            <view class="gname">{{item.name}}</view>
+            <view class="gmeta">¥{{item.price}} · 库存 {{item.stock}} · 已售 {{item.sales}}</view>
+            <view class="glow {{item.soldOut ? 'out' : ''}}" wx:if="{{item.stockLow}}">{{item.stockText}}</view>
+          </view>
+        </view>
+        <switch class="gswitch" checked="{{item.onSale}}" color="#2E4A3F" data-id="{{item.id}}" bindchange="toggleSale" />
+        <view class="gshot" data-id="{{item.id}}" bindtap="uploadPhoto">{{item.uploading ? '传…' : '换图'}}</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="demo-bar">
+    <text class="demo-tip">{{hasDemo ? '演示订单已生成，随时可以清掉' : '想看看有单时的样子？'}}</text>
+    <view class="demo-btn" bindtap="demoAction">{{hasDemo ? '清除演示订单' : '生成演示订单'}}</view>
+  </view>
+
+  <!-- 批量条：勾了单才出现 -->
+  <view class="batchbar" wx:if="{{pickedCount > 0}}">
+    <text class="bb-text">已选 {{pickedCount}} 单<text wx:if="{{pickedPaid !== pickedCount}}">（可发 {{pickedPaid}}）</text></text>
+    <text class="bb-all" bindtap="pickAllPaid">全选待发货</text>
+    <text class="bb-cancel" bindtap="clearPick">取消</text>
+    <view class="bb-go {{pickedPaid ? '' : 'off'}}" bindtap="openBatch">批量发货</view>
+  </view>
+
+  <!-- 补单号 -->
+  <view class="mask" wx:if="{{trackTarget}}" bindtap="closeTrack"></view>
+  <view class="sheet" wx:if="{{trackTarget}}">
+    <view class="sheet-grip"></view>
+    <view class="sheet-title serif">补一个运单号</view>
+    <view class="ship-label">快递</view>
+    <view class="ship-companies">
+      <view
+        class="cchip {{trackCompany === item ? 'on' : ''}}"
+        wx:for="{{companies}}"
+        wx:key="*this"
+        data-c="{{item}}"
+        bindtap="pickTrackCompany"
+      >{{item}}</view>
+    </view>
+    <view class="ship-label">运单号</view>
+    <input
+      class="ship-input"
+      value="{{trackNo}}"
+      bindinput="onTrackNo"
+      placeholder="例如 SF1234567890"
+      placeholder-class="placeholder"
+    />
+    <view class="sheet-actions">
+      <view class="btn ghost sbtn" bindtap="closeTrack">算了</view>
+      <view class="btn primary sbtn" bindtap="doTrack">保存</view>
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+
+  <!-- 批量发货 -->
+  <view class="mask" wx:if="{{batchOpen}}" bindtap="closeBatch"></view>
+  <view class="sheet" wx:if="{{batchOpen}}">
+    <view class="sheet-grip"></view>
+    <view class="sheet-title serif">一次发 {{pickedPaid}} 单</view>
+    <view class="ship-label">快递</view>
+    <view class="ship-companies">
+      <view
+        class="cchip {{batchCompany === item ? 'on' : ''}}"
+        wx:for="{{companies}}"
+        wx:key="*this"
+        data-c="{{item}}"
+        bindtap="pickBatchCompany"
+      >{{item}}</view>
+    </view>
+    <view class="gtip">单号先留空，等快递员揽收后在订单里补；家长那边会立刻看到「已发货」。</view>
+    <view class="sheet-actions">
+      <view class="btn ghost sbtn" bindtap="closeBatch">再想想</view>
+      <view class="btn primary sbtn" bindtap="doBatchShip">确认发货</view>
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+
+  <!-- 发货 -->
+  <view class="mask" wx:if="{{shipTarget}}" bindtap="closeShip"></view>
+  <view class="sheet" wx:if="{{shipTarget}}">
+    <view class="sheet-grip"></view>
+    <view class="sheet-title serif">填一下发货信息</view>
+    <view class="ship-label">快递</view>
+    <view class="ship-companies">
+      <view
+        class="cchip {{shipCompany === item ? 'on' : ''}}"
+        wx:for="{{companies}}"
+        wx:key="*this"
+        data-c="{{item}}"
+        bindtap="pickCompany"
+      >{{item}}</view>
+    </view>
+    <view class="ship-label">运单号（可留空）</view>
+    <input
+      class="ship-input"
+      value="{{shipNo}}"
+      bindinput="onShipNo"
+      placeholder="例如 SF1234567890"
+      placeholder-class="placeholder"
+    />
+    <view class="sheet-actions">
+      <view class="btn ghost sbtn" bindtap="closeShip">再想想</view>
+      <view class="btn primary sbtn" bindtap="doShip">确认发货</view>
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+
+  <!-- 退货 -->
+  <view class="mask" wx:if="{{returnTarget}}" bindtap="closeReturn"></view>
+  <view class="sheet" wx:if="{{returnTarget}}">
+    <view class="sheet-grip"></view>
+    <view class="between">
+      <view>
+        <view class="sheet-title serif">处理退货</view>
+        <view class="sheet-sub">勾选实际收到的退货，只有留下的部分才算消费</view>
+      </view>
+      <view class="sheet-close" bindtap="closeReturn">×</view>
+    </view>
+
+    <view class="ritem {{item.picked ? 'on' : ''}} {{item.returned ? 'done' : ''}}" wx:for="{{returnItems}}" wx:key="index" data-i="{{index}}" bindtap="toggleReturnItem">
+      <view class="rcheck">{{item.returned ? '已退' : (item.picked ? '✓' : '')}}</view>
+      <view class="rbody">
+        <view class="rname">{{item.name}}</view>
+        <view class="rspec">{{item.spec}} · ×{{item.qty}} · ¥{{item.priceText}}</view>
+      </view>
+    </view>
+
+    <view class="ship-label">退货原因（可留空）</view>
+    <input
+      class="ship-input"
+      value="{{returnReason}}"
+      bindinput="onReturnReason"
+      placeholder="尺码不合适 / 质量 / 拍错了"
+      placeholder-class="placeholder"
+    />
+    <view class="rtip">退款按实付金额比例算，运费不退；这一单用掉的积分按比例退回，已返的购物积分按留下的金额重算。</view>
+
+    <view class="sheet-actions">
+      <view class="btn ghost sbtn" bindtap="closeReturn">取消</view>
+      <view class="btn primary sbtn" bindtap="doReturn">确认退货</view>
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+
+  <!-- 商品编辑 -->
+  <view class="mask" wx:if="{{editTarget}}" bindtap="closeEdit"></view>
+  <view class="sheet" wx:if="{{editTarget}}">
+    <view class="sheet-grip"></view>
+    <view class="between">
+      <view>
+        <view class="sheet-title serif">改商品信息</view>
+        <view class="sheet-sub">实物图、价格、库存都由店主自己维护</view>
+      </view>
+      <view class="sheet-close" bindtap="closeEdit">×</view>
+    </view>
+
+    <view class="ebox">
+      <image class="eimg" src="{{editImage}}" mode="aspectFill" bindtap="pickImage" />
+      <view class="ebox-side">
+        <view class="etip">点图片可换成实物照片</view>
+        <view class="ebtn" bindtap="pickImage">选图 / 拍照</view>
+      </view>
+    </view>
+
+    <view class="efield">
+      <text class="elabel">名称</text>
+      <input class="einput" value="{{editName}}" bindinput="onEditName" placeholder="商品名称" placeholder-class="placeholder" />
+    </view>
+    <view class="efield">
+      <text class="elabel">价格</text>
+      <input class="einput" value="{{editPrice}}" type="digit" bindinput="onEditPrice" placeholder="例如 128" placeholder-class="placeholder" />
+    </view>
+    <view class="efield">
+      <text class="elabel">库存</text>
+      <input class="einput" value="{{editStock}}" type="number" bindinput="onEditStock" placeholder="例如 40" placeholder-class="placeholder" />
+    </view>
+
+    <view class="sheet-actions">
+      <view class="btn ghost sbtn" bindtap="closeEdit">取消</view>
+      <view class="btn primary sbtn" bindtap="doEdit">保存</view>
+    </view>
+    <view class="safe-bottom"></view>
+  </view>
+</view>

@@ -1,0 +1,50 @@
+<view class="page pay" wx:if="{{order}}">
+  <view class="hero">
+    <view class="eyebrow">微信支付</view>
+    <view class="amount"><text class="cur">¥</text>{{amountText}}</view>
+    <view class="order-no" bindtap="copyNo">订单号 {{order.no}}<text class="copy">复制</text></view>
+  </view>
+
+  <view class="bill card">
+    <view class="bill-row">
+      <text class="bill-k">商品</text>
+      <text class="bill-v">¥{{goodsText}}</text>
+    </view>
+    <view class="bill-row" wx:if="{{order.memberDiscount > 0}}">
+      <text class="bill-k">会员 96 折</text>
+      <text class="bill-v minus">-¥{{memberText}}</text>
+    </view>
+    <view class="bill-row" wx:if="{{order.discount > 0}}">
+      <text class="bill-k">积分抵现（{{order.pointsUsed}} 分）</text>
+      <text class="bill-v minus">-¥{{discountText}}</text>
+    </view>
+    <view class="bill-row">
+      <text class="bill-k">{{order.delivery === 'pickup' ? '到店自提' : '快递'}}</text>
+      <text class="bill-v">{{order.shipping > 0 ? '+¥' + shippingText : '免运费'}}</text>
+    </view>
+    <view class="hairline"></view>
+    <view class="bill-row total">
+      <text class="bill-k">实付</text>
+      <text class="bill-v strong">¥{{amountText}}</text>
+    </view>
+  </view>
+
+  <view class="wxpay">
+    <view class="wxpay-icon">微</view>
+    <view class="wxpay-body">
+      <view class="wxpay-t">微信支付</view>
+      <view class="wxpay-d">付款到兰欧茜校服的对公收款账户，钱不经过任何个人转发</view>
+    </view>
+    <view class="wxpay-radio"></view>
+  </view>
+
+  <view class="tip">
+    <text class="tip-key">说明</text>
+    <text class="tip-text">付款成功后订单直接进入「待发货」，店长那边会收到通知。演示版不会真实扣款，点下方按钮即可模拟支付成功。</text>
+  </view>
+
+  <view class="bar">
+    <view class="btn ghost later" bindtap="later">稍后付</view>
+    <view class="btn primary done" bindtap="pay">{{paying ? '支付中…' : '微信支付 ¥' + amountText}}</view>
+  </view>
+</view>

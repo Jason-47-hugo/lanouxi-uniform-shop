@@ -1,0 +1,42 @@
+<view class="page points">
+  <view class="hero">
+    <view class="hero-label">可用积分</view>
+    <view class="hero-num">{{available}}</view>
+    <view class="hero-row">
+      <view class="hitem">
+        <text class="hn">¥{{yuanText}}</text>
+        <text class="hl">可抵现金</text>
+      </view>
+      <view class="hdiv"></view>
+      <view class="hitem">
+        <text class="hn">{{member.isMember ? '96 折' : '¥' + member.remain}}</text>
+        <text class="hl">{{member.isMember ? '会员折扣中' : '距会员还差'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card rules">
+    <view class="rules-title serif">积分怎么算</view>
+    <view class="rrow" wx:for="{{rules}}" wx:key="k">
+      <text class="rk">{{item.k}}</text>
+      <text class="rv">{{item.v}}</text>
+    </view>
+  </view>
+
+  <view class="card logs">
+    <view class="logs-head">
+      <text class="lh serif">明细</text>
+      <text class="lh-sub">最近 60 条</text>
+    </view>
+    <view class="lrow" wx:for="{{logs}}" wx:key="id">
+      <view class="lleft">
+        <view class="ltext">{{item.text}}</view>
+        <view class="ltime">{{item.timeText}}</view>
+      </view>
+      <text class="ldelta {{item.positive ? 'up' : 'down'}}">{{item.deltaText}}</text>
+    </view>
+    <view class="lend" wx:if="{{!logs.length}}">还没有积分记录</view>
+  </view>
+
+  <view class="tip">积分仅在本店使用，不可提现、不可转赠；退货时按实际购买金额重算。</view>
+</view>

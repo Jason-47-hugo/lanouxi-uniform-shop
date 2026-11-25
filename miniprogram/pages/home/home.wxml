@@ -1,0 +1,161 @@
+<view class="page home">
+  <view class="nav" style="padding-top:{{statusBarHeight}}px;">
+    <view class="nav-inner">
+      <view class="brand">
+        <text class="brand-name serif">兰欧茜</text>
+        <text class="brand-sub">校服 · 珠海</text>
+      </view>
+      <view class="nav-pill" bindtap="goAll">
+        <text>全部校服</text>
+        <text class="nav-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="hero fade-up">
+    <image class="hero-img" src="/images/hero.png" mode="aspectFill" />
+    <view class="hero-veil"></view>
+    <view class="hero-text">
+      <view class="hero-eyebrow">2026 秋季 · 新生装备</view>
+      <view class="hero-title serif">穿得精神，</view>
+      <view class="hero-title serif">才配得上新学期</view>
+      <view class="hero-sub">珠海本地校服 · 到店可试穿</view>
+      <view class="hero-btn" bindtap="goAll">
+        <text>去挑一件</text>
+        <text class="arrow">→</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="entries">
+    <view class="entry" wx:for="{{entries}}" wx:key="key" data-key="{{item.key}}" bindtap="onQuick">
+      <view class="entry-mark serif">{{item.mark}}</view>
+      <view class="entry-label">{{item.label}}</view>
+      <view class="entry-sub">{{item.sub}}</view>
+    </view>
+  </view>
+
+  <view class="service">
+    <text class="service-item">校服同款版型</text>
+    <text class="service-line">·</text>
+    <text class="service-item">到店试穿</text>
+    <text class="service-line">·</text>
+    <text class="service-item">7 天退换</text>
+  </view>
+
+  <view class="gutter">
+    <view class="sec-head">
+      <view class="row">
+        <text class="sec-title">本周精选</text>
+        <text class="sec-sub">店长挑的几件</text>
+      </view>
+      <view class="sec-more" bindtap="goAll">全部 ›</view>
+    </view>
+  </view>
+
+  <scroll-view class="hscroll" scroll-x="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}">
+    <view class="hscroll-inner">
+      <view class="fcard" wx:for="{{featured}}" wx:key="id">
+        <product-card item="{{item}}" />
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="ornament">
+    <view class="ornament-line"></view>
+    <view class="ornament-dot"></view>
+    <view class="ornament-line"></view>
+  </view>
+
+  <view class="gutter">
+    <view class="sec-head">
+      <view class="row">
+        <text class="sec-title">按学校找</text>
+        <text class="sec-sub">选对版型不踩坑</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="school-card">
+    <view class="stage-tabs">
+      <view
+        class="stab {{stageTab === item.key ? 'on' : ''}}"
+        wx:for="{{stages}}"
+        wx:key="key"
+        data-stage="{{item.key}}"
+        bindtap="pickStage"
+      >{{item.label}}</view>
+    </view>
+    <view class="hairline"></view>
+
+    <view class="schools">
+      <view
+        class="sch"
+        wx:for="{{schoolList}}"
+        wx:key="id"
+        data-school="{{item.name}}"
+        bindtap="onSchool"
+      >
+        <view class="sch-body">
+          <view class="sch-name">{{item.short}}</view>
+          <view class="sch-sub">{{item.group}}</view>
+        </view>
+        <text class="sch-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="sch-more" wx:if="{{schoolMore}}" bindtap="toggleSchool">
+      <text>{{schoolMore}}</text>
+      <text class="sch-more-arrow">展开</text>
+    </view>
+    <view class="sch-more" wx:if="{{!schoolMore && schoolOpen}}" bindtap="toggleSchool">
+      <text class="sch-more-arrow">收起</text>
+    </view>
+
+    <view class="invite">
+      <view class="invite-text">找不到自己学校的款式？报上学段和身高，店长直接给你配</view>
+      <view class="invite-btn" bindtap="contact">问问店长</view>
+    </view>
+  </view>
+
+  <view class="points-card" bindtap="goPoints">
+    <view class="ring ring-a"></view>
+    <view class="ring ring-b"></view>
+    <view class="pc-head">
+      <text class="pc-title serif">积分抵现</text>
+      <view class="pc-badge">可用 {{points}} 分</view>
+    </view>
+    <view class="pc-line">100 积分抵 1 元，消费 1 元再返 1 分</view>
+    <view class="pc-desc">每单最多抵总额 5% · 累计满 ¥1200 全场 96 折</view>
+    <view class="pc-link">积分怎么用 →</view>
+  </view>
+
+  <view class="gutter">
+    <view class="sec-head">
+      <text class="sec-title">店长的话</text>
+    </view>
+    <view class="card store-card">
+      <view class="quote serif">“</view>
+      <view class="quote-text serif">校服这东西，得上身试。开学前店里都能试，不合适随时换。</view>
+      <view class="quote-by">—— 兰欧茜校服 · 店长</view>
+      <view class="hairline store-line"></view>
+      <view class="store-row" bindtap="copyAddress">
+        <text class="store-label">地址</text>
+        <text class="store-val">{{store.address}}</text>
+      </view>
+      <view class="store-row">
+        <text class="store-label">时间</text>
+        <text class="store-val">{{store.hours}}</text>
+      </view>
+      <view class="store-acts">
+        <view class="store-act" bindtap="copyAddress">复制地址</view>
+        <view class="store-act" bindtap="callStore">打电话</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view class="footer-name serif">兰欧茜校服</view>
+    <view class="footer-sub">珠海 · 一件也认真</view>
+  </view>
+</view>

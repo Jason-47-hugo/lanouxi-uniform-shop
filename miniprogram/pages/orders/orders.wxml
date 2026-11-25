@@ -1,0 +1,81 @@
+<view class="page orders">
+  <view class="searchbar">
+    <input
+      class="search-input"
+      value="{{keyword}}"
+      bindinput="onKeyword"
+      placeholder="搜商品名 / 订单号"
+      placeholder-class="placeholder"
+      confirm-type="search"
+    />
+    <text class="search-clear" wx:if="{{keyword}}" bindtap="clearKeyword">清空</text>
+  </view>
+
+  <view class="tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="tab {{tab === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="switchTab"
+    >
+      <text>{{item.text}}</text>
+      <view class="tab-line" wx:if="{{tab === item.key}}"></view>
+    </view>
+  </view>
+
+  <!-- 首次拉云端时先给三行灰骨架，别让用户对着空白等 -->
+  <view wx:if="{{loading && !list.length}}" class="list">
+    <view class="order card sk-card" wx:for="{{[1,2,3]}}" wx:key="*this">
+      <view class="sk sk-line w40"></view>
+      <view class="sk-row">
+        <view class="sk sk-thumb"></view>
+        <view class="sk-lines">
+          <view class="sk sk-line w70"></view>
+          <view class="sk sk-line w50"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:elif="{{list.length}}" class="list">
+    <view
+      class="order card fade-up"
+      wx:for="{{list}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goOrder"
+    >
+      <view class="o-head">
+        <text class="o-time">{{item.timeText}}</text>
+        <text class="o-status {{item.tone}}">{{item.statusText}}</text>
+      </view>
+      <view class="o-body">
+        <image class="o-thumb" src="{{item.image}}" mode="aspectFill" />
+        <view class="o-info">
+          <view class="o-name">{{item.name}}</view>
+          <view class="o-spec">{{item.spec}}</view>
+          <view class="o-track" wx:if="{{item.tracking}}">{{item.tracking}}</view>
+        </view>
+        <view class="o-right">
+          <view class="price"><text class="cur">¥</text>{{item.amountText}}</view>
+          <view class="o-qty">共 {{item.count}} 件</view>
+        </view>
+      </view>
+      <view class="o-foot">
+        <view wx:if="{{item.status === 'pending_pay'}}" class="btn btn-sm ghost" data-id="{{item.id}}" catchtap="goPay">去支付</view>
+        <view wx:if="{{item.status === 'shipped'}}" class="btn btn-sm primary" data-id="{{item.id}}" catchtap="confirmReceive">确认收货</view>
+        <view wx:if="{{item.status === 'done'}}" class="btn btn-sm ghost" catchtap="goShop">再逛逛</view>
+        <view class="btn btn-sm ghost" data-id="{{item.id}}" catchtap="goOrder">订单详情</view>
+      </view>
+    </view>
+    <view class="list-end">— 到底啦 —</view>
+  </view>
+
+  <view wx:else class="empty">
+    <view class="empty-mark">未</view>
+    <view class="empty-t">这里还没有订单</view>
+    <view class="empty-d">挑一件校服，开学不慌</view>
+    <view class="btn btn-primary empty-btn" bindtap="goShop">去逛逛</view>
+  </view>
+</view>

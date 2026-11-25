@@ -1,0 +1,48 @@
+<view class="page cart">
+  <view class="hint" wx:if="{{list.length}}">
+    <text>满 ¥50 包邮</text>
+    <text class="hint-dot">·</text>
+    <text>支持到店自提</text>
+  </view>
+
+  <view class="list" wx:if="{{list.length}}">
+    <view class="citem" wx:for="{{list}}" wx:key="key">
+      <view class="check {{item.selected ? 'on' : ''}}" data-key="{{item.key}}" catchtap="toggle">{{item.selected ? '✓' : ''}}</view>
+      <image class="cimg" src="{{item.product.image}}" mode="aspectFill" data-id="{{item.productId}}" bindtap="goDetail" />
+      <view class="cbody">
+        <view class="crow">
+          <view class="cname">{{item.product.name}}</view>
+          <view class="cdel" data-key="{{item.key}}" catchtap="remove">移除</view>
+        </view>
+        <view class="cspec">{{item.color}} · {{item.size}}</view>
+        <view class="cfoot">
+          <view class="price cprice"><text class="cur">¥</text>{{item.product.price}}</view>
+          <view class="stepper">
+            <view class="step {{item.qty <= 1 ? 'off' : ''}}" data-key="{{item.key}}" catchtap="minus">−</view>
+            <view class="step-num">{{item.qty}}</view>
+            <view class="step" data-key="{{item.key}}" catchtap="plus">＋</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-mark">袋</view>
+    <view class="empty-text">购物车还是空的</view>
+    <view class="empty-sub">校服按学校分版型，先挑学校再看款</view>
+    <view class="btn btn-primary empty-btn" bindtap="goShopping">去逛逛</view>
+  </view>
+
+  <view class="cart-bar" wx:if="{{list.length}}">
+    <view class="all" bindtap="toggleAll">
+      <view class="check {{summary.allSelected ? 'on' : ''}}">{{summary.allSelected ? '✓' : ''}}</view>
+      <text class="all-text">全选</text>
+    </view>
+    <view class="total">
+      <text class="tlabel">合计</text>
+      <view class="price tprice"><text class="cur">¥</text>{{summary.total}}</view>
+    </view>
+    <view class="btn pay-btn {{summary.count ? '' : 'off'}}" bindtap="checkout">去结算 {{summary.count ? '(' + summary.count + ')' : ''}}</view>
+  </view>
+</view>

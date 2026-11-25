@@ -1,0 +1,346 @@
+.checkout {
+  padding-bottom: 128rpx;
+}
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  margin: 20rpx 32rpx 0;
+  padding: 20rpx 32rpx;
+  border-radius: 16rpx;
+  background: #f6ecdc;
+}
+
+.notice-key {
+  flex: 0 0 auto;
+  margin-right: 12rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  background: #b65b3c;
+  color: #fff8ee;
+  font-size: 22rpx;
+  letter-spacing: 1rpx;
+}
+
+.notice-text {
+  flex: 1;
+  font-size: 24rpx;
+  color: #7a5f45;
+  line-height: 1.6;
+}
+
+.block {
+  margin: 20rpx 32rpx 0;
+  padding: 28rpx 32rpx;
+}
+
+.block-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.bh-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+.bh-sub {
+  font-size: 24rpx;
+  color: #7a7264;
+}
+
+.delivery {
+  display: flex;
+  margin: 16rpx 0 8rpx;
+}
+
+.dopt {
+  flex: 1;
+  padding: 20rpx 20rpx;
+  margin-right: 16rpx;
+  border-radius: 16rpx;
+  border: 1rpx solid #e8dece;
+  background: #fbf7f0;
+}
+
+.dopt:last-child {
+  margin-right: 0;
+}
+
+.dopt.on {
+  border-color: #2e4a3f;
+  background: #edf2ee;
+}
+
+.dname {
+  font-size: 28rpx;
+  color: #26221d;
+}
+
+.dopt.on .dname {
+  color: #2e4a3f;
+  font-weight: 600;
+}
+
+.dsub {
+  margin-top: 4rpx;
+  font-size: 24rpx;
+  color: #736b5e;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f1e8d9;
+}
+
+.field.no-line {
+  border-bottom: 0;
+  padding-bottom: 8rpx;
+}
+
+.field-label {
+  width: 140rpx;
+  flex: 0 0 140rpx;
+  font-size: 28rpx;
+  color: #6f675b;
+}
+
+.field input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.pickup-info {
+  margin-top: 16rpx;
+  padding: 20rpx;
+  border-radius: 16rpx;
+  background: #fbf7f0;
+}
+
+.pk-row {
+  display: flex;
+  padding: 4rpx 0;
+}
+
+.pk-label {
+  width: 80rpx;
+  flex: 0 0 80rpx;
+  font-size: 24rpx;
+  color: #736b5e;
+}
+
+.pk-val {
+  flex: 1;
+  font-size: 24rpx;
+  color: #4a4236;
+}
+
+.pk-tip {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #8a6a4f;
+}
+
+.oitem {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+}
+
+.oimg {
+  width: 104rpx;
+  height: 104rpx;
+  flex: 0 0 104rpx;
+  border-radius: 16rpx;
+  background: #f3ece0;
+  margin-right: 20rpx;
+}
+
+.obody {
+  flex: 1;
+  min-width: 0;
+}
+
+.oname {
+  font-size: 28rpx;
+  color: #26221d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ospec {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #736b5e;
+}
+
+.oright {
+  text-align: right;
+  margin-left: 16rpx;
+}
+
+.oprice {
+  font-size: 28rpx;
+  color: #26221d;
+}
+
+.oqty {
+  font-size: 24rpx;
+  color: #736b5e;
+}
+
+.line-row {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.line-main {
+  flex: 1;
+}
+
+.line-title {
+  font-size: 28rpx;
+  color: #26221d;
+}
+
+.line-sub {
+  margin-top: 4rpx;
+  font-size: 24rpx;
+  color: #736b5e;
+}
+
+.line-val {
+  font-size: 26rpx;
+  color: #8a6a4f;
+}
+
+.pts-switch {
+  transform: scale(0.82);
+  transform-origin: right center;
+}
+
+.remark {
+  flex: 1;
+  text-align: right;
+  font-size: 26rpx;
+}
+
+.srow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rpx 0;
+}
+
+.slabel {
+  font-size: 26rpx;
+  color: #6f675b;
+}
+
+.sval {
+  font-size: 26rpx;
+  color: #26221d;
+}
+
+.sval.minus {
+  color: #2e4a3f;
+}
+
+.sum-line {
+  margin: 16rpx 0;
+}
+
+.slabel.strong {
+  font-size: 28rpx;
+  color: #26221d;
+  font-weight: 600;
+}
+
+.total-price {
+  font-size: 46rpx;
+  line-height: 1;
+}
+
+.total-price .cur {
+  font-size: 26rpx;
+}
+
+.earn {
+  margin-top: 8rpx;
+  text-align: right;
+  font-size: 24rpx;
+  color: #7a7264;
+}
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  padding: 16rpx 32rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: rgba(247, 243, 236, 0.97);
+  border-top: 1rpx solid #ebe1d2;
+}
+
+.bar-total {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+}
+
+.bt-label {
+  font-size: 24rpx;
+  color: #6f675b;
+  margin-right: 8rpx;
+}
+
+.bt-price {
+  font-size: 42rpx;
+}
+
+.bt-price .cur {
+  font-size: 24rpx;
+}
+
+.submit {
+  width: 250rpx;
+  height: 86rpx;
+  border-radius: 999rpx;
+  background: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 28rpx;
+}
+
+.submit.off {
+  opacity: 0.6;
+}
+
+/* 固定底栏留出滚动余量 */
+.page { padding-bottom: 128rpx; }
+
+.addr-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rpx 0 8rpx;
+}
+
+.ah-label {
+  font-size: 24rpx;
+  color: #8b8272;
+}
+
+.ah-link {
+  font-size: 24rpx;
+  color: #2e4a3f;
+}

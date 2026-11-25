@@ -1,0 +1,199 @@
+.pay {
+  padding-bottom: 128rpx;
+}
+
+.hero {
+  padding: 48rpx 32rpx 12rpx;
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: 24rpx;
+  letter-spacing: 4rpx;
+  color: #736b5e;
+}
+
+.amount {
+  margin-top: 12rpx;
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-size: 96rpx;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #2e4a3f;
+}
+
+.amount .cur {
+  font-size: 42rpx;
+  font-weight: 500;
+  margin-right: 4rpx;
+}
+
+.order-no {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #6f675b;
+}
+
+.copy {
+  margin-left: 12rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  border: 1rpx solid #d9cebd;
+  color: #6f675b;
+  font-size: 22rpx;
+}
+
+.bill {
+  margin: 32rpx 32rpx 0;
+  padding: 8rpx 32rpx 20rpx;
+}
+
+.bill-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+}
+
+.bill-k {
+  font-size: 26rpx;
+  color: #857c6f;
+}
+
+.bill-v {
+  font-size: 28rpx;
+  color: #3a342c;
+}
+
+.bill-v.minus {
+  color: #b65b3c;
+}
+
+.bill-v.strong {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #2e4a3f;
+}
+
+.bill-row.total .bill-k {
+  font-size: 28rpx;
+  color: #3a342c;
+}
+
+.wxpay {
+  display: flex;
+  align-items: center;
+  margin: 24rpx 32rpx 0;
+  padding: 28rpx 32rpx;
+  border-radius: 24rpx;
+  background: #fffdf9;
+  border: 1rpx solid #e3d8c7;
+}
+
+.wxpay-icon {
+  width: 68rpx;
+  height: 68rpx;
+  flex: 0 0 68rpx;
+  margin-right: 24rpx;
+  border-radius: 16rpx;
+  background: #07c160;
+  color: #ffffff;
+  font-size: 32rpx;
+  text-align: center;
+  line-height: 68rpx;
+}
+
+.wxpay-body {
+  flex: 1;
+}
+
+.wxpay-t {
+  font-size: 28rpx;
+  color: #26221d;
+  letter-spacing: 1rpx;
+}
+
+.wxpay-d {
+  margin-top: 4rpx;
+  font-size: 24rpx;
+  color: #736b5e;
+  line-height: 1.6;
+}
+
+.wxpay-radio {
+  width: 34rpx;
+  height: 34rpx;
+  flex: 0 0 34rpx;
+  margin-left: 16rpx;
+  border-radius: 50%;
+  background: #07c160;
+  position: relative;
+}
+
+.wxpay-radio::after {
+  content: "";
+  position: absolute;
+  left: 12rpx;
+  top: 7rpx;
+  width: 8rpx;
+  height: 14rpx;
+  border-right: 3rpx solid #fff;
+  border-bottom: 3rpx solid #fff;
+  transform: rotate(42deg);
+}
+
+.tip {
+  display: flex;
+  align-items: flex-start;
+  margin: 24rpx 32rpx 0;
+  padding: 20rpx 32rpx;
+  border-radius: 16rpx;
+  background: #f4efe5;
+}
+
+.tip-key {
+  flex: 0 0 auto;
+  margin-right: 12rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  background: #c9a227;
+  color: #fffdf9;
+  font-size: 22rpx;
+  letter-spacing: 1rpx;
+}
+
+.tip-text {
+  flex: 1;
+  font-size: 24rpx;
+  color: #7d7263;
+  line-height: 1.6;
+}
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  padding: 16rpx 32rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: rgba(247, 243, 236, 0.97);
+  border-top: 1rpx solid #ebe1d2;
+}
+
+.later {
+  width: 180rpx;
+  height: 86rpx;
+  border-radius: 999rpx;
+  margin-right: 16rpx;
+  font-size: 28rpx;
+}
+
+.done {
+  flex: 1;
+  height: 86rpx;
+  border-radius: 999rpx;
+  background: #2e4a3f;
+  color: #f8f4ec;
+  font-size: 28rpx;
+}

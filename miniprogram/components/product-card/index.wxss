@@ -1,0 +1,92 @@
+.pc {
+  background: #fffdf9;
+  border-radius: 24rpx;
+  overflow: hidden;
+  border: 1rpx solid #efe6d8;
+}
+
+.pc-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: #f3ece0;
+}
+
+.pc-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pc-flag {
+  position: absolute;
+  left: 16rpx;
+  top: 16rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  background: rgba(255, 253, 249, 0.86);
+  color: #8a6a4f;
+  font-size: 22rpx;
+  letter-spacing: 1rpx;
+}
+
+.pc-cat {
+  position: absolute;
+  right: 16rpx;
+  bottom: 14rpx;
+  padding: 0rpx 12rpx;
+  border-radius: 4rpx;
+  background: rgba(38, 34, 29, 0.28);
+  color: #fffdf9;
+  font-size: 22rpx;
+  letter-spacing: 2rpx;
+}
+
+.pc-body {
+  padding: 20rpx 20rpx 24rpx;
+}
+
+.pc-school {
+  font-size: 24rpx;
+  color: #736b5e;
+  letter-spacing: 1rpx;
+  margin-bottom: 4rpx;
+}
+
+.pc-name {
+  font-size: 28rpx;
+  color: #26221d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.5rpx;
+}
+
+.pc-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 12rpx;
+}
+
+.pc-price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 34rpx;
+  color: #b65b3c;
+  line-height: 1;
+}
+
+.pc-price .cur {
+  font-size: 24rpx;
+  font-weight: 500;
+  margin-right: 4rpx;
+}
+
+.pc-sales {
+  font-size: 22rpx;
+  color: #7d7365;
+}

@@ -1,0 +1,108 @@
+<view class="page mine">
+  <view class="top">
+    <view class="brand-row">
+      <text class="brand serif">兰欧茜</text>
+      <text class="brand-sub">校服 · 珠海</text>
+    </view>
+
+    <view class="member">
+      <view class="avatar">兰</view>
+      <view class="member-main">
+        <view class="member-name">微信用户</view>
+        <view class="member-tag">{{member.isMember ? '兰欧茜会员 · 全场 96 折' : '再消费 ¥' + member.remain + ' 成为会员'}}</view>
+      </view>
+      <view class="pts" bindtap="goPoints">
+        <view class="pts-num">{{points}}</view>
+        <view class="pts-label">积分</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card block orders">
+    <view class="block-head">
+      <text class="bh serif">我的订单</text>
+      <text class="more" data-tab="all" bindtap="goOrders">全部 ›</text>
+    </view>
+    <view class="ostat-row">
+      <view class="ostat" data-tab="pay" bindtap="goOrders">
+        <view class="oico">
+          付
+          <view class="badge" wx:if="{{counts.pay}}">{{counts.pay}}</view>
+        </view>
+        <text class="olabel">待付款</text>
+      </view>
+      <view class="ostat" data-tab="ship" bindtap="goOrders">
+        <view class="oico">
+          发
+          <view class="badge" wx:if="{{counts.ship}}">{{counts.ship}}</view>
+        </view>
+        <text class="olabel">待发货</text>
+      </view>
+      <view class="ostat" data-tab="receive" bindtap="goOrders">
+        <view class="oico">
+          收
+          <view class="badge" wx:if="{{counts.receive}}">{{counts.receive}}</view>
+        </view>
+        <text class="olabel">待收货</text>
+      </view>
+      <view class="ostat" data-tab="done" bindtap="goOrders">
+        <view class="oico">
+          成
+          <view class="badge" wx:if="{{counts.done}}">{{counts.done}}</view>
+        </view>
+        <text class="olabel">已完成</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="pcard" bindtap="goPoints">
+    <view class="pc-top">
+      <view>
+        <view class="pc-label">我的积分</view>
+        <view class="pc-num">{{points}}</view>
+      </view>
+      <view class="pc-side">
+        <view class="pc-side-k">{{member.isMember ? '会员折扣' : '会员进度'}}</view>
+        <view class="pc-side-v">{{member.isMember ? '全场 96 折' : '¥' + member.remain}}</view>
+      </view>
+    </view>
+    <view class="pc-bar">
+      <view class="pc-fill" style="width: {{member.percent}}%;"></view>
+    </view>
+    <view class="pc-sub">{{member.isMember ? '已累计消费 ¥' + member.spent + '，本单自动打 96 折' : '累计消费满 ¥' + member.threshold + ' 享 96 折，100 积分抵 ¥1'}}</view>
+  </view>
+
+  <view class="card menu">
+    <view class="mrow" bindtap="address">
+      <text class="mkey">收货地址</text>
+      <text class="mval">下单自动记住</text>
+      <text class="arrow">›</text>
+    </view>
+    <view class="mrow" bindtap="goPoints">
+      <text class="mkey">积分明细</text>
+      <text class="mval">抵现与会员</text>
+      <text class="arrow">›</text>
+    </view>
+    <view class="mrow" bindtap="contact">
+      <text class="mkey">联系店长</text>
+      <text class="mval">{{store.wechat}}</text>
+      <text class="arrow">›</text>
+    </view>
+    <view class="mrow" bindtap="about">
+      <text class="mkey">关于兰欧茜</text>
+      <text class="mval">{{version}}</text>
+      <text class="arrow">›</text>
+    </view>
+    <view class="mrow" wx:if="{{canAdmin}}" bindtap="goAdmin">
+      <text class="mkey">店长入口</text>
+      <text class="mval">处理订单与商品</text>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view class="footer-line"></view>
+    <view class="footer-text">兰欧茜校服 · 珠海</view>
+    <view class="footer-sub">量体裁衣，穿得精神</view>
+  </view>
+</view>

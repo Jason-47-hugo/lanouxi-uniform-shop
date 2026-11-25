@@ -1,0 +1,243 @@
+.orders {
+  padding-bottom: 40rpx;
+}
+
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  background: #f7f3ec;
+  border-bottom: 1rpx solid #ece2d2;
+}
+
+.tab {
+  flex: 1;
+  position: relative;
+  height: 92rpx;
+  line-height: 92rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #6f675b;
+}
+
+.tab.on {
+  color: #26221d;
+  font-weight: 600;
+}
+
+.tab-line {
+  position: absolute;
+  left: 50%;
+  bottom: 12rpx;
+  width: 40rpx;
+  height: 4rpx;
+  margin-left: -20rpx;
+  border-radius: 4rpx;
+  background: #2e4a3f;
+}
+
+.list {
+  padding: 24rpx 32rpx 0;
+}
+
+.order {
+  margin-bottom: 20rpx;
+  padding: 24rpx 32rpx 20rpx;
+}
+
+.o-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16rpx;
+}
+
+.o-time {
+  font-size: 24rpx;
+  color: #7a7264;
+  letter-spacing: 0.5rpx;
+}
+
+.o-status {
+  font-size: 24rpx;
+  letter-spacing: 1rpx;
+}
+
+.o-status.warm {
+  color: #b65b3c;
+}
+
+.o-status.green {
+  color: #2e4a3f;
+}
+
+.o-status.muted {
+  color: #7a7264;
+}
+
+.o-body {
+  display: flex;
+  align-items: flex-start;
+}
+
+.o-thumb {
+  width: 128rpx;
+  height: 128rpx;
+  flex: 0 0 128rpx;
+  border-radius: 16rpx;
+  background: #f3ece0;
+  margin-right: 20rpx;
+}
+
+.o-info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 4rpx;
+}
+
+.o-name {
+  font-size: 28rpx;
+  color: #26221d;
+  line-height: 1.45;
+}
+
+.o-spec {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #736b5e;
+}
+
+.o-track {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #8a6a4f;
+}
+
+.o-right {
+  text-align: right;
+  margin-left: 16rpx;
+  padding-top: 4rpx;
+}
+
+.o-right .price {
+  font-size: 34rpx;
+}
+
+.o-right .cur {
+  font-size: 24rpx;
+}
+
+.o-qty {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #7a7264;
+}
+
+.o-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f3ebdc;
+}
+
+.o-foot .btn {
+  margin-left: 16rpx;
+}
+
+.list-end {
+  padding: 12rpx 0 32rpx;
+  text-align: center;
+  font-size: 24rpx;
+  letter-spacing: 2rpx;
+  color: #c3b8a5;
+}
+
+.empty {
+  padding-top: 128rpx;
+  text-align: center;
+}
+
+.empty-btn {
+  display: inline-block;
+  margin-top: 32rpx;
+  padding: 0 56rpx;
+  height: 78rpx;
+  line-height: 78rpx;
+  border-radius: 999rpx;
+  font-size: 28rpx;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  margin: 16rpx 32rpx 4rpx;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  height: 64rpx;
+  padding: 0 22rpx;
+  border-radius: 32rpx;
+  background: #fff;
+  border: 1rpx solid #ece3d4;
+  font-size: 26rpx;
+  color: #2b2823;
+}
+
+.search-clear {
+  margin-left: 16rpx;
+  font-size: 24rpx;
+  color: #8b8272;
+}
+
+/* ---------- 首次加载的骨架屏（只为了不让人对着空白等） ---------- */
+.sk-card {
+  padding: 28rpx 26rpx;
+}
+
+.sk {
+  background: #efe8db;
+  border-radius: 8rpx;
+  animation: sk-breathe 1.4s ease-in-out infinite;
+}
+
+@keyframes sk-breathe {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+.sk-line {
+  height: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.sk-line:last-child {
+  margin-bottom: 0;
+}
+
+.w40 { width: 40%; }
+.w50 { width: 50%; }
+.w70 { width: 70%; }
+
+.sk-row {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 22rpx;
+}
+
+.sk-thumb {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 12rpx;
+  flex: 0 0 auto;
+  margin-right: 22rpx;
+}
+
+.sk-lines {
+  flex: 1;
+  min-width: 0;
+  padding-top: 8rpx;
+}

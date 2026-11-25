@@ -1,0 +1,390 @@
+page {
+  background: #f7f3ec;
+  color: #26221d;
+  font-family: "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 30rpx;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+image,
+scroll-view,
+swiper,
+input,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+.serif {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 48rpx;
+}
+
+.gutter {
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+}
+
+.muted {
+  color: #6f675b;
+}
+
+.tiny {
+  font-size: 24rpx;
+}
+
+.small {
+  font-size: 26rpx;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.card {
+  background: #fffdf9;
+  border-radius: 24rpx;
+  border: 1rpx solid #efe6d8;
+  box-shadow: 0 12rpx 40rpx rgba(80, 60, 40, 0.05);
+}
+
+.hairline {
+  height: 1rpx;
+  background: #efe6d8;
+}
+
+/* 按钮 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 92rpx;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+  transition: opacity 0.15s;
+}
+
+.btn:active {
+  opacity: 0.82;
+}
+
+.btn-primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn-brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1rpx solid #d9cebd;
+  color: #2e4a3f;
+}
+
+/* 简写别名，便于页面内组合 */
+.btn.primary {
+  background: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.btn.brick {
+  background: #b65b3c;
+  color: #fff8ee;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1rpx solid #d9cebd;
+  color: #2e4a3f;
+}
+
+.btn-light {
+  background: #f1e9db;
+  color: #4a4236;
+}
+
+.btn-sm {
+  height: 64rpx;
+  padding: 0 32rpx;
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+}
+
+/* 标签与筛选 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 60rpx;
+  padding: 0 28rpx;
+  margin-right: 16rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid #e3d8c7;
+  background: #fffdf9;
+  color: #6f675b;
+  font-size: 28rpx;
+  white-space: nowrap;
+}
+
+.chip.on {
+  background: #2e4a3f;
+  border-color: #2e4a3f;
+  color: #f8f4ec;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4rpx 12rpx;
+  margin-right: 8rpx;
+  border-radius: 8rpx;
+  background: #f3ebdd;
+  color: #8a6a4f;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.tag-green {
+  background: #e7efe9;
+  color: #2e4a3f;
+}
+
+/* 标题 */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 56rpx 0 24rpx;
+}
+
+.sec-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 38rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  color: #26221d;
+}
+
+.sec-sub {
+  font-size: 24rpx;
+  color: #736b5e;
+  letter-spacing: 1rpx;
+  margin-left: 16rpx;
+}
+
+.sec-more {
+  font-size: 26rpx;
+  color: #6f675b;
+}
+
+/* 价格 */
+.price {
+  font-family: "DIN Alternate", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  color: #b65b3c;
+}
+
+.price .cur {
+  font-size: 0.62em;
+  font-weight: 500;
+  margin-right: 4rpx;
+}
+
+.price-old {
+  margin-left: 12rpx;
+  color: #8f8577;
+  font-size: 24rpx;
+  text-decoration: line-through;
+}
+
+/* 空状态 */
+.empty {
+  padding: 112rpx 40rpx 128rpx;
+  text-align: center;
+  color: #736b5e;
+}
+
+.empty-mark {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 0 auto 28rpx;
+  border-radius: 50%;
+  border: 1rpx solid #ded2bf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 46rpx;
+  color: #8f8577;
+  background: #fbf7f0;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  letter-spacing: 1rpx;
+}
+
+.empty-sub {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #7d7365;
+}
+
+/* 底部弹层 */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(30, 26, 20, 0.45);
+  z-index: 900;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 901;
+  background: #fffdf9;
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 40rpx 32rpx calc(40rpx + env(safe-area-inset-bottom));
+  max-height: 82vh;
+}
+
+.sheet-grip {
+  width: 72rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #e4d8c6;
+  margin: 0 auto 24rpx;
+}
+
+.sheet-title {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 38rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+.sheet-sub {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #736b5e;
+}
+
+.sheet-close {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #f2ebdf;
+  color: #7a7165;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+}
+
+/* 输入 */
+.field {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #efe6d8;
+}
+
+.field-label {
+  width: 150rpx;
+  font-size: 28rpx;
+  color: #6f675b;
+}
+
+.field input {
+  flex: 1;
+  font-size: 30rpx;
+  color: #26221d;
+}
+
+.placeholder {
+  color: #84796a;
+}
+
+/* 动画 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease both;
+}
+
+/* 分隔花饰：一条细线 + 中间一枚小菱形，用来断开章节，比纯空白更有节奏 */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 0 4rpx;
+}
+
+.ornament-line {
+  width: 96rpx;
+  height: 1rpx;
+  background: #ded2bf;
+}
+
+.ornament-dot {
+  width: 10rpx;
+  height: 10rpx;
+  margin: 0 20rpx;
+  background: #c9a227;
+  transform: rotate(45deg);
+}
+
+.safe-bottom {
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+}

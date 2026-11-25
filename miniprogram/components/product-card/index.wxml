@@ -1,0 +1,15 @@
+<view class="pc" bindtap="onTap">
+  <view class="pc-img-wrap">
+    <image class="pc-img" src="{{item.image}}" mode="aspectFill" lazy-load="{{true}}" />
+    <view class="pc-flag" wx:if="{{item.tags[0]}}">{{item.tags[0]}}</view>
+    <view class="pc-cat" wx:if="{{item.category}}">{{item.category}}</view>
+  </view>
+  <view class="pc-body">
+    <view class="pc-school" wx:if="{{showSchool}}">{{item.schoolShort}}</view>
+    <view class="pc-name">{{item.short}}</view>
+    <view class="pc-foot">
+      <view class="pc-price"><text class="cur">¥</text>{{item.price}}</view>
+      <view class="pc-sales">已售 {{item.sales}}</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,135 @@
+<view class="page checkout">
+  <view class="notice">
+    <text class="notice-key">说明</text>
+    <text class="notice-text">提交后走微信支付，付完店长立刻收到通知并安排发货；7 天无理由退换。</text>
+  </view>
+
+  <view class="card block">
+    <view class="block-head">
+      <text class="bh-title serif">怎么拿</text>
+    </view>
+    <view class="delivery">
+      <view class="dopt {{delivery === 'express' ? 'on' : ''}}" data-d="express" bindtap="setDelivery">
+        <view class="dname">快递到家</view>
+        <view class="dsub">¥8 · 满 50 包邮</view>
+      </view>
+      <view class="dopt {{delivery === 'pickup' ? 'on' : ''}}" data-d="pickup" bindtap="setDelivery">
+        <view class="dname">到店自提</view>
+        <view class="dsub">免运费 · 可当场试穿</view>
+      </view>
+    </view>
+
+    <view wx:if="{{delivery === 'express'}}">
+      <view class="addr-head">
+        <text class="ah-label">收货信息</text>
+        <text class="ah-link" bindtap="openAddressBook">地址簿 ›</text>
+      </view>
+      <view class="field">
+        <text class="field-label">收货人</text>
+        <input value="{{address.name}}" data-field="name" bindinput="onAddrInput" placeholder="家长姓名" placeholder-class="placeholder" />
+      </view>
+      <view class="field">
+        <text class="field-label">手机号</text>
+        <input value="{{address.phone}}" data-field="phone" type="number" maxlength="11" bindinput="onAddrInput" placeholder="11 位手机号" placeholder-class="placeholder" />
+      </view>
+      <view class="field no-line">
+        <text class="field-label">地址</text>
+        <input value="{{address.detail}}" data-field="detail" bindinput="onAddrInput" placeholder="小区 / 街道 / 门牌号" placeholder-class="placeholder" />
+      </view>
+    </view>
+
+    <view class="pickup-info" wx:else>
+      <view class="pk-row"><text class="pk-label">门店</text><text class="pk-val">{{store.name}}</text></view>
+      <view class="pk-row"><text class="pk-label">地址</text><text class="pk-val">{{store.address}}</text></view>
+      <view class="pk-row"><text class="pk-label">时间</text><text class="pk-val">{{store.hours}}</text></view>
+      <view class="pk-tip">到店报订单号，可以当场试穿换码。</view>
+    </view>
+  </view>
+
+  <view class="card block">
+    <view class="block-head">
+      <text class="bh-title serif">买了什么</text>
+      <text class="bh-sub">共 {{items.length}} 种</text>
+    </view>
+    <view class="oitem" wx:for="{{items}}" wx:key="index">
+      <image class="oimg" src="{{item.image}}" mode="aspectFill" />
+      <view class="obody">
+        <view class="oname">{{item.name}}</view>
+        <view class="ospec">{{item.color}} · {{item.size}}</view>
+      </view>
+      <view class="oright">
+        <view class="oprice">¥{{item.price}}</view>
+        <view class="oqty">×{{item.qty}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card block">
+    <view class="line-row" wx:if="{{memberDiscount > 0}}">
+      <view class="line-main">
+        <view class="line-title">会员 96 折</view>
+        <view class="line-sub">已累计消费 ¥{{member.spent}}，自动打折</view>
+      </view>
+      <text class="line-val minus">-¥{{memberDiscount}}</text>
+    </view>
+    <view class="hairline" wx:if="{{memberDiscount > 0}}"></view>
+    <view class="line-row">
+      <view class="line-main">
+        <view class="line-title">积分抵扣</view>
+        <view class="line-sub">可用 {{available}} 分（约 ¥{{availableYuan}}） · 本单最多抵 ¥{{maxUse}}</view>
+      </view>
+      <view class="pts-switch">
+        <switch checked="{{usePoints}}" bindchange="togglePoints" color="#2E4A3F" />
+      </view>
+    </view>
+    <view class="hairline"></view>
+    <view class="line-row" wx:if="{{!member.isMember}}">
+      <view class="line-main">
+        <view class="line-title">会员进度</view>
+        <view class="line-sub">再消费 ¥{{member.remain}} 享全场 96 折</view>
+      </view>
+    </view>
+    <view class="hairline" wx:if="{{!member.isMember}}"></view>
+    <view class="line-row">
+      <view class="line-main">
+        <view class="line-title">备注</view>
+      </view>
+      <input
+        class="remark"
+        value="{{remark}}"
+        bindinput="onRemark"
+        placeholder="孩子姓名 / 班级，可留空"
+        placeholder-class="placeholder"
+      />
+    </view>
+  </view>
+
+  <view class="card block">
+    <view class="srow">
+      <text class="slabel">商品金额</text>
+      <text class="sval">¥{{goods}}</text>
+    </view>
+    <view class="srow">
+      <text class="slabel">运费</text>
+      <text class="sval">{{shipping > 0 ? '¥' + shipping : '包邮'}}</text>
+    </view>
+    <view class="srow" wx:if="{{discount > 0}}">
+      <text class="slabel">积分抵扣</text>
+      <text class="sval minus">-¥{{discount}}</text>
+    </view>
+    <view class="hairline sum-line"></view>
+    <view class="srow total">
+      <text class="slabel strong">合计</text>
+      <view class="price total-price"><text class="cur">¥</text>{{amount}}</view>
+    </view>
+    <view class="earn">确认收货后返 {{amount}} 积分</view>
+  </view>
+
+  <view class="bar">
+    <view class="bar-total">
+      <text class="bt-label">应付</text>
+      <view class="price bt-price"><text class="cur">¥</text>{{amount}}</view>
+    </view>
+    <view class="btn submit {{submitting ? 'off' : ''}}" bindtap="submit">{{submitting ? '提交中…' : '提交订单'}}</view>
+  </view>
+</view>
