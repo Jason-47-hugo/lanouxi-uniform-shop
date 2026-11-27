@@ -228,6 +228,128 @@ async function payNotify(ctx, payload) {
   return { ok: true, order: order };
 }
 
+/* 真实支付：服务端统一下单。
+ * 金额一律用订单里已经算好的 order.amount（前端传什么都不认），
+ * 未配置商户号时返回 payReady:false，页面退回「到店付款」提示。 */
+async function createPayment(ctx, payload) {
+  const got = await getOwnOrder(ctx, payload.orderId);
+  if (!got.ok) return got;
+  const order = got.order;
+  const guard = R.canDo('pay', order, { openid: ctx.openid, isAdmin: ctx.isAdmin });
+  if (!guard.ok) return guard;
+
+  const wp = ctx.wxpay || require('./wxpay');
+  if (!wp.configured()) {
+    return {
+      ok: false,
+      payReady: false,
+      msg: '在线支付还没开通，可以先到店付款或转给店长',
+      missing: wp.missing ? wp.missing() : []
+    };
+  }
+
+  const outTradeNo = order.no || order._id;
+  const amountFen = Math.round(Number(order.amount) * 100);
+  if (!(amountFen > 0)) return { ok: false, msg: '订单金额不对，先刷新一下' };
+
+  const first = order.items && order.items[0] ? order.items[0].name : '校服';
+  const name = String(first).slice(0, 40);
+  const r = await wp.jsapi({
+    description: '兰欧茜校服·' + name,
+    outTradeNo: outTradeNo,
+    amountFen: amountFen,
+    openid: ctx.openid,
+    attach: order._id
+  });
+  if (!r.ok) return { ok: false, payReady: true, msg: r.msg };
+
+  await ctx.db.update(COLL.orders, order._id, {
+    pay: { outTradeNo: outTradeNo, prepayId: r.prepayId, at: ctx.now },
+    updatedAt: ctx.now
+  });
+  return { ok: true, payReady: true, orderId: order._id, outTradeNo: outTradeNo, payParams: r.payParams };
+}
+
+/* 前端支付成功后主动查单确认（不依赖公网回调）。
+ * 以微信侧的 trade_state 为准，金额必须和订单一致。 */
+async function confirmPay(ctx, payload) {
+  const got = await getOwnOrder(ctx, payload.orderId);
+  if (!got.ok) return got;
+  const order = got.order;
+  if (order.status === 'paid') return { ok: true, order: order, already: true };
+
+  const wp = ctx.wxpay || require('./wxpay');
+  if (!wp.configured()) return { ok: false, payReady: false, msg: '在线支付还没开通' };
+
+  const outTradeNo = (order.pay && order.pay.outTradeNo) || order.no || order._id;
+  const q = await wp.query(outTradeNo);
+  if (!q.ok) return { ok: false, msg: q.msg };
+  if (q.tradeState !== 'SUCCESS') {
+    return { ok: false, pending: true, tradeState: q.tradeState, msg: '还没收到付款' };
+  }
+  const expectFen = Math.round(Number(order.amount) * 100);
+  if (q.amountFen && expectFen !== q.amountFen) {
+    return { ok: false, msg: '付款金额对不上，请联系店长' };
+  }
+
+  order.status = 'paid';
+  order.transactionId = q.transactionId || '';
+  timeline(order, '微信支付成功', ctx.now);
+  const won = await ctx.db.cas(COLL.orders, order._id, { status: 'pending_pay' }, {
+    status: 'paid',
+    transactionId: order.transactionId,
+    updatedAt: order.updatedAt,
+    timeline: order.timeline
+  });
+  if (!won) {
+    const fresh = await ctx.db.get(COLL.orders, order._id);
+    return { ok: true, order: fresh, already: true };
+  }
+  return { ok: true, order: order };
+}
+
+/* 店长手动标记已收款：家长到店付或微信转帐时用 */
+async function markPaid(ctx, payload) {
+  if (!ctx.isAdmin) return { ok: false, msg: '只有店长能标记收款' };
+  const order = await ctx.db.get(COLL.orders, payload.orderId);
+  if (!order) return { ok: false, msg: '订单不存在' };
+  if (order.status !== 'pending_pay') return { ok: false, msg: '这单不是待付款状态' };
+  order.status = 'paid';
+  order.paidBy = 'admin';
+  timeline(order, '店长标记已收款（到店付款/转账）', ctx.now);
+  const won = await ctx.db.cas(COLL.orders, order._id, { status: 'pending_pay' }, {
+    status: 'paid',
+    paidBy: 'admin',
+    updatedAt: order.updatedAt,
+    timeline: order.timeline
+  });
+  if (!won) return { ok: false, msg: '这单刚被改过，刷新看看' };
+  return { ok: true, orderId: order._id, order: order };
+}
+
+/* 支付回调路由（可选）：云开发有公网 HTTP 地址时，把微信回调接到这里 */
+async function payNotifyV3(ctx, payload) {
+  const wp = ctx.wxpay || require('./wxpay');
+  const dec = wp.decryptResource ? wp.decryptResource(payload.resource || {}) : { ok: false, msg: '无法解密' };
+  if (!dec.ok) return { ok: false, msg: dec.msg };
+  const data = dec.data || {};
+  const orderId = data.attach || '';
+  const order = orderId ? await ctx.db.get(COLL.orders, orderId) : null;
+  if (!order) return { ok: false, msg: '订单不存在' };
+  if (data.trade_state !== 'SUCCESS') return { ok: true, ignored: true, tradeState: data.trade_state };
+  if (order.status === 'paid') return { ok: true, order: order, duplicate: true };
+  order.status = 'paid';
+  order.transactionId = data.transaction_id || '';
+  timeline(order, '微信支付成功（回调）', ctx.now);
+  const won = await ctx.db.cas(COLL.orders, order._id, { status: 'pending_pay' }, {
+    status: 'paid',
+    transactionId: order.transactionId,
+    updatedAt: order.updatedAt,
+    timeline: order.timeline
+  });
+  return { ok: true, order: order, duplicate: !won };
+}
+
 async function cancel(ctx, payload) {
   const got = await getOwnOrder(ctx, payload.orderId);
   if (!got.ok) return got;
@@ -815,6 +937,10 @@ module.exports = {
   createOrder: createOrder,
   pay: pay,
   payNotify: payNotify,
+  createPayment: createPayment,
+  confirmPay: confirmPay,
+  markPaid: markPaid,
+  payNotifyV3: payNotifyV3,
   cancel: cancel,
   confirm: confirm,
   returnApply: returnApply,
