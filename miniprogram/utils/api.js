@@ -101,6 +101,31 @@ function pay(orderId) {
   });
 }
 
+/* 真实支付：服务端统一下单，返回 wx.requestPayment 需要的参数。
+   云端没配商户号时返回 {ok:false, payReady:false}，页面提示到店付款。 */
+function createPayment(orderId) {
+  return withFallback('createPayment', { orderId: orderId }, function () {
+    /* 本地演示版没有商户号：直接当作「演示支付」走通 */
+    store.payOrder(orderId);
+    return { ok: true, demo: true, payReady: false, msg: '演示版没有在线支付' };
+  });
+}
+
+/* 付款后查单确认；演示版就是本地已付款 */
+function confirmPay(orderId) {
+  return withFallback('confirmPay', { orderId: orderId }, function () {
+    const o = store.getOrder(orderId);
+    return o ? { ok: true, order: o, demo: true } : { ok: false, msg: '订单不见了' };
+  });
+}
+
+/* 店长手动标记已收款（家长到店付或转账） */
+function markPaid(orderId) {
+  return withFallback('markPaid', { orderId: orderId }, function () {
+    return { ok: false, msg: '演示版不支持标记收款，联网后才有' };
+  });
+}
+
 function cancel(orderId) {
   return withFallback('cancel', { orderId: orderId }, function () {
     return store.cancelOrder(orderId);
@@ -274,6 +299,9 @@ module.exports = {
   me: me,
   createOrder: createOrder,
   pay: pay,
+  createPayment: createPayment,
+  confirmPay: confirmPay,
+  markPaid: markPaid,
   cancel: cancel,
   confirm: confirm,
   returnApply: returnApply,
