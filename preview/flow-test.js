@@ -343,6 +343,25 @@ ok(stateMap.every((s) => rules.STATUS[s] && store.STATUS[s]), '七个订单状�
   }
   ok(threw, '空数据会报错而不是生成坏文件');
 
+  /* 真实支付（v1.4）：前端只能调起收银台，金额与状态都在服务端 */
+  const payJs = fs.readFileSync(path.join(MP, 'pages', 'pay', 'pay.js'), 'utf8');
+  const payWxml = fs.readFileSync(path.join(MP, 'pages', 'pay', 'pay.wxml'), 'utf8');
+  const wxpay = require(path.join(__dirname, '..', 'cloudfunctions', 'api', 'common', 'wxpay.js'));
+  const apiJs = fs.readFileSync(path.join(MP, 'utils', 'api.js'), 'utf8');
+
+  ok(/wx\.requestPayment\s*\(/.test(payJs), '收银台是 wx.requestPayment 拉起的');
+  ok(/api\.createPayment\s*\(/.test(payJs), '下单先走云函数 createPayment');
+  ok(/api\.confirmPay\s*\(/.test(payJs), '付完调 confirmPay 让服务端查单确认');
+  ok(payWxml.indexOf('演示版不会真实扣款') < 0, '支付页已经没有「演示版不会真实扣款」');
+  ok(payWxml.indexOf('到店付款') >= 0, '支付页保留了「到店付款/转账」的兜底说法');
+  ok(typeof wxpay.configured === 'function' && typeof wxpay.configured() === 'boolean',
+    'wxpay.configured() 返回布尔值（配置齐才发起请求）');
+  const need = wxpay.missing();
+  ok(Array.isArray(need) && need.length === (wxpay.configured() ? 0 : need.length),
+    'missing() 与 configured() 口径一致', need);
+  ok(/createPayment/.test(apiJs) && /confirmPay/.test(apiJs) && /markPaid/.test(apiJs),
+    'api.js 暴露了 createPayment / confirmPay / markPaid');
+
   console.log('\n' + (fail ? 'FAILED ' + fail + ' / ' + (pass + fail) : 'ALL PASS ' + pass));
   process.exit(fail ? 1 : 0);
 })();
