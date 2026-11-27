@@ -101,10 +101,11 @@ function makeCtx(db, openid) {
   return { db: db, openid: openid, now: Date.now() + Math.floor(Math.random() * 1000), isAdmin: false };
 }
 
-async function call(db, openid, event) {
+async function call(db, openid, event, extra) {
   /* 每次调用都新建 ctx，模拟云函数一次执行只处理一个请求 */
   const ctx = makeCtx(db, openid);
   ctx.now = Date.now();
+  if (extra) Object.keys(extra).forEach(function (k) { ctx[k] = extra[k]; });
   return handle(event, ctx);
 }
 
@@ -659,6 +660,102 @@ async function main() {
   const p9row = db.data.products.p9;
   ok(!!p9row && p9row.image === '/images/prod-02.jpg', '新品 p9 的图片字段写进去了', p9row && p9row.image);
   eq(p9row.price, D.PRODUCTS.filter(function (p) { return p.id === 'p9'; })[0].price, '同步不篡改文件里的价格');
+
+  /* 场景 16：真实支付（下单 / 查单 / 店长标记收款） */
+  console.log('\n[16] 真实支付');
+  db = makeMemDb();
+  db.data.admins[ADMIN] = { _id: ADMIN };
+
+  /* 16.1 没配商户号：明确告诉前端「没开通」，不要抛错、也不要把单子改掉
+   * 注意：真实环境里配置可能来自环境变量或 pay.local.json，所以这里注入一个
+   * 「什么都没配」的网关，测试才不受本机是否填了密钥影响。 */
+  const unset = {
+    configured: function () { return false; },
+    missing: function () { return ['MCH_ID', 'MCH_SERIAL_NO', 'MCH_PRIVATE_KEY', 'API_V3_KEY']; },
+    jsapi: async function () { throw new Error('不该被调用'); }
+  };
+  const noPay = await call(db, BUYER, { action: 'createPayment', orderId: 'x' }, { wxpay: unset });
+  eq(noPay.ok, false, '没配商户号时 createPayment 不成功');
+  eq(noPay.msg, '订单不存在', '订单不存在先报订单不存在');
+
+  const order1 = await call(db, BUYER, {
+    action: 'createOrder',
+    items: [{ productId: 'p1', size: '170', color: '藏青', qty: 1 }],
+    delivery: 'express',
+    address: addr(),
+    usePoints: false
+  });
+  const oid1 = order1.order._id;
+  const realPay = await call(db, BUYER, { action: 'createPayment', orderId: oid1 }, { wxpay: unset });
+  eq(realPay.ok, false, '云函数没配商户号时下单被拒绝');
+  eq(realPay.payReady, false, '返回 payReady:false，前端据此提示到店付款');
+  ok(Array.isArray(realPay.missing) && realPay.missing.length >= 3, '告诉前端缺哪些环境变量', (realPay.missing || []).join(','));
+
+  /* 16.2 注入假的支付网关：金额必须来自服务端订单，前端传的一概不认 */
+  const fake = {
+    configured: function () { return true; },
+    missing: function () { return []; },
+    lastJsapi: null,
+    jsapi: async function (p) {
+      fake.lastJsapi = p;
+      return { ok: true, prepayId: 'wx-prepay-1', payParams: { timeStamp: '1', nonceStr: 'n', package: 'prepay_id=wx-prepay-1', signType: 'RSA', paySign: 'sig' } };
+    },
+    query: async function (no) {
+      fake.lastQuery = no;
+      return { ok: true, tradeState: fake.tradeState || 'SUCCESS', transactionId: '4200000001', amountFen: fake.amountFen };
+    }
+  };
+  const pay1 = await call(db, BUYER, { action: 'createPayment', orderId: oid1, amount: 1 }, { wxpay: fake });
+  ok(pay1.ok, '配置好了就能下单', pay1.msg);
+  eq(pay1.payParams.signType, 'RSA', '返回小程序要的支付参数（signType=RSA）');
+  eq(pay1.payParams.package, 'prepay_id=wx-prepay-1', 'package 里带 prepay_id');
+  eq(fake.lastJsapi.amountFen, Math.round(order1.order.amount * 100), '下单金额 = 服务端算的订单金额（前端传 amount:1 无效）');
+  eq(fake.lastJsapi.openid, BUYER, 'payer.openid 是下单人自己');
+  eq(pay1.outTradeNo, order1.order.no, '商户订单号用订单号，方便对账');
+  eq(db.data.orders[oid1].pay.prepayId, 'wx-prepay-1', 'prepay_id 记在订单里');
+
+  /* 16.3 别人的单、已付款的单都不能再发起支付 */
+  const otherPay = await call(db, OTHER, { action: 'createPayment', orderId: oid1 }, { wxpay: fake });
+  eq(otherPay.ok, false, '不能替别人的订单付款');
+  eq(otherPay.msg, '这不是你的订单', '越权提示明确');
+
+  /* 16.4 查单确认：金额对得上才置为已付款 */
+  fake.amountFen = Math.round(order1.order.amount * 100) - 1;
+  const badMoney = await call(db, BUYER, { action: 'confirmPay', orderId: oid1 }, { wxpay: fake });
+  eq(badMoney.ok, false, '付款金额比订单少一分就不认');
+  eq(db.data.orders[oid1].status, 'pending_pay', '金额不符时订单状态不动');
+
+  fake.amountFen = Math.round(order1.order.amount * 100);
+  fake.tradeState = 'NOTPAY';
+  const notYet = await call(db, BUYER, { action: 'confirmPay', orderId: oid1 }, { wxpay: fake });
+  eq(notYet.ok, false, '微信侧还没付款时返回失败');
+  eq(notYet.pending, true, 'pending:true 让前端知道「等一下再查」');
+
+  fake.tradeState = 'SUCCESS';
+  const paid = await call(db, BUYER, { action: 'confirmPay', orderId: oid1 }, { wxpay: fake });
+  ok(paid.ok, '查单成功后订单变已付款', paid.msg);
+  eq(db.data.orders[oid1].status, 'paid', '库里状态是 paid');
+  eq(db.data.orders[oid1].transactionId, '4200000001', '微信交易号写进订单');
+  const againPay = await call(db, BUYER, { action: 'confirmPay', orderId: oid1 }, { wxpay: fake });
+  eq(againPay.already, true, '重复确认不会重复改');
+
+  /* 16.5 店长手动标记收款（到店付/转账的兜底） */
+  const order2 = await call(db, BUYER, {
+    action: 'createOrder',
+    items: [{ productId: 'p1', size: '170', color: '藏青', qty: 1 }],
+    delivery: 'pickup',
+    address: addr(),
+    usePoints: false
+  });
+  const oidMark = order2.order._id;
+  const buyerMark = await call(db, BUYER, { action: 'markPaid', orderId: oidMark });
+  eq(buyerMark.ok, false, '买家不能自己标记已收款');
+  const adminMark = await call(db, ADMIN, { action: 'markPaid', orderId: oidMark });
+  ok(adminMark.ok, '店长可以标记已收款', adminMark.msg);
+  eq(db.data.orders[oidMark].status, 'paid', '标记后进入待发货');
+  eq(db.data.orders[oidMark].paidBy, 'admin', '记录是店长标记的');
+  const markTwice = await call(db, ADMIN, { action: 'markPaid', orderId: oidMark });
+  eq(markTwice.ok, false, '重复标记会失败（状态已不是待付款）');
 
   console.log('\n' + (fail === 0 ? 'ALL PASS ' : 'FAILED ') + pass + (fail ? ' / ' + (pass + fail) : ''));
   process.exit(fail === 0 ? 0 : 1);
