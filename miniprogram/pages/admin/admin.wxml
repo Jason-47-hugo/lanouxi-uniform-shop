@@ -84,6 +84,7 @@
             <view wx:if="{{item.status === 'return_pending'}}" class="abtn primary" data-id="{{item.id}}" bindtap="openReturn">处理退货</view>
             <view wx:if="{{item.status === 'shipped'}}" class="abtn ghost" data-id="{{item.id}}" bindtap="copyTrack">复制运单</view>
             <view wx:if="{{item.status === 'shipped'}}" class="abtn ghost" data-id="{{item.id}}" bindtap="openTrack">补单号</view>
+            <view wx:if="{{item.status === 'pending_pay'}}" class="abtn primary" data-id="{{item.id}}" bindtap="doMarkPaid">标记收款</view>
             <view wx:if="{{item.status === 'pending_pay'}}" class="abtn ghost" data-id="{{item.id}}" bindtap="copyNo">单号</view>
           </view>
         </view>

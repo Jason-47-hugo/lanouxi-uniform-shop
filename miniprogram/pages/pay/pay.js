@@ -61,38 +61,80 @@ Page({
     wx.setClipboardData({ data: this.data.order.no });
   },
 
-  /* 真实上线时这里调用云函数统一下单拿 payment 参数，
-     再 wx.requestPayment() 唤起微信收银台；演示版直接标记支付成功。 */
+  /* 真实支付：先让云函数统一下单拿支付参数，再 wx.requestPayment；
+     付完调 confirmPay 让服务端查单确认（不依赖公网回调）。
+     云函数没配商户号时，createPayment 返回 payReady:false，退回「到店付款」提示。 */
   pay() {
     if (this.data.paying) return;
     const that = this;
-    const amount = this.data.amountText;
-    wx.showModal({
-      title: '微信支付',
-      content: '演示版不会真实扣款。确认后模拟支付 ¥' + amount + '，订单直接进入待发货。',
-      confirmText: '确认支付',
-      cancelText: '再想想',
-      success(res) {
-        if (!res.confirm) return;
-        that.setData({ paying: true });
-        setTimeout(function () {
-          /* 支付走 api：接真商户号后这里换成 wx.requestPayment，
-             订单状态只认云函数返回，前端改不动 */
-          api.pay(that.id).then(function (r) {
-            that.setData({ paying: false });
-            if (!r || !r.ok) {
-              wx.showToast({ title: (r && r.msg) || '订单状态已变化', icon: 'none' });
-              return;
-            }
-            wx.showToast({ title: '支付成功', icon: 'success' });
-            setTimeout(function () {
-              wx.redirectTo({ url: '/pages/order/order?id=' + that.id });
-            }, 700);
-          }).catch(function () {
-            that.setData({ paying: false });
-            wx.showToast({ title: '支付失败，请重试', icon: 'none' });
+    this.setData({ paying: true });
+
+    api.createPayment(this.id).then(function (r) {
+      if (!r || !r.ok) {
+        that.setData({ paying: false });
+        if (r && r.payReady === false) {
+          wx.showModal({
+            title: '在线支付还没开通',
+            content: '可以到店付款，或微信转账给店长，付款后店长会把这单标成已付款。',
+            showCancel: false,
+            confirmText: '知道了'
           });
-        }, 500);
+          return;
+        }
+        wx.showToast({ title: (r && r.msg) || '下单失败，请重试', icon: 'none' });
+        return;
+      }
+      if (!r.payParams) {
+        that.finalize();
+        return;
+      }
+      that.requestPay(r);
+    }).catch(function () {
+      that.setData({ paying: false });
+      wx.showToast({ title: '网络不太好，请重试', icon: 'none' });
+    });
+  },
+
+  /* 付完了（或演示版直接成功）：让服务端查单确认，再跳订单详情 */
+  finalize() {
+    const that = this;
+    api.confirmPay(this.id).then(function (c) {
+      that.setData({ paying: false });
+      if (c && c.ok) {
+        wx.showToast({ title: '支付成功', icon: 'success' });
+        setTimeout(function () {
+          wx.redirectTo({ url: '/pages/order/order?id=' + that.id });
+        }, 700);
+        return;
+      }
+      wx.showToast({ title: (c && c.msg) || '正在确认付款…', icon: 'none' });
+      setTimeout(function () { that.load(); }, 1500);
+    }).catch(function () {
+      that.setData({ paying: false });
+      wx.showToast({ title: '正在确认付款…', icon: 'none' });
+    });
+  },
+
+  requestPay(r) {
+    const that = this;
+    const p = r.payParams || {};
+    wx.requestPayment({
+      timeStamp: p.timeStamp,
+      nonceStr: p.nonceStr,
+      package: p.package,
+      signType: p.signType || 'RSA',
+      paySign: p.paySign,
+      success() {
+        that.finalize();
+      },
+      fail(err) {
+        that.setData({ paying: false });
+        const msg = err && err.errMsg ? err.errMsg : '';
+        if (msg.indexOf('cancel') >= 0) {
+          wx.showToast({ title: '已取消支付', icon: 'none' });
+          return;
+        }
+        wx.showToast({ title: '支付没成功，可以再试一次', icon: 'none' });
       }
     });
   },

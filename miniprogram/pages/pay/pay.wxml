@@ -33,14 +33,14 @@
     <view class="wxpay-icon">微</view>
     <view class="wxpay-body">
       <view class="wxpay-t">微信支付</view>
-      <view class="wxpay-d">付款到兰欧茜校服的对公收款账户，钱不经过任何个人转发</view>
+      <view class="wxpay-d">付款到「珠海市香洲区兰欧茜服饰商铺」的微信支付商户号，钱不经过任何个人转发</view>
     </view>
     <view class="wxpay-radio"></view>
   </view>
 
   <view class="tip">
     <text class="tip-key">说明</text>
-    <text class="tip-text">付款成功后订单直接进入「待发货」，店长那边会收到通知。演示版不会真实扣款，点下方按钮即可模拟支付成功。</text>
+    <text class="tip-text">付款成功后订单直接进入「待发货」，店长那边会收到通知。付不了也可以到店付款或微信转账给店长，店长会把这单标成已付款。</text>
   </view>
 
   <view class="bar">

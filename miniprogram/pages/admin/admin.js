@@ -341,6 +341,31 @@ Page({
     this.setData({ shipNo: e.detail.value });
   },
 
+  /* ---------- 标记收款（家长到店付/转账，线上支付没开通时的兜底） ---------- */
+  doMarkPaid(e) {
+    const id = e.currentTarget.dataset.id;
+    const that = this;
+    const o = (this.rawMap || {})[id] || {};
+    wx.showModal({
+      title: '标记已收款',
+      content: '确认收到这单 ¥' + (o.amountText || o.amount || '') + ' 的钱？标记后订单进入「待发货」。',
+      confirmText: '收到了',
+      cancelText: '还没收',
+      success(res) {
+        if (!res.confirm) return;
+        api.markPaid(id).then(function (r) {
+          if (!r || !r.ok) {
+            wx.showToast({ title: (r && r.msg) || '标记失败', icon: 'none' });
+            that.load();
+            return;
+          }
+          wx.showToast({ title: '已标记收款' });
+          that.load();
+        });
+      }
+    });
+  },
+
   doShip() {
     const id = this.data.shipTarget;
     const company = this.data.shipCompany;
