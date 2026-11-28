@@ -5,7 +5,7 @@
 <title>兰欧茜校服 · 演示</title>
 <style id="base-css">
 
-html, body { margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
 body {
   background: #F7F3EC; color: #26364A;
   font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
@@ -34,12 +34,18 @@ body.hastab .bar, body.hastab .cart-bar, body.hastab .foot-bar, body.hastab .bot
 .mask, .picker-mask, .lightbox, .sheet {
   left: 50% !important; right: auto !important; width: 375px; margin-left: -187.5px; box-sizing: border-box;
 }
-#screen { position: relative; width: 375px; height: 100vh; max-height: 812px; margin: 0 auto;
+#screen { position: relative; width: 375px; height: 100vh; height: 100dvh; height: 100%; max-height: 812px; margin: 0 auto;
   overflow: hidden; background: #F7F3EC; }
 #phone { position: absolute; left: 0; right: 0; top: 0; bottom: 0; overflow-y: auto; overflow-x: hidden;
   -webkit-overflow-scrolling: touch; }
-.tabbar { position: absolute; left: 0; right: auto; bottom: 0; width: 375px; height: 50px; display: flex; background: #FBF8F2;
-  border-top: 1px solid #EFE6D8; z-index: 70; }
+/* 底部导航固定在可视区底部：手机浏览器的 100vh 常常比可见区域高（地址栏），
+   用 absolute + #screen 高度会把它顶到屏幕外，看着"点了没反应"，所以这里用 fixed；
+   桌面上 #screen 是 375×812 居中的手机框，用媒体查询把导航收回框内。 */
+.tabbar { position: fixed; left: 0; right: 0; margin: 0 auto; bottom: 0; width: 375px; max-width: 100vw; height: 50px;
+  display: flex; background: #FBF8F2; border-top: 1px solid #EFE6D8; z-index: 70; }
+@media (min-height: 862px) {
+  .tabbar { position: absolute; left: 0; right: auto; margin: 0; max-width: none; }
+}
 .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   font-size: 10px; color: #6F675B; position: relative; cursor: pointer; }
 .tab img { width: 22px; height: 22px; }
@@ -6235,6 +6241,7 @@ Page({
     phone = document.getElementById('phone') || document.body;
     screenEl = document.getElementById('phone') || document.body;
     rootEl = document.getElementById('root');
+    console.log('[兰欧茜演示版] build 1.4.1（底部导航已修复）');
     bindEvents();
 
     var tabsHtml = TABS.map(function (t) {
