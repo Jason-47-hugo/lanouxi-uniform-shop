@@ -3,7 +3,7 @@
 珠海本地一家校服店的订货小程序：**家长**看款式、按身高选码、下单付款、查订单；**店长**在手机上接单、发货、处理退货、改价改库存、导出对账单。
 
 - 课程项目报告（PDF）：[`submission/Peisong Yuan_Lanouxi.pdf`](submission/Peisong%20Yuan_Lanouxi.pdf)
-- 网页演示版（不用装任何东西）：双击 [`web/index.html`](web/index.html)
+- 网页演示版（不用装任何东西，手机也能开）：https://jason-47-hugo.github.io/lanouxi-uniform-shop/web/index.html
 - 当前版本 **v1.3**（2026-11-25）：12 个页面、30 款商品（22 款实拍图）、21 所学校
 
 ---
@@ -12,7 +12,7 @@
 
 | 我想…… | 打开这个 |
 | --- | --- |
-| 不看代码，直接点一遍小程序 | `web/index.html`（双击即可，浏览器里走完整流程） |
+| 不看代码，直接点一遍小程序 | 网页演示版：https://jason-47-hugo.github.io/lanouxi-uniform-shop/web/index.html |
 | 读课程报告 | `submission/Peisong Yuan_Lanouxi.pdf` |
 | 在微信开发者工具里真跑 | 「导入项目」选**本文件夹这一层**（`project.config.json` 已指向 `miniprogram/`） |
 | 看小程序源码 | `miniprogram/`（12 个页面在 `pages/`） |
@@ -71,7 +71,7 @@
 
 ## 网页演示版怎么用
 
-双击 `web/index.html`，浏览器里就能点：首页 → 按学校/分类 → 商品详情（填身高出码）→ 加购/立即购买 → 结算（选地址簿）→ 支付 → 我的订单。
+打开 https://jason-47-hugo.github.io/lanouxi-uniform-shop/web/index.html ，浏览器里就能点（下载仓库后双击 `web/index.html` 效果一样）：首页 → 按学校/分类 → 商品详情（填身高出码）→ 加购/立即购买 → 结算（选地址簿）→ 支付 → 我的订单。
 
 - 数据存在浏览器 localStorage，刷新不丢；想重置就清站点数据或执行 `localStorage.clear()`。
 - **店长端**：「我的 → 店长入口」，网页版口令 `2468`（小程序端已改成服务端按 `admins` 里的 openid 判定，没有口令）。

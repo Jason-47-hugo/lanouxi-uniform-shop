@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>兰欧茜校服 · 校服小店微信小程序</title>
+<style>
+  :root{
+    --green:#2e4a3f; --cream:#f8f1e5; --ink:#2b2b2b;
+    --red:#b5543a; --gold:#b08d57; --muted:#8a8175;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--cream); color:var(--ink);
+    font-family:"Songti SC","SimSun","Noto Serif CJK SC",serif;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:40px 20px;
+  }
+  .card{
+    width:100%; max-width:760px; background:#fffdf8; border:1px solid #efe6d8;
+    border-radius:18px; padding:44px 40px 34px;
+    box-shadow:0 18px 50px rgba(46,74,63,.08);
+  }
+  h1{font-size:34px; letter-spacing:2px; color:var(--green); font-weight:700}
+  .sub{margin-top:10px; color:var(--muted); font-size:15px; letter-spacing:.5px}
+  .rule{height:1px; background:var(--gold); opacity:.55; margin:26px 0 22px}
+  .lead{font-size:16px; line-height:1.9; color:#3a3a3a}
+  .nav{margin-top:26px; display:grid; gap:12px}
+  .row{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    background:var(--cream); border:1px solid #efe6d8; border-radius:12px;
+    padding:16px 20px; text-decoration:none; color:var(--ink);
+    transition:border-color .18s, box-shadow .18s;
+  }
+  .row:hover{border-color:var(--gold); box-shadow:0 6px 18px rgba(46,74,63,.08)}
+  .row b{font-size:17px; color:var(--green); font-weight:700}
+  .row span{font-size:14px; color:var(--muted); display:block; margin-top:4px}
+  .go{white-space:nowrap; font-size:14px; color:#fff; background:var(--green);
+      border-radius:999px; padding:9px 18px}
+  .qr{margin-top:26px; display:flex; gap:22px; align-items:center;
+      border-top:1px dashed #e2d7c4; padding-top:22px}
+  .qr img{width:132px; height:132px; border-radius:10px; border:1px solid #eee}
+  .qr p{font-size:14px; line-height:1.9; color:#4a4a4a}
+  .qr p b{color:var(--green)}
+  footer{margin-top:26px; font-size:13px; color:var(--muted); line-height:1.8}
+  a{color:var(--red)}
+  @media (max-width:560px){
+    .card{padding:28px 22px}
+    h1{font-size:26px}
+    .row{flex-direction:column; align-items:flex-start}
+    .go{align-self:flex-start}
+    .qr{flex-direction:column; align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>兰欧茜校服</h1>
+  <div class="sub">校服小店微信小程序 · 课程项目 · Peisong Yuan · 2026</div>
+
+  <div class="rule"></div>
+
+  <p class="lead">
+    珠海本地一家校服店的订货小程序：家长看款式、按身高选码、下单付款、查订单；
+    店长在手机上接单、发货、处理退货。下面是三样可以直接点开的东西。
+  </p>
+
+  <nav class="nav">
+    <a class="row" href="web/index.html">
+      <div>
+        <b>网页演示版</b>
+        <span>不用装任何东西，浏览器里走完整流程（店长口令 2468）</span>
+      </div>
+      <div class="go">打开 →</div>
+    </a>
+    <a class="row" href="submission/Peisong%20Yuan_Lanouxi.pdf">
+      <div>
+        <b>课程项目报告（PDF）</b>
+        <span>背景与动机、开发历史、功能来源、遇到的问题、反馈与决策</span>
+      </div>
+      <div class="go">查看 →</div>
+    </a>
+    <a class="row" href="https://github.com/Jason-47-hugo/lanouxi-uniform-shop#readme">
+      <div>
+        <b>源码与说明</b>
+        <span>目录结构、怎么在微信开发者工具里跑、自测命令、已知限制</span>
+      </div>
+      <div class="go">阅读 →</div>
+    </a>
+  </nav>
+
+  <div class="qr">
+    <img src="docs/preview-qr.jpg" alt="小程序体验版二维码">
+    <p>
+      想用手机看真机？微信扫左侧二维码进<b>体验版</b>（需由管理员在微信公众平台添加体验成员）。<br>
+      小程序名称：<b>兰欧茜</b>　AppID：wx37e1073cc15df404　云开发环境：cloud1-d7gvr1q2x22eb4eb0
+    </p>
+  </div>
+
+  <footer>
+    这个仓库包含：<code>miniprogram/</code> 小程序源码（12 页）、<code>cloudfunctions/</code> 云函数（定价与权限在服务端）、
+    <code>web/</code> 网页演示版、<code>docs/</code> 文档与截图、<code>submission/</code> 报告。
+    商品与价格以店主核对为准；支付在上线前为模拟成功，不真扣钱。
+  </footer>
+</main>
+</body>
+</html>
